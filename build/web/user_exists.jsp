@@ -30,7 +30,7 @@
 <div id="footer">
             <center><p>The world is Your pictures</p></center>
             </div>
-<form name="myForm" onsubmit="return validateForm()" method="post" action="Register">
+<form name="myForm" onsubmit="return validateForm()" method="post" action="RegisterServlet">
                 <table id="register" align="Center" >
                     
                     <tr>

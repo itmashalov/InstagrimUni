@@ -1,4 +1,4 @@
-package Main;
+package Servlets;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import DataBases.MySql;
+import Models.User;
 
 /**
  *

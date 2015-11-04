@@ -8,8 +8,11 @@ import java.sql.ResultSet;
 import static sun.misc.MessageUtils.out;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Statement;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,6 +36,7 @@ public class MySql {
 
     }
 
+    //USER FUNCTIONS ******************************************************************************************************************************************
     public boolean isAuthenticated(String u, String p) {
         boolean auth = false;
         try {
@@ -43,8 +47,8 @@ public class MySql {
             //-----------------Getting Connection----------------------------------------- 
             PreparedStatement query = con.prepareStatement("select count(*) from users where pass=? and username=?");
 
-            query.setString(1, u);
-            query.setString(2, p);
+            query.setString(1, p);
+            query.setString(2, u);
 
             ResultSet rs = query.executeQuery();
             rs.next();
@@ -137,7 +141,9 @@ public class MySql {
         }
         return maxID;
     }
+    //USER FUNCTIONS END***************************************************************************************************************************************
 
+    //CONIFGURATION FUNCTIONS**********************************************************************************************************************************
     public void configure() {
         createDatabase();
         createTables();
@@ -214,4 +220,63 @@ public class MySql {
         }
 
     }
+    //CONIFGURATION FUNCTIONS END******************************************************************************************************************************
+
+    //IMAGES FUNCTIONS*****************************************************************************************************************************************
+    private int getMaxImgID() {
+        int maxID = -1;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            Statement s2 = con.createStatement();
+            s2.execute("SELECT MAX(id) FROM images");
+            ResultSet rs2 = s2.getResultSet();
+            if (rs2.next()) {
+                maxID = rs2.getInt(1);
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return maxID;
+    }
+
+    public boolean addImage(int type, String nametag, String usr, InputStream img) {
+        boolean success = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            int id = getMaxImgID();
+
+            PreparedStatement insertImage = con.prepareStatement("insert into images values(?,?,?,?,?)");
+
+            id = id + 1;
+            insertImage.setInt(1, id);
+            insertImage.setString(2, usr);
+            insertImage.setString(3, nametag);
+            insertImage.setInt(4, type);
+            insertImage.setBlob(5, img);
+
+            int i = insertImage.executeUpdate();
+            con.close();
+
+            int newID = getMaxImgID();
+            if (newID > id - 1) {
+                success = true;
+            }
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return success;
+    }
+    //IMAGES FUNCTIONS END*************************************************************************************************************************************
+
 }

@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/src/java/Main/Register.java</file>
+            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/register.jsp</file>
+            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/login_fail.jsp</file>
+            <file>file:/D:/XAMPP/htdocs/Instagrim2/src/java/DataBases/MySql.java</file>
+            <file>file:/D:/XAMPP/htdocs/Instagrim2/src/java/Main/UploadImageServlet.java</file>
+            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/index.jsp</file>
             <file>file:/D:/XAMPP/htdocs/Instagrim2/nbproject/build-impl.xml</file>
+            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/WEB-INF/web.xml</file>
+            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/user_exists.jsp</file>
         </group>
     </open-files>
 </project-private>

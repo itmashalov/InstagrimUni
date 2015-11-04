@@ -11,45 +11,71 @@
         <meta charset="UTF-8">
         <script type="text/javascript" src="java.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
-          <link href='http://fonts.googleapis.com/css?family=Eater' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Eater' rel='stylesheet' type='text/css'>
         <title></title> 
-  
+
     </head>
     <body>
-       
+
         <div id="wrap">
-       <div id="header">
-           <table id="head"  align="center" >
-           <tr>
-               <td>Instagram Baby</td>
+            <div id="header">
+                <table id="head"  align="center" >
+                    <tr>
+                        <td>Instagram Baby</td>
 
-           </tr>
-        </table>
+                    </tr>
+                </table>
 
-        </div>                   
-       <div id="footer">
-           <%
-             if(session.getAttribute("is_logged")=="True"){  
+            </div>                   
+            <div id="footer">
+                <%
+                    if (session.getAttribute("is_logged") == "True") {
                 %>    
 
-                     <center><p>The world is Your pictures<div id='log'>
-                     <a href='searchImg.jsp'>search img</a>&nbsp | &nbsp           
-                     <a href='gallery.jsp'>gallery</a>&nbsp | &nbsp  
-                     <a href="LogoutServlet">log out &nbsp&nbsp</a>
-                    
-                     </div>
-                     
-              </p></center></div>
-                
+                <center><p>The world is Your pictures<div id='log'>
+                        <a href='searchImg.jsp'>search img</a>&nbsp | &nbsp           
+                        <a href='gallery.jsp'>gallery</a>&nbsp | &nbsp  
+                        <a href="LogoutServlet">log out &nbsp&nbsp</a>
+
+                    </div>
+
+                    </p></center></div>
+
             <center>
                 <h2>
-                 hello <%=   session.getAttribute("user")%>
-              
-                    Upload Your Picture Here
-                
-                
+                    
+                     
+                    <% if (session.getAttribute("uploaded") == "True") {
+                    %>
+                    Image Uploaded Successfully, You can Visit Gallery(link) to see your images.
+                    <%
+                    }
+                    %>
+
+                    <% if (session.getAttribute("uploaded") == "False") {
+                    %>
+                    No Image Selected!!!
+                    <%
+                    }
+                    %>
+                    
+                     <% if (session.getAttribute("uploaded") == "TooBig") {
+                     %>
+                    The Selected Image is Larger than 1MB!
+                    <%
+                    }
+                    %>
+
+                    <% if (session.getAttribute("uploaded") == null){
+                    %>
+                    hello <%=   session.getAttribute("user")%>
+                     Upload Your Picture Here
+                    <%
+                        }
+                    %>
+
                 </h2>
-                <form method="post" action="FileUploadDBServlet"  enctype="multipart/form-data">
+                <form method="post" action="UploadImageServlet"  enctype="multipart/form-data">
                     <table border="0">
                         <tr>
                             <td>Tag of your pic </td>
@@ -80,35 +106,34 @@
                         </tr>
                     </table>
                 </form>
-               
+
             </center>    
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <% 
-             }
-             else{ 
-                 %>
-                     <center><p>The world is Your pictures<div id='log'>
-            <a href='gallery.jsp'>gallery</a>&nbsp | &nbsp                 
-            <a href='login.jsp'>log in</a>&nbsp | &nbsp
-            <a href='register.jsp'>sign up &nbsp&nbsp</a>
-     </div></p></center></div>  
-                 <%            
-             } 
-           %>             
 
 
-    
+
+
+
+
+
+
+
+
+
+
+            <%
+            } else {
+            %>
+            <center><p>The world is Your pictures<div id='log'>
+                    <a href='gallery.jsp'>gallery</a>&nbsp | &nbsp                 
+                    <a href='login.jsp'>log in</a>&nbsp | &nbsp
+                    <a href='register.jsp'>sign up &nbsp&nbsp</a>
+                </div></p></center></div>  
+                <%
+                    }
+                %>             
+
+
+
 
     </body>
 </html><%-- 
@@ -116,4 +141,4 @@
     Created on : Nov 3, 2015, 5:07:41 PM
     Author     : Ivan
 --%>
- 
+

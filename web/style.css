@@ -1,0 +1,229 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 26, 2014, 2:16:54 AM
+    Author     : Admin
+*/
+body {
+	
+	
+	background:  black;
+    
+	
+	
+}
+#log {
+    position:relative;
+    margin-top:-35px;
+    float:right;
+    text-decoration: none;
+}
+#log a {
+    text-decoration: none;
+    color: #757575;
+}
+
+table#register
+{
+   
+    
+    margin-top:2%;
+	font-family:Georgia,Arial,Verdana;
+        font-size:18px;
+        color: gray
+}
+
+table#login
+{
+   
+    
+    margin-top:10%;
+	font-family:Georgia,Arial,Verdana;
+        font-size:18px;
+        color: gray
+}
+table#blanket_left
+{
+   
+    border-collapse:collapse;
+    margin-top:-15px;
+width:10%;
+text-align:left;
+margin-right:0%;
+       
+}
+table#blanket_right
+{
+   
+    border-collapse:collapse;
+    margin-top:-15px;
+    margin-right:0%;
+   
+width:10%;
+
+       
+}
+table#blanket_left td
+{
+    
+	padding:0;
+}
+table#blanket_right td
+{
+    
+	padding:0;
+}
+#newspaper-a {
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 12px;
+width: 156px;
+text-align: left;
+border-collapse: collapse;
+
+
+
+}
+#newspaper-a th {
+font-weight: normal;
+font-size: 15px;
+color: #039;
+border-bottom: 1px dashed #69c;
+padding: 12px 17px;
+}
+#newspaper-a tbody tr:hover td {
+color: #339;
+background: #D0DAFE;
+
+}
+#newspaper-a td {
+color: #669;
+font-size: 13px;
+padding: 7px 17px;
+}
+     
+#wrap {
+overflow: visible !important;     
+width:80%;
+height:auto; 
+height: 3675px;
+margin:0 auto;
+margin-top:-0.5%;
+background:#fff;
+ border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    
+
+}
+
+#header {
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+background:#C91B18;
+margin-top:1.2%;
+height:90px;
+   font-size:38px;
+   font-family: 'Eater', cursive;
+   color: #fff;
+}
+#nav {
+background:#c99;
+}
+#main {
+background:#9c9;
+}
+#sidebar {
+background:#000;
+}
+#footer {
+     margin-top:-1.3%;
+      border-radius:4px;
+     -webkit-border-radius:4px;
+background:#cc9;
+color: #757575;
+}
+
+
+
+
+
+
+
+
+
+
+
+nav {
+	margin: 1px auto; 
+	text-align: center;
+}
+
+nav ul ul {
+	display: none;
+}
+
+	nav ul li:hover > ul {
+		display: block;
+	}
+
+
+nav ul {
+	background: #efefef; 
+	background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);  
+	background: -moz-linear-gradient(top, #cc9 0%, #bbbbbb 100%); 
+	background: -webkit-linear-gradient(top, #efefef 0%,#cc9 100%); 
+	box-shadow: 0px 0px 9px rgba(0,0,0,0.15);
+	padding: 0 20px;
+	border-radius: 10px;  
+	list-style: none;
+	position: relative;
+	display: inline-table;
+}
+	nav ul:after {
+		content: ""; clear: both; display: block;
+	}
+
+	nav ul li {
+		float: left;
+	}
+		nav ul li:hover {
+			background: #A02422;
+			background: linear-gradient(top, #CD3333 0%, #5f6975 82%);
+			background: -moz-linear-gradient(top, #CD3333 0%, #5f6975 82%);
+			background: -webkit-linear-gradient(top, #CD3333 0%,#cc9 82%);
+		}
+			nav ul li:hover a {
+				color: #fff;
+			}
+		
+		nav ul li a {
+			display: block; padding: 25px 40px;
+			color: #757575; text-decoration: none;
+                        font-size:22px;
+		}
+			
+		
+	nav ul ul {
+		background: #cc9; border-radius: 0px; padding: 0;
+		position: absolute; top: 100%;
+	}
+		nav ul ul li {
+			float: none; 
+			border-top: 1px solid #6b727c;
+			border-bottom: 1px solid #575f6a; position: relative;
+		}
+			nav ul ul li a {
+				padding: 15px 40px;
+				color: #fff;
+			}	
+				nav ul ul li a:hover {
+					background: #cc9;
+				}
+		
+	nav ul ul ul {
+		position: absolute; left: 100%; top:0;
+	}

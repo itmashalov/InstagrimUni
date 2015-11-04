@@ -1,0 +1,119 @@
+<%-- 
+    Document   : register
+    Created on : Oct 10, 2014, 8:09:27 PM
+    Author     : Admin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="java.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+          <link href='http://fonts.googleapis.com/css?family=Eater' rel='stylesheet' type='text/css'>
+        <title></title> 
+  
+    </head>
+    <body>
+       
+        <div id="wrap">
+       <div id="header">
+           <table id="head"  align="center" >
+           <tr>
+               <td>Instagram Baby</td>
+
+           </tr>
+        </table>
+
+        </div>                   
+       <div id="footer">
+           <%
+             if(session.getAttribute("is_logged")=="True"){  
+                %>    
+
+                     <center><p>The world is Your pictures<div id='log'>
+                     <a href='searchImg.jsp'>search img</a>&nbsp | &nbsp           
+                     <a href='gallery.jsp'>gallery</a>&nbsp | &nbsp  
+                     <a href="LogoutServlet">log out &nbsp&nbsp</a>
+                    
+                     </div>
+                     
+              </p></center></div>
+                
+            <center>
+                <h2>
+                 hello <%=   session.getAttribute("user")%>
+              
+                    Upload Your Picture Here
+                
+                
+                </h2>
+                <form method="post" action="FileUploadDBServlet"  enctype="multipart/form-data">
+                    <table border="0">
+                        <tr>
+                            <td>Tag of your pic </td>
+                            <td><input type="text" name="nametag" size="50"/></td>
+                        </tr>
+                        <tr>
+                            <td>Public Pic? </td>
+                            <td><input type="checkbox" name="type" ></td>
+                        </tr>
+                        <tr>
+                            <td>Portrait Photo: </td>
+                            <td><input type="file" name="photo" size="50"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" value="Save">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <form method="post" action="show" enctype="multipart/form-data">
+                    <table border="0">
+
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" value="Show your latest pictures">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+               
+            </center>    
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <% 
+             }
+             else{ 
+                 %>
+                     <center><p>The world is Your pictures<div id='log'>
+            <a href='gallery.jsp'>gallery</a>&nbsp | &nbsp                 
+            <a href='login.jsp'>log in</a>&nbsp | &nbsp
+            <a href='register.jsp'>sign up &nbsp&nbsp</a>
+     </div></p></center></div>  
+                 <%            
+             } 
+           %>             
+
+
+    
+
+    </body>
+</html><%-- 
+    Document   : index
+    Created on : Nov 3, 2015, 5:07:41 PM
+    Author     : Ivan
+--%>
+ 

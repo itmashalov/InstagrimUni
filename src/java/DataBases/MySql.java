@@ -1,5 +1,9 @@
 package DataBases;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,10 +13,14 @@ import static sun.misc.MessageUtils.out;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.sql.Blob;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
@@ -21,7 +29,6 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Ivan
@@ -295,13 +302,38 @@ public class MySql {
             query.setString(1, usr);
             ResultSet rs = query.executeQuery();
 
-            while(rs.next()){
+            int BUFFER_SIZE = 4096;
+            byte[] imgData = new byte[10];
+
+            while (rs.next()) {
                 String name;
-                name=usr+"_"+rs.getInt(1);
-                images.add(name);
+                name = usr + "_" + rs.getInt(1) + ".jpg";
+                File baseDir = new File(System.getProperty("java.io.tmpdir") + name);
+                 baseDir.mkdir();
+                images.add(baseDir);
+                 Blob blob = rs.getBlob("image");
+                imgData = blob.getBytes(1, (int) blob.length());
+                InputStream inputStream = blob.getBinaryStream();
+                OutputStream outputStream = new FileOutputStream(baseDir);
+
+                int bytesRead = -1;
+                byte[] buffer = new byte[BUFFER_SIZE];
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+//                File image = new File(System.getProperty("java.io.tmpdir") + name);
+//                image.mkdir();
+//                FileOutputStream fos = new FileOutputStream(image);
+//                images.add(image);
+//                byte[] buffer = new byte[1];
+//                InputStream is = rs.getBinaryStream(2);
+//                while (is.read(buffer) > 0) {
+//                    fos.write(buffer);
+//                }
+//                fos.close();
             }
 
-            
             con.close();
 
         } catch (Exception e2) {

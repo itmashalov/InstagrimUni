@@ -33,8 +33,13 @@
                 %>    
 
                 <center><p>The world is Your pictures<div id='log'>
-                        <a href='searchImg.jsp'>search img</a>&nbsp | &nbsp           
-                        <a href='gallery.jsp'>gallery</a>&nbsp | &nbsp  
+                        <a href='searchImg.jsp'>search img</a>&nbsp | &nbsp 
+                         <form method="post" action="GalleryServlet" >
+                        <!--<a href='gallery.jsp'>gallery</a>&nbsp | &nbsp  -->
+                        <input type="hidden" name="user" value=<%=   session.getAttribute("user")%>>
+                        <input type="submit" value="gallery">
+                        
+                         </form>
                         <a href="LogoutServlet">log out &nbsp&nbsp</a>
 
                     </div>

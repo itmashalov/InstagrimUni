@@ -1,26 +1,34 @@
-package Servlets;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Models.User;
+package Servlets;
+
+import Models.Gallery;
+
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+
+
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 /**
  *
  * @author Admin
  */
 //
-public class LoginServlet extends HttpServlet {
+public class GalleryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -29,24 +37,16 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        String u = request.getParameter("u");
-        String p = request.getParameter("p");
-
+        String usr = request.getParameter("user");
         try {
-            User user = new User(u, p, "", "");
-            boolean auth =false;
-            auth=user.isAuthenticated();
-            if (auth==true) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", u);
+            Gallery gal = new Gallery(usr);
+            List pics = gal.showGallery();
 
-                session.setAttribute("is_logged", "True");
-                response.sendRedirect("index.jsp");
-            }
-            else{
-              response.sendRedirect("login_fail.jsp");
-            }
- 
+            request.setAttribute("images", pics);
+
+            RequestDispatcher view = request.getRequestDispatcher("gallery.jsp");
+            view.forward(request, response);
+
         } catch (Exception e2) {
             System.out.println(e2);
         }
@@ -61,3 +61,7 @@ public class LoginServlet extends HttpServlet {
  *
  * @return a String containing servlet description
  */
+
+
+
+

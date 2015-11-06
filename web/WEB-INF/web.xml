@@ -4,6 +4,7 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>Servlets.RegisterServlet</servlet-class>
     </servlet>
+    
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -31,6 +32,15 @@
     <servlet-mapping>
         <servlet-name>UploadImageServlet</servlet-name>
         <url-pattern>/UploadImageServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>GalleryServlet</servlet-name>
+        <servlet-class>Servlets.GalleryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GalleryServlet</servlet-name>
+        <url-pattern>/GalleryServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

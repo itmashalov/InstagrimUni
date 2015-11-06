@@ -3,14 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/register.jsp</file>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/login_fail.jsp</file>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/src/java/DataBases/MySql.java</file>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/src/java/Main/UploadImageServlet.java</file>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/index.jsp</file>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/nbproject/build-impl.xml</file>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/WEB-INF/web.xml</file>
-            <file>file:/D:/XAMPP/htdocs/Instagrim2/web/user_exists.jsp</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/web/WEB-INF/web.xml</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/src/java/Servlets/LogoutServlet.java</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/web/gallery.jsp</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/web/login.jsp</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/src/java/Models/Gallery.java</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/src/java/DataBases/MySql.java</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/web/index.jsp</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/src/java/Models/User.java</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/src/java/Servlets/RegisterServlet.java</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/src/java/Servlets/GalleryServlet.java</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/src/java/Models/Image.java</file>
+            <file>file:/Applications/XAMPP/htdocs/instagrim2/src/java/Servlets/LoginServlet.java</file>
         </group>
     </open-files>
 </project-private>

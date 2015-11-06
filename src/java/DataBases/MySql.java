@@ -11,8 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -279,4 +282,35 @@ public class MySql {
     }
     //IMAGES FUNCTIONS END*************************************************************************************************************************************
 
+    public List showGallery(String usr) {
+        List images = new ArrayList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select id,image from images where username=? ");
+
+            query.setString(1, usr);
+            ResultSet rs = query.executeQuery();
+
+            while(rs.next()){
+                String name;
+                name=usr+"_"+rs.getInt(1);
+                images.add(name);
+            }
+
+            
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return (images);
+    }
+
+    //Gallery FUNCTIONS ***************************************************************************************************************************************
+    //Gallery FUNCTIONS END*************************************************************************************************************************************
 }

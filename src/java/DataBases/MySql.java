@@ -15,12 +15,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.sql.Blob;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
@@ -41,6 +45,7 @@ public class MySql {
     private String user = "ivan";
     private String password = "ivankriskitchen";
     private String uploadLimit = "SET GLOBAL max_allowed_packet=104857600;";  // 10 MB
+    private String dir = "/htdocs/InstagrimUni/web/";
 
     public MySql() {
 
@@ -297,41 +302,22 @@ public class MySql {
 
             Connection con = DriverManager.getConnection(dataBase, this.user, password);
             //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("select id,image from images where username=? ");
+            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=? ");
 
             query.setString(1, usr);
             ResultSet rs = query.executeQuery();
 
-            int BUFFER_SIZE = 4096;
-            byte[] imgData = new byte[10];
-
             while (rs.next()) {
-                String name;
-                name = usr + "_" + rs.getInt(1) + ".jpg";
-                File baseDir = new File(System.getProperty("java.io.tmpdir") + name);
-                 baseDir.mkdir();
-                images.add(baseDir);
-                 Blob blob = rs.getBlob("image");
-                imgData = blob.getBytes(1, (int) blob.length());
-                InputStream inputStream = blob.getBinaryStream();
-                OutputStream outputStream = new FileOutputStream(baseDir);
 
-                int bytesRead = -1;
-                byte[] buffer = new byte[BUFFER_SIZE];
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
+                String nametag = rs.getString("nametag");
+                String id = rs.getString("id");
+                String name = usr + "_" + nametag + "_" + id;
+                String newDir = "instapics/" + usr;
 
-//                File image = new File(System.getProperty("java.io.tmpdir") + name);
-//                image.mkdir();
-//                FileOutputStream fos = new FileOutputStream(image);
-//                images.add(image);
-//                byte[] buffer = new byte[1];
-//                InputStream is = rs.getBinaryStream(2);
-//                while (is.read(buffer) > 0) {
-//                    fos.write(buffer);
-//                }
-//                fos.close();
+                String filePath = newDir + "/" + name + ".jpg";
+
+                images.add(filePath);
+
             }
 
             con.close();
@@ -342,6 +328,103 @@ public class MySql {
 
         return (images);
     }
+
+    public void createImageGallery(String usr) {
+
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=? ");
+
+            query.setString(1, usr);
+            ResultSet rs = query.executeQuery();
+
+            int BUFFER_SIZE = 4096;
+            byte[] imgData = new byte[1000];
+
+            while (rs.next()) {
+
+                String nametag = rs.getString("nametag");
+                String id = rs.getString("id");
+                String name = usr + "_" + nametag + "_" + id;
+                String newDir = "instapics/" + usr;
+
+                String parentDir = new File(".").getCanonicalPath();
+                File folder = new File(parentDir + dir + newDir);
+                folder.mkdir();
+                String path = folder.getPath();
+                String fullPath = path + "/" + name + ".jpg";
+
+                Blob blob = rs.getBlob("image");
+                imgData = blob.getBytes(1, (int) blob.length());
+                InputStream inputStream = blob.getBinaryStream();
+                OutputStream outputStream = new FileOutputStream(fullPath);
+
+                int bytesRead = -1;
+                byte[] buffer = new byte[BUFFER_SIZE];
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+    }
+
+    public void deleteImageGallery(String usr) {
+        try {
+            String newDir = "instapics\\" + usr;
+            String parentDir = new File(".").getCanonicalPath();
+            File folder = new File(parentDir + dir + newDir);
+
+            FileUtils.deleteDirectory(new File(parentDir + dir + newDir));
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+    }
+
+//    public static boolean removeDirectory(File directory) {
+//
+//  // System.out.println("removeDirectory " + directory);
+//        if (directory == null) {
+//            return false;
+//        }
+//        if (!directory.exists()) {
+//            return true;
+//        }
+//        if (!directory.isDirectory()) {
+//            return false;
+//        }
+//
+//        String[] list = directory.list();
+//
+//  // Some JVMs return null for File.list() when the
+//        // directory is empty.
+//        if (list != null) {
+//            for (int i = 0; i < list.length; i++) {
+//                File entry = new File(directory, list[i]);
+//
+//      //        System.out.println("\tremoving entry " + entry);
+//                if (entry.isDirectory()) {
+//                    if (!removeDirectory(entry)) {
+//                        return false;
+//                    }
+//                } else {
+//                    if (!entry.delete()) {
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return directory.delete();
+//    }
 
     //Gallery FUNCTIONS ***************************************************************************************************************************************
     //Gallery FUNCTIONS END*************************************************************************************************************************************

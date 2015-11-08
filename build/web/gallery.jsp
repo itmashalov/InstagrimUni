@@ -14,17 +14,20 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <p>
+         
 
             <%
                 List images = (List) request.getAttribute("images");
                 Iterator it = images.iterator();
                 while (it.hasNext()) {
-                    out.print("<br>try: " + it.next());
+                   out.print("<br><img src='" + it.next()+"'   width='50%' height='100px'/>");
+                    //out.print("<br>" + it.next());
+                    
                 }
                            // out.print(System.getProperty("java.io.tmpdir"));
 
             %>
+          
             
     </body>
 </html>

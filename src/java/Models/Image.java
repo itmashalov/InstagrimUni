@@ -31,6 +31,9 @@ public class Image {
         MySql sql = new MySql();
         success = sql.addImage(type, nametag, user, image);
 
+        if(success==true){
+            sql.createImageGallery(user);
+        }
         return success;
     }
 }

@@ -5,6 +5,7 @@ package Servlets;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -26,11 +27,14 @@ protected void doGet(HttpServletRequest  request,HttpServletResponse response)
               
             request.getRequestDispatcher("index.jsp").include(request, response);  
               
-            HttpSession session=request.getSession();  
+            HttpSession session=request.getSession();
+            String u =(String)session.getAttribute("user");
+            User user = new User(u, "", "", "");
             session.invalidate();  
              response.sendRedirect("login.jsp"); 
            // out.print("You are successfully logged out!");  
               
+             
             out.close(); 
   }
 }

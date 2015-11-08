@@ -20,7 +20,7 @@
                 List images = (List) request.getAttribute("images");
                 Iterator it = images.iterator();
                 while (it.hasNext()) {
-                   out.print("<br><img src='" + it.next()+"'   width='50%' height='100px'/>");
+                   out.print("<br><img src='" + it.next()+"'/>");
                     //out.print("<br>" + it.next());
                     
                 }

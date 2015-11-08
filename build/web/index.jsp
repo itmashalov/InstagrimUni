@@ -1,149 +1,124 @@
-<%-- 
-    Document   : register
-    Created on : Oct 10, 2014, 8:09:27 PM
-    Author     : Admin
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <script type="text/javascript" src="java.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link href='http://fonts.googleapis.com/css?family=Eater' rel='stylesheet' type='text/css'>
-        <title></title> 
-
+        <title>MyInstaGallery University Project</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="description" content="Item Blur Effect with CSS3 and jQuery - Using Box Shadows, Transform and Transitions" />
+        <meta name="keywords" content="blur, css3, transition, jquery, box shadow, text shadow, articles, scale, transform, animation" />
+        <meta name="author" content="Codrops" />
+        
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+		 <script type="text/javascript" src="scripts/jquery/jquery-2.1.1.js"  ></script>
+		<script src="js/modernizr.custom.34978.js"></script>	
+	
+		<script> 
+		 		setTimeout(function(){
+	
+					document.getElementById('ib-container').style.display ="table";
+				$("#ib-container").animate({top	: "120%",
+									opacity: '1.0' },2000);
+				},500); 
+					 
+				
+				setTimeout(function(){
+	//document.getElementById('ib-container').style.display ="none";
+				$("#ib-container").animate({ 
+									opacity: '0.0' },1000);
+				},1500); 
+				
+				setTimeout(function(){
+				$("#ib-container").animate({ 
+									opacity: '1.0' },1000);
+									
+				 
+				},2500); 
+				
+				setTimeout(function(){						
+				var audio = new Audio('audio_file.mp3');
+              //  audio.play();
+				},3600); 
+			 
+			 
+	    </script>
     </head>
     <body>
-
-        <div id="wrap">
-            <div id="header">
-                <table id="head"  align="center" >
-                    <tr>
-                        <td>Instagram Baby</td>
-
-                    </tr>
-                </table>
-
-            </div>                   
-            <div id="footer">
-                <%
-                    if (session.getAttribute("is_logged") == "True") {
-                %>    
-
-                <center><p>The world is Your pictures<div id='log'>
-                        <a href='searchImg.jsp'>search img</a>&nbsp | &nbsp 
-                         <form method="post" action="GalleryServlet" >
-                        <!--<a href='gallery.jsp'>gallery</a>&nbsp | &nbsp  -->
-                        <input type="hidden" name="user" value=<%=   session.getAttribute("user")%>>
-                        <input type="submit" value="gallery">
-                        
-                         </form>
-                        <a href="LogoutServlet">log out &nbsp&nbsp</a>
-
-                    </div>
-
-                    </p></center></div>
-
-            <center>
-                <h2>
-                    
-                     
-                    <% if (session.getAttribute("uploaded") == "True") {
-                    %>
-                    Image Uploaded Successfully, You can Visit Gallery(link) to see your images.
-                    <%
-                    }
-                    %>
-
-                    <% if (session.getAttribute("uploaded") == "False") {
-                    %>
-                    No Image Selected!!!
-                    <%
-                    }
-                    %>
-                    
-                     <% if (session.getAttribute("uploaded") == "TooBig") {
-                     %>
-                    The Selected Image is Larger than 1MB!
-                    <%
-                    }
-                    %>
-
-                    <% if (session.getAttribute("uploaded") == null){
-                    %>
-                    hello <%=   session.getAttribute("user")%>
-                     Upload Your Picture Here
-                    <%
-                        }
-                    %>
-
-                </h2>
-                <form method="post" action="UploadImageServlet"  enctype="multipart/form-data">
-                    <table border="0">
-                        <tr>
-                            <td>Tag of your pic </td>
-                            <td><input type="text" name="nametag" size="50"/></td>
-                        </tr>
-                        <tr>
-                            <td>Public Pic? </td>
-                            <td><input type="checkbox" name="type" ></td>
-                        </tr>
-                        <tr>
-                            <td>Portrait Photo: </td>
-                            <td><input type="file" name="photo" size="50"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input type="submit" value="Save">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-                <form method="post" action="show" enctype="multipart/form-data">
-                    <table border="0">
-
-                        <tr>
-                            <td colspan="2">
-                                <input type="submit" value="Show your latest pictures">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-
-            </center>    
-
-
-
-
-
-
-
-
-
-
-
-
-            <%
-            } else {
-            %>
-            <center><p>The world is Your pictures<div id='log'>
-                    <a href='gallery.jsp'>gallery</a>&nbsp | &nbsp                 
-                    <a href='login.jsp'>log in</a>&nbsp | &nbsp
-                    <a href='register.jsp'>sign up &nbsp&nbsp</a>
-                </div></p></center></div>  
-                <%
-                    }
-                %>             
-
-
-
-
+		 
+        <div class="container">
+            <div class="header">
+                <a href="http://tympanus.net/Tutorials/ExperimentsBackgroundClipText/">
+                    <strong>User Guide for:</strong>MyInstaGallery
+                </a>
+                <span class="right">
+                    <a href="http://tympanus.net/codrops/2011/12/14/item-blur-effect-with-css3-and-jquery/">
+                        <strong>About Me</strong>
+                    </a>
+                </span>
+                <div class="clr"></div>
+            </div>
+			<header>
+				<h1>JAVA WEB UNI PROJECT <span>MYINSTAGALLERY</span></h1>
+				<h2>Using jsp,mvc framework, jquery,mysql and more. </h2>
+			</header>
+			<section class="ib-container" id="ib-container" style="
+			 position: absolute;
+			 width:380px;     
+			 top:900%;  
+			 left:0;
+			 right:0;
+			 margin-left:auto;
+			 margin-right:auto;
+			 
+			 opacity:0.1; display:none;" >
+				 
+				<article  style="height:60px;">
+					<header> 
+						<h3><a target="_blank" href="login.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Log in</a></h3>
+						 
+					</header>
+			  </article>
+				<article style="height:60px;">
+					<header> 
+						<h3><a target="_blank" href="register.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Register</a></h3>
+						
+			    </article>
+			 
+			</section>
+        </div>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				
+				var $container	= $('#ib-container'),
+					$articles	= $container.children('article'),
+					timeout;
+				
+				$articles.on( 'mouseenter', function( event ) {
+						
+					var $article	= $(this);
+					clearTimeout( timeout );
+					timeout = setTimeout( function() {
+						
+						if( $article.hasClass('active') ) return false;
+						
+						$articles.not( $article.removeClass('blur').addClass('active') )
+								 .removeClass('active')
+								 .addClass('blur');
+						
+					}, 65 );
+					
+				});
+				
+				$container.on( 'mouseleave', function( event ) {
+					
+					clearTimeout( timeout );
+					$articles.removeClass('active blur');
+					
+				});
+			
+			});
+		</script>
     </body>
-</html><%-- 
-    Document   : index
-    Created on : Nov 3, 2015, 5:07:41 PM
-    Author     : Ivan
---%>
-
+</html>

@@ -9,6 +9,7 @@
         <meta name="keywords" content="blur, css3, transition, jquery, box shadow, text shadow, articles, scale, transform, animation" />
         <meta name="author" content="Codrops" />
         
+		<link rel="stylesheet" type="text/css" href="css/buttons.css" />
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
 		 <script type="text/javascript" src="scripts/jquery/jquery-2.1.1.js"  ></script>
@@ -75,15 +76,17 @@
 						  
 					</header>
 					 </article>
-				<article  style="height:60px;">
+					 
+					 <button type="submit" style="margin-left:42px;" onclick="document.forms[0].submit();"  class="button button--nina button--border-thin button--round-s" data-text="Sign up" id="myButton">
+						<span>S</span><span>i</span><span>g</span><span>n</span> <span>U</span><span>p</span>
+					</button>
+				<article  style="height:60px;margin-left:36px;">
 					<header> 
 						<h3><a target="_blank" href="login.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Log in</a></h3>
 						 
 					</header>
 			  </article>
-			   <button type="submit" onclick="document.forms[0].submit();"  class="button button--nina button--border-thin button--round-s" data-text="Sign up" id="myButton">
-						<span>S</span><span>i</span><span>g</span><span>n</span> <span>U</span><span>p</span>
-					</button>
+			   
 			 
 			</section>
         </div>

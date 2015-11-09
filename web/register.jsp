@@ -56,11 +56,11 @@
 				<article  style="height:180px;width:200px;">
 					<header>
 					 	<form name="myForm" onsubmit="return validateForm()" method="post" action="RegisterServlet">
-                			<br><input type="text"style="background:rgba(255,255,255,0.6)"      placeholder="Username"    name="usr"></td>
-							<br><input type="password" style="background:rgba(255,255,255,0.6)"  placeholder="password"    name="pass"></td>
-							<br><input type="password"  style="background:rgba(255,255,255,0.6)" placeholder="Retype Password"    name="re-pass"></td>
-							<br><input type="text"  style="background:rgba(255,255,255,0.6)"     placeholder="Name"  name="name"></td>
-							<br><input type="text"  style="background:rgba(255,255,255,0.6)"    placeholder="Email"  name="email"></td>
+                			<br><input type="text"style="background:rgba(255,255,255,0.6)"      placeholder="Username"    name="usr">
+							<br><input type="password" style="background:rgba(255,255,255,0.6)"  placeholder="Password"    name="pass">
+							<br><input type="password"  style="background:rgba(255,255,255,0.6)" placeholder="Retype Password"    name="re-pass">
+							<br><input type="text"  style="background:rgba(255,255,255,0.6)"     placeholder="Name"  name="name">
+							<br><input type="text"  style="background:rgba(255,255,255,0.6)"    placeholder="Email"  name="email">
 							
 							 
 							 

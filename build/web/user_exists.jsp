@@ -66,11 +66,11 @@
 					<header>
 						Username Already exists!
 					 	<form name="myForm" onsubmit="return validateForm()" method="post" action="RegisterServlet">
-                			<br><input type="text"style="background:rgba(255,255,255,0.6)"      placeholder="Username" onKeyDown="usrcheck1()" onBlur="usrcheck1()" name="usr"></td>
-							<br><input type="password" style="background:rgba(255,255,255,0.6)"  placeholder="password" onKeyDown="passcheck1()" onBlur="passcheck1()" name="pass"></td>
-							<br><input type="password"  style="background:rgba(255,255,255,0.6)" placeholder="Retype Password" onKeyDown="passcheck2()" onBlur="passcheck2()" name="re-pass"></td>
-							<br><input type="text"  style="background:rgba(255,255,255,0.6)"     placeholder="Name" onKeyDown="namecheck()" onBlur="namecheck()" name="name"></td>
-							<br><input type="text"  style="background:rgba(255,255,255,0.6)"    placeholder="Email" onKeyDown="mailchk()" onBlur="mailchk()" name="email"></td>
+                			<br><input type="text"style="background:rgba(255,255,255,0.6)"      placeholder="Username" onKeyDown="usrcheck1()" onBlur="usrcheck1()" name="usr"> 
+							<br><input type="password" style="background:rgba(255,255,255,0.6)"  placeholder="password" onKeyDown="passcheck1()" onBlur="passcheck1()" name="pass"> 
+							<br><input type="password"  style="background:rgba(255,255,255,0.6)" placeholder="Retype Password" onKeyDown="passcheck2()" onBlur="passcheck2()" name="re-pass"> 
+							<br><input type="text"  style="background:rgba(255,255,255,0.6)"     placeholder="Name" onKeyDown="namecheck()" onBlur="namecheck()" name="name"> 
+							<br><input type="text"  style="background:rgba(255,255,255,0.6)"    placeholder="Email" onKeyDown="mailchk()" onBlur="mailchk()" name="email"> 
 							 
 						</form>
 						  

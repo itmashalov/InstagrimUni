@@ -7,6 +7,8 @@ package Models;
 
 import DataBases.MySql;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,6 +20,13 @@ public class Image {
     private String nametag;
     private String user;
     private InputStream image;
+    private String path;
+    private List comments;
+    private int id;
+
+    public Image() {
+
+    }
 
     public Image(int type, String nametag, String user, InputStream image) {
         this.type = type;
@@ -26,12 +35,44 @@ public class Image {
         this.image = image;
     }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getCommentsCount(int id) {
+        int count;
+        MySql sql = new MySql();
+        count = sql.getCommentsCount(id);
+
+        return count;
+    }
+
+    public List getComments(int id) {
+        List comments = new ArrayList();
+        MySql sql = new MySql();
+        comments = sql.getCommentsForID(id);
+
+        return comments;
+    }
+
     public boolean addImage() {
         boolean success = false;
         MySql sql = new MySql();
         success = sql.addImage(type, nametag, user, image);
 
-        if(success==true){
+        if (success == true) {
             sql.createImageGallery(user);
         }
         return success;

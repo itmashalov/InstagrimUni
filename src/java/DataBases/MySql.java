@@ -1,5 +1,6 @@
 package DataBases;
 
+import Models.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -329,6 +330,95 @@ public class MySql {
         return (images);
     }
 
+    public List getCommentsForID(int id) {
+        List comments = new ArrayList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT * FROM comments where  img_id=? ");
+
+            query.setInt(1, id);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                String comment = rs.getString("comment");
+                comments.add(comment);
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return (comments);
+    }
+
+    public int getCommentsCount(int id) {
+        int count=0;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT count(*) FROM comments where img_id=? ");
+
+            query.setInt(1, id);
+            ResultSet rs = query.executeQuery();
+            rs.next();
+            count = rs.getInt(1);
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return count;
+    }
+
+    public java.util.LinkedList<Image> getPicsForUser(String usr) {
+        java.util.LinkedList<Image> Pics = new java.util.LinkedList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=? ");
+
+            query.setString(1, usr);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                Image img = new Image();
+                String nametag = rs.getString("nametag");
+                String id = rs.getString("id");
+                String name = usr + "_" + nametag + "_" + id;
+                String newDir = "instapics/" + usr;
+
+                String filePath = newDir + "/" + name + ".jpg";
+                img.setPath(filePath);
+
+                img.setId(Integer.parseInt(id));
+                Pics.add(img);
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return Pics;
+    }
+
     public void createImageGallery(String usr) {
 
         try {
@@ -425,7 +515,6 @@ public class MySql {
 //
 //        return directory.delete();
 //    }
-
     //Gallery FUNCTIONS ***************************************************************************************************************************************
     //Gallery FUNCTIONS END*************************************************************************************************************************************
 }

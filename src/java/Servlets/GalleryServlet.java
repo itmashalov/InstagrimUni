@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import Models.Image;
 
 /**
  *
@@ -40,9 +40,10 @@ public class GalleryServlet extends HttpServlet {
         String usr = request.getParameter("user");
         try {
             Gallery gal = new Gallery(usr);
-            List pics = gal.showGallery();
-
-            request.setAttribute("images", pics);
+         //   List pics = gal.showGallery();
+            java.util.LinkedList<Image> images = gal.getPicsForUser(usr);
+     
+            request.setAttribute("images", images);
 
             RequestDispatcher view = request.getRequestDispatcher("gallery.jsp");
             view.forward(request, response);

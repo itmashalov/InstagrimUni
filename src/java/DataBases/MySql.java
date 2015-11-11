@@ -52,6 +52,84 @@ public class MySql {
 
     }
 
+    //CONIFGURATION FUNCTIONS**********************************************************************************************************************************
+    public void configure() {
+        createDatabase();
+        createTables();
+        setUploadLimit();
+
+    }
+
+    private void createDatabase() {
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mysql", this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+
+            PreparedStatement createDataBase = con.prepareStatement("CREATE DATABASE IF NOT EXISTS " + dataBaseName);
+
+            int crDb = 0;
+            crDb = createDataBase.executeUpdate();
+            if (crDb != 0) {
+                System.out.println("Database created!");
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+    }
+
+    private void createTables() {
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+
+            PreparedStatement createUsers = con.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS users(id integer,username varchar(255),pass varchar(255),name varchar(255),email varchar(255))");
+
+            PreparedStatement createImages = con.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS images(id integer, username varchar(255),nametag varchar(255),type BOOL, image mediumblob) ");
+
+            PreparedStatement createComments = con.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS comments( id integer,comment varchar(255),img_id integer, username varchar(20)) ");
+
+            createUsers.executeUpdate();
+            createImages.executeUpdate();
+            createComments.executeUpdate();
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+    }
+
+    private void setUploadLimit() {
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            String querySetLimit = uploadLimit;  // 10 MB
+            // Statement stSetLimit = conn.createStatement();
+            PreparedStatement stSetLimit = con.prepareStatement(querySetLimit);
+            stSetLimit.execute(querySetLimit);
+
+            con.close();
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+    }
+    //CONIFGURATION FUNCTIONS END******************************************************************************************************************************
+
     //USER FUNCTIONS ******************************************************************************************************************************************
     public boolean isAuthenticated(String u, String p) {
         boolean auth = false;
@@ -159,85 +237,6 @@ public class MySql {
     }
     //USER FUNCTIONS END***************************************************************************************************************************************
 
-    //CONIFGURATION FUNCTIONS**********************************************************************************************************************************
-    public void configure() {
-        createDatabase();
-        createTables();
-        setUploadLimit();
-
-    }
-
-    private void createDatabase() {
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mysql", this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-
-            PreparedStatement createDataBase = con.prepareStatement("CREATE DATABASE IF NOT EXISTS " + dataBaseName);
-
-            int crDb = 0;
-            crDb = createDataBase.executeUpdate();
-            if (crDb != 0) {
-                System.out.println("Database created!");
-            }
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-    }
-
-    private void createTables() {
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-
-            PreparedStatement createUsers = con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS users(id integer,username varchar(255),pass varchar(255),name varchar(255),email varchar(255))");
-
-            PreparedStatement createImages = con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS images(id integer, username varchar(255),nametag varchar(255),type BOOL, image mediumblob) ");
-
-            PreparedStatement createComments = con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS comments( id integer,comment varchar(255),img_id integer, username varchar(20)) ");
-
-            createUsers.executeUpdate();
-            createImages.executeUpdate();
-            createComments.executeUpdate();
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-
-    }
-
-    private void setUploadLimit() {
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            String querySetLimit = uploadLimit;  // 10 MB
-            // Statement stSetLimit = conn.createStatement();
-            PreparedStatement stSetLimit = con.prepareStatement(querySetLimit);
-            stSetLimit.execute(querySetLimit);
-
-            con.close();
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-
-    }
-    //CONIFGURATION FUNCTIONS END******************************************************************************************************************************
-
     //IMAGES FUNCTIONS*****************************************************************************************************************************************
     private int getMaxImgID() {
         int maxID = -1;
@@ -293,7 +292,6 @@ public class MySql {
         }
         return success;
     }
-    //IMAGES FUNCTIONS END*************************************************************************************************************************************
 
     public List showGallery(String usr) {
         List images = new ArrayList();
@@ -328,58 +326,6 @@ public class MySql {
         }
 
         return (images);
-    }
-
-    public List getCommentsForID(int id) {
-        List comments = new ArrayList();
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("SELECT * FROM comments where  img_id=? ");
-
-            query.setInt(1, id);
-            ResultSet rs = query.executeQuery();
-
-            while (rs.next()) {
-                String comment = rs.getString("comment");
-                comments.add(comment);
-
-            }
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-
-        return (comments);
-    }
-
-    public int getCommentsCount(int id) {
-        int count=0;
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("SELECT count(*) FROM comments where img_id=? ");
-
-            query.setInt(1, id);
-            ResultSet rs = query.executeQuery();
-            rs.next();
-            count = rs.getInt(1);
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-
-        return count;
     }
 
     public java.util.LinkedList<Image> getPicsForUser(String usr) {
@@ -478,43 +424,136 @@ public class MySql {
             System.out.println(e2);
         }
     }
+     //Image functions end FUNCTIONS ***************************************************************************************************************************
 
-//    public static boolean removeDirectory(File directory) {
-//
-//  // System.out.println("removeDirectory " + directory);
-//        if (directory == null) {
-//            return false;
-//        }
-//        if (!directory.exists()) {
-//            return true;
-//        }
-//        if (!directory.isDirectory()) {
-//            return false;
-//        }
-//
-//        String[] list = directory.list();
-//
-//  // Some JVMs return null for File.list() when the
-//        // directory is empty.
-//        if (list != null) {
-//            for (int i = 0; i < list.length; i++) {
-//                File entry = new File(directory, list[i]);
-//
-//      //        System.out.println("\tremoving entry " + entry);
-//                if (entry.isDirectory()) {
-//                    if (!removeDirectory(entry)) {
-//                        return false;
-//                    }
-//                } else {
-//                    if (!entry.delete()) {
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
-//
-//        return directory.delete();
-//    }
-    //Gallery FUNCTIONS ***************************************************************************************************************************************
-    //Gallery FUNCTIONS END*************************************************************************************************************************************
+    //Comments FUNCTIONS ***************************************************************************************************************************************
+    public List getCommentsForID(int id) {
+        List comments = new ArrayList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT * FROM comments where  img_id=? ");
+
+            query.setInt(1, id);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                String comment = rs.getString("comment");
+                comments.add(comment);
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return (comments);
+    }
+
+    public List getUserForImageID(int id) {
+        List usernames = new ArrayList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT * FROM comments where  img_id=? ");
+
+            query.setInt(1, id);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                String comment = rs.getString("username");
+                usernames.add(comment);
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return (usernames);
+    }
+
+    public int getCommentsCount(int id) {
+        int count = 0;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT count(*) FROM comments where img_id=? ");
+
+            query.setInt(1, id);
+            ResultSet rs = query.executeQuery();
+            rs.next();
+            count = rs.getInt(1);
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return count;
+    }
+
+    private int getMaxCommentID() {
+        int maxID = -1;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            Statement s2 = con.createStatement();
+            s2.execute("SELECT MAX(id) FROM comments");
+            ResultSet rs2 = s2.getResultSet();
+            if (rs2.next()) {
+                maxID = rs2.getInt(1);
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return maxID;
+    }
+
+    public void addComment(String comment, String user, int img_id) {
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            int id = getMaxCommentID();
+
+            PreparedStatement insertComment = con.prepareStatement("insert into comments values(?,?,?,?)");
+
+            id = id + 1;
+            insertComment.setInt(1, id);
+            insertComment.setString(2, comment);
+            insertComment.setInt(3, img_id);
+            insertComment.setString(4, user);
+
+            int i = insertComment.executeUpdate();
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+    }
+
+    //Comments FUNCTIONS END*************************************************************************************************************************************
 }

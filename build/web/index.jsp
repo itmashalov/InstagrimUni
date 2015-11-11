@@ -135,7 +135,7 @@
                     
                      <% if (session.getAttribute("uploaded") == "TooBig") {
                      %>
-                    The Selected Image is Larger than 1MB!
+                    The Selected Image is Larger than 10MB!
                     <%
                     }
                     %>

@@ -49,45 +49,44 @@ public class UploadImageServlet extends HttpServlet {
         }
 
         InputStream inputStream = null; // input stream of the upload file
-        int size = 1024*1024;//1MB
-    
-    // obtains the upload file part in this multipart request
-    Part filePart = request.getPart("photo");
+        int size = 1024 * 1024 * 10;//1MB
 
-    if (filePart.getSize () 
-        > 0) {
+        // obtains the upload file part in this multipart request
+        Part filePart = request.getPart("photo");
+
+        if (filePart.getSize()
+                > 0) {
             inputStream = filePart.getInputStream();
-    }
+        }
 
-    Connection conn = null; // connection to the database
-    String message = null; // message will be sent back to client
+        Connection conn = null; // connection to the database
+        String message = null; // message will be sent back to client
 
-    
         try {
             if (inputStream != null && filePart.getSize() <= size) {
-            HttpSession session = request.getSession();
-            String user = (String) session.getAttribute("user");
-            Image image = new Image(type, nametag, user, inputStream);
-            boolean success = false;
-            success = image.addImage();
-            if (success == true) {
-                response.sendRedirect("index.jsp");
-                session.setAttribute("uploaded", "True");
+                HttpSession session = request.getSession();
+                String user = (String) session.getAttribute("user");
+                Image image = new Image(type, nametag, user, inputStream);
+                boolean success = false;
+                success = image.addImage();
+                if (success == true) {
+                    response.sendRedirect("index.jsp");
+                    session.setAttribute("uploaded", "True");
+                } else {
+                    response.sendRedirect("register.jsp");
+                }
             } else {
-                response.sendRedirect("register.jsp");
+                if (filePart.getSize() > size) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("uploaded", "TooBig");
+                    response.sendRedirect("index.jsp");
+                }
+                if (inputStream == null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("uploaded", "False");
+                    response.sendRedirect("index.jsp");
+                }
             }
-        } else {
-            if (filePart.getSize() > size) {
-                HttpSession session = request.getSession();
-                session.setAttribute("uploaded", "TooBig");
-                response.sendRedirect("index.jsp");
-            }
-            if (inputStream == null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("uploaded", "False");
-                response.sendRedirect("index.jsp");
-            }
-        }
 
 //            try {
 //                Class.forName("com.mysql.jdbc.Driver");
@@ -134,15 +133,11 @@ public class UploadImageServlet extends HttpServlet {
 //
 //                // message = "File uploaded and saved into database";
 //            }
-    }
-    catch (Exception ex
-
-    
-        ) {
+        } catch (Exception ex) {
 
             message = "ERROR: " + ex.getMessage();
-        ex.printStackTrace();
-    }
+            ex.printStackTrace();
+        }
 //        } finally {
 //            if (conn != null) {
 //                // closes the database connection
@@ -159,5 +154,5 @@ public class UploadImageServlet extends HttpServlet {
 //            // forwards to the message page
 //            //getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
 //        }
-}
+    }
 }

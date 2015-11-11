@@ -10,9 +10,6 @@ import Models.Gallery;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 
-
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -40,9 +37,9 @@ public class GalleryServlet extends HttpServlet {
         String usr = request.getParameter("user");
         try {
             Gallery gal = new Gallery(usr);
-         //   List pics = gal.showGallery();
+            //   List pics = gal.showGallery();
             java.util.LinkedList<Image> images = gal.getPicsForUser(usr);
-     
+
             request.setAttribute("images", images);
 
             RequestDispatcher view = request.getRequestDispatcher("gallery.jsp");
@@ -56,13 +53,3 @@ public class GalleryServlet extends HttpServlet {
     }
 
 }
-
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-
-
-
-

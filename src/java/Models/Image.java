@@ -67,6 +67,14 @@ public class Image {
         return comments;
     }
 
+    public List getUsers(int id) {
+        List usernames = new ArrayList();
+        MySql sql = new MySql();
+        usernames = sql.getUserForImageID(id);
+
+        return usernames;
+    }
+
     public boolean addImage() {
         boolean success = false;
         MySql sql = new MySql();

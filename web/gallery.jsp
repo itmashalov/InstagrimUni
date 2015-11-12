@@ -29,54 +29,63 @@
 
             var active;
             function enterImage(id, height) {
-                setTimeout(function () {
-
-                    var idForm = id * 2.3;
-                    var idImg = id * 2.4;
-                    var idComN = id * 2.2;
-                    active = id;
-                    document.getElementById(idComN).style.display = "none";
-
-                    document.getElementById(idImg).style.clip = "auto";
-
-                    var image = document.getElementById(idImg);
-                    var imgW = image.naturalWidth;
-                    var imgH = image.naturalHeight;
-
-                    if (imgW > 1600) {
-                        imgW = imgW / 4;
-                    }
-                    if (imgH > 1080) {
-                        imgH = imgH / 4;
-                    }
-
-
-                    $('#' + id).animate({width:  imgW,
-                        height: 25 * (height + 10) + imgH, }, 1000);
-
-
+                if (id != active) {
+                    leaveImage();
                     setTimeout(function () {
-                        document.getElementById(idForm).style.display = "table";
-                        document.getElementById(idForm).style.marginTop = imgH + "px";
-                    }, 500);
-                    setTimeout(function () {
-                        document.getElementById(idImg).style.width = imgW + "px";
-                        document.getElementById(idImg).style.height = imgH + "px";
-                    }, 200);
 
-                }, 100);
+                        var idForm = id * 2.3;
+                        var idImg = id * 2.4;
+                        var idComN = id * 2.2;
+                        active = id;
+                        document.getElementById(idComN).style.display = "none";
+
+                        document.getElementById(idImg).style.clip = "auto";
+
+                        var image = document.getElementById(idImg);
+                        var imgW = image.naturalWidth;
+                        var imgH = image.naturalHeight;
+
+                        if (imgW > 1600) {
+                            imgW = imgW / 4;
+                        }
+                        if (imgH > 1080) {
+                            imgH = imgH / 4;
+                        }
+                        document.getElementById(id).style.position = "absolute";
+                        document.getElementById("close").style.visibility = "visible";
+
+
+
+                        $('#' + id).animate({width: imgW,
+                            height: 25 * (height + 10) + imgH,
+                            left: "50%",
+                            marginLeft: -imgW / 2, }, 1000);
+
+
+                        setTimeout(function () {
+                            document.getElementById(idForm).style.display = "table";
+                            document.getElementById(idForm).style.marginTop = imgH + "px";
+                        }, 500);
+                        setTimeout(function () {
+                            document.getElementById(idImg).style.width = imgW + "px";
+                            document.getElementById(idImg).style.height = imgH + "px";
+                        }, 200);
+
+                    }, 100);
+
+                }
 
             }
 
-            function leaveImage(id) {
-             //   id= active;
+            function leaveImage() {
+                id = active;
                 setTimeout(function () {
                     var idForm = id * 2.3;
                     var idImg = id * 2.4;
                     var idComN = id * 2.2;
 
                     document.getElementById(idComN).style.display = "table";
-
+                    document.getElementById("close").style.visibility = "hidden";
 
                     var image = document.getElementById(idImg);
                     var imgW = image.naturalWidth;
@@ -94,15 +103,18 @@
 
                     document.getElementById(idForm).style.display = "none";
 
+                    document.getElementById(id).style.position = "static";
                     document.getElementById(idImg).style.clip = "rect(0px,200px,100px,0px)";
                     $('#' + id).animate({width: "200px",
+                        left: "0%",
+                        marginLeft: "47px",
                         height: '120px'}, 1000);
                 }, 100);
             }
 
         </script>
     </head>
-    <body onclick="javascritp:leaveImage()">
+    <body   >
 
         <div class="container">
             <div class="header">
@@ -120,6 +132,7 @@
                 <h1>JAVA WEB UNI PROJECT <span>MYINSTAGALLERY</span></h1>
                 <h2>Using jsp,mvc framework, jquery,mysql and more. </h2>
             </header>
+            <a href="#" id="close" onclick="leaveImage();" style="position:absolute;color:white;visibility:hidden">Close</a>
             <section class="ib-container" id="ib-container" style="
                      position: absolute;
                      width:100%;     
@@ -138,7 +151,9 @@
                     while (it.hasNext()) {
                         Image p = (Image) it.next();
                 %>
-                <article  style="height:120px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascrtip:enterImage(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>)" onmouseleave="javascrtip:leaveImage(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>)">
+
+                <article  style="height:120px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:;
+                        enterImage(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>)"  >
                     <header> 
                         <%
 

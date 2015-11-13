@@ -350,6 +350,7 @@ public class MySql {
 
                 String filePath = newDir + "/" + name + ".jpg";
                 img.setPath(filePath);
+                img.setTag(nametag);
 
                 img.setId(Integer.parseInt(id));
                 Pics.add(img);

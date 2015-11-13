@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Models.Image;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,17 +29,18 @@ import Models.Image;
 public class GalleryServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        String usr = request.getParameter("user");
         try {
-            Gallery gal = new Gallery(usr);
+            HttpSession session = request.getSession();
+            String user = (String) session.getAttribute("user");
+            Gallery gal = new Gallery(user);
             //   List pics = gal.showGallery();
-            java.util.LinkedList<Image> images = gal.getPicsForUser(usr);
+            java.util.LinkedList<Image> images = gal.getPicsForUser(user);
 
             request.setAttribute("images", images);
 

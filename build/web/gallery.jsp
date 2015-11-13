@@ -20,22 +20,24 @@
         <script src="js/modernizr.custom.34978.js"></script>	
 
         <script>
+            var openned = 0;
             setTimeout(function () {
 
                 document.getElementById('ib-container').style.display = "table";
-                $("#ib-container").animate({top: "120%",
+                $("#ib-container").animate({//top: "120%",
                     opacity: '1.0'}, 2000);
             }, 100);
 
             var active;
             function enterImage(id, height) {
-                if (id != active) {
+                if (id !== active) {
+                     oppened = 0;
                     leaveImage();
                     setTimeout(function () {
 
-                        var idForm = id * 2.3;
-                        var idImg = id * 2.4;
-                        var idComN = id * 2.2;
+                        var idForm = id * 2.31111;
+                        var idImg = id * 2.41111;
+                        var idComN = id * 2.21111;
                         active = id;
                         document.getElementById(idComN).style.display = "none";
 
@@ -47,9 +49,11 @@
 
                         if (imgW > 1600) {
                             imgW = imgW / 4;
+                            imgH = imgH / 4;
                         }
                         if (imgH > 1080) {
                             imgH = imgH / 4;
+                            imgW = imgW / 4;
                         }
                         document.getElementById(id).style.position = "absolute";
                         document.getElementById("close").style.visibility = "visible";
@@ -72,7 +76,10 @@
                         }, 200);
 
                     }, 100);
-  $('body').scrollTop(0);
+                    $('body').scrollTop(0);
+                }
+                else{
+                    oppened=1;
                 }
 
             }
@@ -80,9 +87,9 @@
             function leaveImage() {
                 id = active;
                 setTimeout(function () {
-                    var idForm = id * 2.3;
-                    var idImg = id * 2.4;
-                    var idComN = id * 2.2;
+                    var idForm = id * 2.31111;
+                    var idImg = id * 2.41111;
+                    var idComN = id * 2.21111;
 
                     document.getElementById(idComN).style.display = "table";
                     document.getElementById("close").style.visibility = "hidden";
@@ -108,10 +115,89 @@
                     $('#' + id).animate({width: "200px",
                         left: "0%",
                         marginLeft: "47px",
-                        height: '120px'}, 1000);
+                        height: '140px'}, 1000);
                 }, 100);
+                active = null;
+               
             }
 
+        </script>
+
+
+
+
+
+
+
+
+        <script type="text/javascript">
+
+            function getXMLObject()  //XML OBJECT
+            {
+                var xmlHttp = false;
+                try {
+                    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP")  // For Old Microsoft Browsers
+                }
+                catch (e) {
+                    try {
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP")  // For Microsoft IE 6.0+
+                    }
+                    catch (e2) {
+                        xmlHttp = false   // No Browser accepts the XMLHTTP Object then false
+                    }
+                }
+                if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
+                    xmlHttp = new XMLHttpRequest();        //For Mozilla, Opera Browsers
+                }
+                return xmlHttp;  // Mandatory Statement returning the ajax object created
+            }
+
+            var xmlhttp = new getXMLObject();	//xmlhttp holds the ajax object
+            var commentsID;
+            function ajaxFunction(newCommentID, imgID) {
+
+                var getdate = new Date();  //Used to prevent caching during ajax call
+                if (xmlhttp) {
+
+                    var comment = document.getElementById(newCommentID).value;
+ 
+                    commentsID = "comments" + newCommentID;
+                    xmlhttp.open("POST", "AddCommentServlet?comment=" + comment + "&imgID=" + imgID, true); //gettime will be the servlet name
+                    xmlhttp.onreadystatechange = handleServerResponse;
+                    xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xmlhttp.send();
+                }
+            }
+
+            function ajaxFunctionOpen(newCommentID, imgID) {
+ 
+                if (oppened == 0) {
+                    var getdate = new Date();  //Used to prevent caching during ajax call
+                    if (xmlhttp) {
+
+                        var comment = "NoCommentAddedToTheServlet";
+                            
+                        commentsID = "comments" + newCommentID;
+                        xmlhttp.open("POST", "AddCommentServlet?comment=" + comment + "&imgID=" + imgID, true); //gettime will be the servlet name
+                        xmlhttp.onreadystatechange = handleServerResponse;
+                        xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        xmlhttp.send();
+                    }
+                }
+                openned = 1;
+               
+            }
+
+            function handleServerResponse() {
+                if (xmlhttp.readyState == 4) {
+                    if (xmlhttp.status == 200) {
+                        document.getElementById(commentsID).innerHTML = xmlhttp.responseText; //Update the HTML Form element
+                    }
+                    else {
+                        alert("Error during AJAX call. Please try again");
+                    }
+                }
+            }
         </script>
     </head>
     <body   >
@@ -136,7 +222,7 @@
             <section class="ib-container" id="ib-container" style="
                      position: absolute;
                      width:100%;     
-                     top:900%;  
+                     top:120%;  
                      left:0;
                      right:0;
                      margin-left:auto;
@@ -152,30 +238,32 @@
                         Image p = (Image) it.next();
                 %>
 
-                <article  style="height:120px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:;
-                        enterImage(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>)"  >
+                <article  style="height:140px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:enterImage(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>);
+                        ajaxFunctionOpen('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>)"  >
                     <header> 
                         <%
-
-                            out.print("<img src=" + p.getPath() + " width=200px  style='margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;' id='" + p.getId() * 2.4 + "'/>");
-                            out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.2 + "'> comments number: " + p.getCommentsCount(p.getId()) + "</p>");
+                            out.print("<p>" + p.getTag() + "</p>");
+                            out.print("<img src=" + p.getPath() + " width=200px  style='margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;' id='" + p.getId() * 2.41111 + "'/>");
+                            out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.21111 + "'> comments " + p.getCommentsCount(p.getId()) + "</p>");
                         %>
-                        <div style="display:none;margin-top: 10px; position: absolute;"  id='<%=p.getId() * 2.3%>'>
-                            <form name="myForm"   method="post" action="AddCommentServlet">
+                        <div style="display:none;margin-top: 10px; position: absolute;"  id='<%=p.getId() * 2.31111%>'>
+                            <form name="myForm"   method="post" >
                                 <input type="hidden"   name="u"  value="<%=   session.getAttribute("user")%>"> 
                                 <input type="hidden"   name="id"  value="<%=   p.getId()%>"> 
 
-                                <textarea name="comment"  rows="4" cols="30" autofocus>      </textarea>
+                                <textarea   id="comment<%=p.getId() * 2.31111%>"  rows="4" cols="30" autofocus>      </textarea>
                                 <br>
-                                <input type="submit" value="Post Comment"> </td>
+                                <input type="button" onclick="javascript:ajaxFunction('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>);" value="Post Comment"> </td>
                             </form>
+                            <p  id="commentscomment<%=p.getId() * 2.31111%>">
+                            </p>
                             <%
                                 //out.print("<br>"+  p.getId()); 
-                                List comments = p.getComments(p.getId());
-                                List users = p.getUsers(p.getId());
-                                for (int i = 0; i < comments.size(); i++) {
-                                    out.print("<br>" + users.get(i) + ": " + comments.get(i));
-                                }
+//                                List comments = p.getComments(p.getId());
+//                                List users = p.getUsers(p.getId());
+//                                for (int i = 0; i < comments.size(); i++) {
+//                                    out.print("<br>" + users.get(i) + ": " + comments.get(i));
+//                                }
 
                             %>
                         </div>
@@ -191,37 +279,37 @@
         </div>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script type="text/javascript">
-                    $(function () {
+                                    $(function () {
 
-                        var $container = $('#ib-container'),
-                                $articles = $container.children('article'),
-                                timeout;
+                                        var $container = $('#ib-container'),
+                                                $articles = $container.children('article'),
+                                                timeout;
 
-                        $articles.on('mouseenter', function (event) {
+                                        $articles.on('mouseenter', function (event) {
 
-                            var $article = $(this);
-                            clearTimeout(timeout);
-                            timeout = setTimeout(function () {
+                                            var $article = $(this);
+                                            clearTimeout(timeout);
+                                            timeout = setTimeout(function () {
 
-                                if ($article.hasClass('active'))
-                                    return false;
+                                                if ($article.hasClass('active'))
+                                                    return false;
 
-                                $articles.not($article.removeClass('blur').addClass('active'))
-                                        .removeClass('active')
-                                        .addClass('blur');
+                                                $articles.not($article.removeClass('blur').addClass('active'))
+                                                        .removeClass('active')
+                                                        .addClass('blur');
 
-                            }, 65);
+                                            }, 65);
 
-                        });
+                                        });
 
-                        $container.on('mouseleave', function (event) {
+                                        $container.on('mouseleave', function (event) {
 
-                            clearTimeout(timeout);
-                            $articles.removeClass('active blur');
+                                            clearTimeout(timeout);
+                                            $articles.removeClass('active blur');
 
-                        });
+                                        });
 
-                    });
+                                    });
         </script>
     </body>
 </html>

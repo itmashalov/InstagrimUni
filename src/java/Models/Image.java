@@ -43,6 +43,14 @@ public class Image {
         return path;
     }
 
+    public void setTag(String nametag) {
+        this.nametag = nametag;
+    }
+
+    public String getTag() {
+        return nametag;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

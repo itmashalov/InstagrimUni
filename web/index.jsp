@@ -100,8 +100,8 @@
 				 <article  style="height:60px;margin-left:47px;">
 					<header> 
 						
-						 <form action="GalleryServlet" method="post" id="ff">
-        <input type="hidden" name="user" value=<%=   session.getAttribute("user")%> >
+						 <form action="GalleryServlet" method="get" id="ff">
+        
    
 						<h3><a  href="javascript: submitForm();" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Gallery</a></h3>
 						 

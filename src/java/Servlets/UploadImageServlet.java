@@ -66,11 +66,14 @@ public class UploadImageServlet extends HttpServlet {
             if (inputStream != null && filePart.getSize() <= size) {
                 HttpSession session = request.getSession();
                 String user = (String) session.getAttribute("user");
+                if(nametag.isEmpty()){
+                    nametag="untagged";
+                }
                 Image image = new Image(type, nametag, user, inputStream);
                 boolean success = false;
                 success = image.addImage();
                 if (success == true) {
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("/GalleryServlet");
                     session.setAttribute("uploaded", "True");
                 } else {
                     response.sendRedirect("register.jsp");

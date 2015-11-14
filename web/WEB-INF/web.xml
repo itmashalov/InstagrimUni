@@ -44,14 +44,6 @@
         <servlet-name>GalleryServlet</servlet-name>
         <url-pattern>/GalleryServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>gettime</servlet-name>
-        <servlet-class>gettime</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>gettime</servlet-name>
-        <url-pattern>/gettime</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ImageOperationsServlet</servlet-name>
         <url-pattern>/ImageOperationsServlet</url-pattern>

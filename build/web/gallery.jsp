@@ -288,13 +288,13 @@
 
                             String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
                         %>
-<img src="data:image/png;base64,<%=b64%>"  width="200px"  style="margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;" id="<%=p.getId() * 2.41111%>"/>
+                        <img src="data:image/png;base64,<%=b64%>"  width="200px"  style="margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;" id="<%=p.getId() * 2.41111%>"/>
                         <%//   out.print("<img src=" + p.getPath() + " width=200px  style='margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;' id='" + p.getId() * 2.41111 + "'/>");
                             out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.21111 + "'> comments " + p.getCommentsCount(p.getId()) + "</p>");
 
 
                         %>
-                        
+
                         <div style="display:none;margin-top: 10px; position: absolute;"  id='<%=p.getId() * 2.31111%>'>
                             <a  href="#" onclick="javascript:deleteImgConf(<%=p.getId()%>)"  ><img src="icons/bin_icon.png" alt="Delete" width="14%"  ></a>
                             <br>

@@ -46,7 +46,7 @@ public class MySql {
     private String user = "ivan";
     private String password = "ivankriskitchen";
     private String uploadLimit = "SET GLOBAL max_allowed_packet=104857600;";  // 10 MB
-    private String dir = "/htdocs/InstagrimUni/web/";
+    
 
     public MySql() {
 
@@ -347,40 +347,7 @@ public class MySql {
         return success;
     }
 
-    public List showGallery(String usr) {
-        List images = new ArrayList();
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=? ");
-
-            query.setString(1, usr);
-            ResultSet rs = query.executeQuery();
-
-            while (rs.next()) {
-
-                String nametag = rs.getString("nametag");
-                String id = rs.getString("id");
-                String name = usr + "_" + nametag + "_" + id;
-                String newDir = "instapics/" + usr;
-
-                String filePath = newDir + "/" + name + ".jpg";
-
-                images.add(filePath);
-
-            }
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-
-        return (images);
-    }
+ 
 
     public java.util.LinkedList<Image> getPicsForUser(String usr) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
@@ -401,12 +368,6 @@ public class MySql {
                 String id = rs.getString("id");
                 Blob blob =rs.getBlob("image");
                 
-                String name = usr + "_" + nametag + "_" + id;
-                String newDir = "instapics/" + usr;
-
-                String filePath = newDir + "/" + name + ".jpg";
-
-                img.setPath(filePath);
                 img.setTag(nametag);
                 img.setImgBlob(blob);
 
@@ -424,66 +385,7 @@ public class MySql {
         return Pics;
     }
 
-    public void createImageGallery(String usr) {
 
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=? ");
-
-            query.setString(1, usr);
-            ResultSet rs = query.executeQuery();
-
-            int BUFFER_SIZE = 4096;
-            byte[] imgData = new byte[1000];
-
-            while (rs.next()) {
-
-                String nametag = rs.getString("nametag");
-                String id = rs.getString("id");
-                String name = usr + "_" + nametag + "_" + id;
-                String newDir = "instapics/" + usr;
-
-                //String parentDir = new File(".").getCanonicalPath();//windows
-                String parentDir ="/Applications/XAMPP";//mac
-                File folder = new File(parentDir + dir + newDir);
-                folder.mkdir();
-                String path = folder.getPath();
-                String fullPath = path + "/" + name + ".jpg";
-
-                Blob blob = rs.getBlob("image");
-                imgData = blob.getBytes(1, (int) blob.length());
-                InputStream inputStream = blob.getBinaryStream();
-                OutputStream outputStream = new FileOutputStream(fullPath);
-
-                int bytesRead = -1;
-                byte[] buffer = new byte[BUFFER_SIZE];
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-            }
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-    }
-
-    public void deleteImageGallery(String usr) {
-        try {
-            String newDir = "instapics\\" + usr;
-            String parentDir = new File(".").getCanonicalPath();
-            File folder = new File(parentDir + dir + newDir);
-
-            FileUtils.deleteDirectory(new File(parentDir + dir + newDir));
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-    }
     //Image functions end FUNCTIONS ***************************************************************************************************************************
 
     //Comments FUNCTIONS ***************************************************************************************************************************************

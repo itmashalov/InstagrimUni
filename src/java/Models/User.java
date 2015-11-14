@@ -49,13 +49,13 @@ public class User {
         MySql sql = new MySql();
         boolean auth = sql.isAuthenticated(username, password);
         if(auth==true){
-            sql.createImageGallery(username);
+           
         }
         return auth;
     }
     public void logOutUser() {
         MySql sql = new MySql();
-        sql.deleteImageGallery(username);
+       
     }
 
 }

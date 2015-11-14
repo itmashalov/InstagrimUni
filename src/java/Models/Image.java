@@ -21,8 +21,6 @@ public class Image {
     private String nametag;
     private String user;
     private InputStream image;
-    private String path;
-    private List comments;
     private int id;
     private Blob img;
 
@@ -37,13 +35,6 @@ public class Image {
         this.image = image;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getPath() {
-        return path;
-    }
 
     public void setTag(String nametag) {
         this.nametag = nametag;
@@ -99,7 +90,7 @@ public class Image {
         success = sql.addImage(type, nametag, user, image);
 
         if (success == true) {
-            sql.createImageGallery(user);
+            
         }
         return success;
     }
@@ -121,7 +112,7 @@ public class Image {
         success = sql.deleteComments(id);
 
         if (success == true) {
-            sql.createImageGallery(user);
+            
         }
         return success;
     }

@@ -112,10 +112,17 @@
 
                     document.getElementById(id).style.position = "static";
                     document.getElementById(idImg).style.clip = "rect(0px,200px,100px,0px)";
+                    document.getElementById(id).style.width = "10px";
+                    document.getElementById(id).style.height = "7px";
+                    document.getElementById(id).style.marginLeft = "47px";
+                    document.getElementById(idImg).style.position = "static";
                     $('#' + id).animate({width: "200px",
-                        left: "0%",
-                        marginLeft: "47px",
+                        //left: "0%",
+                        //marginLeft: "47px",
                         height: '140px'}, 1000);
+                    setTimeout(function () {
+                        document.getElementById(idImg).style.position = "absolute";
+                    }, 1000);
                 }, 100);
                 active = null;
 

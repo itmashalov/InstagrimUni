@@ -42,11 +42,14 @@ public class MySql {
 
     private String driver = "com.mysql.jdbc.Driver";
     private String dataBaseName = "instagram";
+
     private String dataBase = "jdbc:mysql://localhost/" + dataBaseName;
     private String user = "ivan";
     private String password = "ivankriskitchen";
+//    private String dataBase = "jdbc:mysql://127.3.225.130/" + dataBaseName;
+//    private String user = "admint2B46ui";
+//    private String password = "bVv5gL2JT7VT";
     private String uploadLimit = "SET GLOBAL max_allowed_packet=104857600;";  // 10 MB
-    
 
     public MySql() {
 
@@ -66,6 +69,7 @@ public class MySql {
             Class.forName(driver);
 
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mysql", this.user, password);
+          //  Connection con = DriverManager.getConnection("jdbc:mysql://127.3.225.130/mysql", this.user, password);
             //-----------------Getting Connection----------------------------------------- 
 
             PreparedStatement createDataBase = con.prepareStatement("CREATE DATABASE IF NOT EXISTS " + dataBaseName);
@@ -347,8 +351,6 @@ public class MySql {
         return success;
     }
 
- 
-
     public java.util.LinkedList<Image> getPicsForUser(String usr) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
         try {
@@ -366,8 +368,8 @@ public class MySql {
                 Image img = new Image();
                 String nametag = rs.getString("nametag");
                 String id = rs.getString("id");
-                Blob blob =rs.getBlob("image");
-                
+                Blob blob = rs.getBlob("image");
+
                 img.setTag(nametag);
                 img.setImgBlob(blob);
 
@@ -385,9 +387,7 @@ public class MySql {
         return Pics;
     }
 
-
     //Image functions end FUNCTIONS ***************************************************************************************************************************
-
     //Comments FUNCTIONS ***************************************************************************************************************************************
     public List getCommentsForID(int id) {
         List comments = new ArrayList();

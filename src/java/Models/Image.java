@@ -93,4 +93,26 @@ public class Image {
         }
         return success;
     }
+
+    public boolean deleteImage(int id) {
+        boolean success = false;
+        MySql sql = new MySql();
+        success = sql.deleteImage(id);
+
+        if (success == true) {
+            boolean deletedComments = deleteComments(id);
+        }
+        return success;
+    }
+
+    private boolean deleteComments(int id) {
+        boolean success = false;
+        MySql sql = new MySql();
+        success = sql.deleteComments(id);
+
+        if (success == true) {
+            sql.createImageGallery(user);
+        }
+        return success;
+    }
 }

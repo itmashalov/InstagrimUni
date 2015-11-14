@@ -4,7 +4,10 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>Servlets.RegisterServlet</servlet-class>
     </servlet>
-    
+    <servlet>
+        <servlet-name>ImageOperationsServlet</servlet-name>
+        <servlet-class>Servlets.ImageOperationsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -33,7 +36,6 @@
         <servlet-name>UploadImageServlet</servlet-name>
         <url-pattern>/UploadImageServlet</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>GalleryServlet</servlet-name>
         <servlet-class>Servlets.GalleryServlet</servlet-class>
@@ -42,7 +44,6 @@
         <servlet-name>GalleryServlet</servlet-name>
         <url-pattern>/GalleryServlet</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>gettime</servlet-name>
         <servlet-class>gettime</servlet-class>
@@ -51,10 +52,21 @@
         <servlet-name>gettime</servlet-name>
         <url-pattern>/gettime</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>ImageOperationsServlet</servlet-name>
+        <url-pattern>/ImageOperationsServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
+        <servlet>
+            <servlet-name>gettime</servlet-name>
+            <servlet-class>gettime</servlet-class>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>gettime</servlet-name>
+            <url-pattern>/gettime</url-pattern>
+        </servlet-mapping>
     </session-config>
 </web-app>

@@ -293,6 +293,60 @@ public class MySql {
         return success;
     }
 
+    public boolean deleteImage(int id) {
+        boolean success = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+
+            PreparedStatement deleteImage = con.prepareStatement("DELETE FROM images WHERE id=?");
+
+            deleteImage.setInt(1, id);
+
+            int i = 0;
+            i = deleteImage.executeUpdate();
+            con.close();
+
+            int newID = getMaxImgID();
+            if (i != 0) {
+                success = true;
+            }
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return success;
+    }
+
+    public boolean deleteComments(int id) {
+        boolean success = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+
+            PreparedStatement deleteComments = con.prepareStatement("DELETE FROM comments WHERE img_id=?");
+
+            deleteComments.setInt(1, id);
+
+            int i = 0;
+            i = deleteComments.executeUpdate();
+            con.close();
+
+            int newID = getMaxImgID();
+            if (i != 0) {
+                success = true;
+            }
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return success;
+    }
+
     public List showGallery(String usr) {
         List images = new ArrayList();
         try {

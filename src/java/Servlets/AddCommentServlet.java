@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -38,9 +39,10 @@ public class AddCommentServlet extends HttpServlet {
 //        String idImg = request.getParameter("id");
 //        int id_img = Integer.parseInt(idImg);
         PrintWriter out = response.getWriter();
-        String comment = request.getParameter("comment");
+        String comment = (String)request.getParameter("comment");
         int imgID = Integer.parseInt(request.getParameter("imgID"));
-        if (comment.equals("NoCommentAddedToTheServlet")==false) {
+        
+        if (comment.isEmpty()==false){//comment.equals("NoCommentAddedToTheServlet")==false) {
             HttpSession session = request.getSession();
             String user = (String) session.getAttribute("user");
             Comment comObj = new Comment();

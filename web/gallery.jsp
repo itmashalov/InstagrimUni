@@ -31,7 +31,7 @@
             var active;
             function enterImage(id, height) {
                 if (id !== active) {
-                     oppened = 0;
+                    oppened = 0;
                     leaveImage();
                     setTimeout(function () {
 
@@ -78,8 +78,8 @@
                     }, 100);
                     $('body').scrollTop(0);
                 }
-                else{
-                    oppened=1;
+                else {
+                    oppened = 1;
                 }
 
             }
@@ -118,7 +118,7 @@
                         height: '140px'}, 1000);
                 }, 100);
                 active = null;
-               
+
             }
 
         </script>
@@ -131,7 +131,7 @@
 
 
         <script type="text/javascript">
-
+            //AJAX========================================================================================================================================
             function getXMLObject()  //XML OBJECT
             {
                 var xmlHttp = false;
@@ -154,41 +154,41 @@
 
             var xmlhttp = new getXMLObject();	//xmlhttp holds the ajax object
             var commentsID;
-            function ajaxFunction(newCommentID, imgID) {
+            function ajaxAddComment(newCommentID, imgID) {
 
                 var getdate = new Date();  //Used to prevent caching during ajax call
                 if (xmlhttp) {
 
                     var comment = document.getElementById(newCommentID).value;
- 
+
                     commentsID = "comments" + newCommentID;
                     xmlhttp.open("POST", "AddCommentServlet?comment=" + comment + "&imgID=" + imgID, true); //gettime will be the servlet name
-                    xmlhttp.onreadystatechange = handleServerResponse;
+                    xmlhttp.onreadystatechange = handleServerResponseComments;
                     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                     xmlhttp.send();
                 }
             }
 
-            function ajaxFunctionOpen(newCommentID, imgID) {
- 
+            function ajaxOpenFrame(newCommentID, imgID) {
+
                 if (oppened == 0) {
                     var getdate = new Date();  //Used to prevent caching during ajax call
                     if (xmlhttp) {
 
-                        var comment = "NoCommentAddedToTheServlet";
-                            
+                        var comment = "";
+
                         commentsID = "comments" + newCommentID;
                         xmlhttp.open("POST", "AddCommentServlet?comment=" + comment + "&imgID=" + imgID, true); //gettime will be the servlet name
-                        xmlhttp.onreadystatechange = handleServerResponse;
+                        xmlhttp.onreadystatechange = handleServerResponseComments;
                         xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                         xmlhttp.send();
                     }
                 }
                 openned = 1;
-               
+
             }
 
-            function handleServerResponse() {
+            function handleServerResponseComments() {
                 if (xmlhttp.readyState == 4) {
                     if (xmlhttp.status == 200) {
                         document.getElementById(commentsID).innerHTML = xmlhttp.responseText; //Update the HTML Form element
@@ -198,6 +198,50 @@
                     }
                 }
             }
+            function ajaxDeleteComment(imgID) {
+ 
+                var getdate = new Date();  //Used to prevent caching during ajax call
+                if (xmlhttp) {
+
+                    var command ="delete";
+
+                     
+                    xmlhttp.open("POST", "ImageOperationsServlet?command=" + command + "&imgID=" + imgID, true); //gettime will be the servlet name
+                    xmlhttp.onreadystatechange = handleServerResponseDeleteImg;
+                    xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xmlhttp.send();
+                }
+            }
+            function handleServerResponseDeleteImg() {
+                if (xmlhttp.readyState == 4) {
+                    if (xmlhttp.status == 200) {
+                        var resp=xmlhttp.responseText;
+                        alert(resp);
+                        //document.getElementById(commentsID).innerHTML = xmlhttp.responseText; //Update the HTML Form element
+                    }
+                    else {
+                        alert("Error during AJAX call. Please try again");
+                    }
+                }
+            }
+            //AJAX========================================================================================================================================
+
+            function deleteImgConf(id) {
+                var x;
+                if (confirm("Are you Sure that you want to delete this image?") == true) {
+                    ajaxDeleteComment(id);
+                    document.getElementById(id).style.display = "none";
+                     
+
+                    //call ajax
+                } else {
+
+                }
+
+
+            }
+
+
         </script>
     </head>
     <body   >
@@ -239,7 +283,7 @@
                 %>
 
                 <article  style="height:140px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:enterImage(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>);
-                        ajaxFunctionOpen('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>)"  >
+                        ajaxOpenFrame('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>)"  >
                     <header> 
                         <%
                             out.print("<p>" + p.getTag() + "</p>");
@@ -247,13 +291,15 @@
                             out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.21111 + "'> comments " + p.getCommentsCount(p.getId()) + "</p>");
                         %>
                         <div style="display:none;margin-top: 10px; position: absolute;"  id='<%=p.getId() * 2.31111%>'>
+                            <a  href="#" onclick="javascript:deleteImgConf(<%=p.getId()%>)"  ><img src="icons/bin_icon.png" alt="Delete" width="14%"  ></a>
+                            <br>
                             <form name="myForm"   method="post" >
                                 <input type="hidden"   name="u"  value="<%=   session.getAttribute("user")%>"> 
                                 <input type="hidden"   name="id"  value="<%=   p.getId()%>"> 
 
                                 <textarea   id="comment<%=p.getId() * 2.31111%>"  rows="4" cols="30" autofocus>      </textarea>
                                 <br>
-                                <input type="button" onclick="javascript:ajaxFunction('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>);" value="Post Comment"> </td>
+                                <input type="button" onclick="javascript:ajaxAddComment('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>);" value="Post Comment"> </td>
                             </form>
                             <p  id="commentscomment<%=p.getId() * 2.31111%>">
                             </p>

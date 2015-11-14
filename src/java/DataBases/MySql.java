@@ -399,12 +399,16 @@ public class MySql {
                 Image img = new Image();
                 String nametag = rs.getString("nametag");
                 String id = rs.getString("id");
+                Blob blob =rs.getBlob("image");
+                
                 String name = usr + "_" + nametag + "_" + id;
                 String newDir = "instapics/" + usr;
 
                 String filePath = newDir + "/" + name + ".jpg";
+
                 img.setPath(filePath);
                 img.setTag(nametag);
+                img.setImgBlob(blob);
 
                 img.setId(Integer.parseInt(id));
                 Pics.add(img);
@@ -443,7 +447,8 @@ public class MySql {
                 String name = usr + "_" + nametag + "_" + id;
                 String newDir = "instapics/" + usr;
 
-                String parentDir = new File(".").getCanonicalPath();
+                //String parentDir = new File(".").getCanonicalPath();//windows
+                String parentDir ="/Applications/XAMPP";//mac
                 File folder = new File(parentDir + dir + newDir);
                 folder.mkdir();
                 String path = folder.getPath();
@@ -479,7 +484,7 @@ public class MySql {
             System.out.println(e2);
         }
     }
-     //Image functions end FUNCTIONS ***************************************************************************************************************************
+    //Image functions end FUNCTIONS ***************************************************************************************************************************
 
     //Comments FUNCTIONS ***************************************************************************************************************************************
     public List getCommentsForID(int id) {

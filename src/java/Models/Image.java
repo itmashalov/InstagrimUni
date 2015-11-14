@@ -7,6 +7,7 @@ package Models;
 
 import DataBases.MySql;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class Image {
     private String path;
     private List comments;
     private int id;
+    private Blob img;
 
     public Image() {
 
@@ -57,6 +59,14 @@ public class Image {
 
     public int getId() {
         return id;
+    }
+
+    public void setImgBlob(Blob img) {
+        this.img = img;
+    }
+
+    public Blob getImgBlob() {
+        return img;
     }
 
     public int getCommentsCount(int id) {

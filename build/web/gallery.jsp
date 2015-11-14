@@ -1,4 +1,5 @@
 
+<%@page import="java.io.OutputStream"%>
 <%@page import="Models.Image"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
@@ -77,8 +78,7 @@
 
                     }, 100);
                     $('body').scrollTop(0);
-                }
-                else {
+                } else {
                     oppened = 1;
                 }
 
@@ -137,12 +137,10 @@
                 var xmlHttp = false;
                 try {
                     xmlHttp = new ActiveXObject("Msxml2.XMLHTTP")  // For Old Microsoft Browsers
-                }
-                catch (e) {
+                } catch (e) {
                     try {
                         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP")  // For Microsoft IE 6.0+
-                    }
-                    catch (e2) {
+                    } catch (e2) {
                         xmlHttp = false   // No Browser accepts the XMLHTTP Object then false
                     }
                 }
@@ -192,20 +190,19 @@
                 if (xmlhttp.readyState == 4) {
                     if (xmlhttp.status == 200) {
                         document.getElementById(commentsID).innerHTML = xmlhttp.responseText; //Update the HTML Form element
-                    }
-                    else {
+                    } else {
                         alert("Error during AJAX call. Please try again");
                     }
                 }
             }
             function ajaxDeleteComment(imgID) {
- 
+
                 var getdate = new Date();  //Used to prevent caching during ajax call
                 if (xmlhttp) {
 
-                    var command ="delete";
+                    var command = "delete";
 
-                     
+
                     xmlhttp.open("POST", "ImageOperationsServlet?command=" + command + "&imgID=" + imgID, true); //gettime will be the servlet name
                     xmlhttp.onreadystatechange = handleServerResponseDeleteImg;
                     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -215,11 +212,10 @@
             function handleServerResponseDeleteImg() {
                 if (xmlhttp.readyState == 4) {
                     if (xmlhttp.status == 200) {
-                        var resp=xmlhttp.responseText;
+                        var resp = xmlhttp.responseText;
                         alert(resp);
                         //document.getElementById(commentsID).innerHTML = xmlhttp.responseText; //Update the HTML Form element
-                    }
-                    else {
+                    } else {
                         alert("Error during AJAX call. Please try again");
                     }
                 }
@@ -231,7 +227,7 @@
                 if (confirm("Are you Sure that you want to delete this image?") == true) {
                     ajaxDeleteComment(id);
                     document.getElementById(id).style.display = "none";
-                     
+
 
                     //call ajax
                 } else {
@@ -287,9 +283,18 @@
                     <header> 
                         <%
                             out.print("<p>" + p.getTag() + "</p>");
-                            out.print("<img src=" + p.getPath() + " width=200px  style='margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;' id='" + p.getId() * 2.41111 + "'/>");
-                            out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.21111 + "'> comments " + p.getCommentsCount(p.getId()) + "</p>");
+                            byte[] imgData = new byte[10];
+                            imgData = p.getImgBlob().getBytes(1, (int) p.getImgBlob().length());
+
+                            String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
                         %>
+<img src="data:image/png;base64,<%=b64%>"  width="200px"  style="margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;" id="<%=p.getId() * 2.41111%>"/>
+                        <%//   out.print("<img src=" + p.getPath() + " width=200px  style='margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;' id='" + p.getId() * 2.41111 + "'/>");
+                            out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.21111 + "'> comments " + p.getCommentsCount(p.getId()) + "</p>");
+
+
+                        %>
+                        
                         <div style="display:none;margin-top: 10px; position: absolute;"  id='<%=p.getId() * 2.31111%>'>
                             <a  href="#" onclick="javascript:deleteImgConf(<%=p.getId()%>)"  ><img src="icons/bin_icon.png" alt="Delete" width="14%"  ></a>
                             <br>

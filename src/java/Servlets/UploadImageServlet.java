@@ -73,7 +73,7 @@ public class UploadImageServlet extends HttpServlet {
                 boolean success = false;
                 success = image.addImage();
                 if (success == true) {
-                    response.sendRedirect("/GalleryServlet");
+                    response.sendRedirect("index.jsp");
                     session.setAttribute("uploaded", "True");
                 } else {
                     response.sendRedirect("register.jsp");

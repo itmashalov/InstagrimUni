@@ -48,6 +48,14 @@ public class ImageOperationsServlet extends HttpServlet {
                 out.println("something went wrong!");
             }
         }
+        if (command.equals("getCommentsCount")) {//comment.equals("NoCommentAddedToTheServlet")==false) {
+            int count = 0;
+            
+            Image img = new Image();
+            count = img.getCommentsCount(imgID);
+
+            out.println(count);
+        }
 
     }
 

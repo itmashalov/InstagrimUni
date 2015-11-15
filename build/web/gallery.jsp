@@ -36,12 +36,12 @@
 
             function lightsOff() {
                 document.getElementById("galleryLights").style.display = "block";
-                 document.getElementById("galleryLights").style.opacity = "0.7";
+                document.getElementById("galleryLights").style.opacity = "0.7";
                 $('#galleryLights').animate({opacity: "0.7"}, 1000);
             }
             function lightsOn() {
                 //$('#galleryLights').animate({opacity: "0.0"}, 1000);
-              //  document.getElementById("galleryLights").style.opacity: = "0.0";
+                //  document.getElementById("galleryLights").style.opacity: = "0.0";
                 document.getElementById("galleryLights").style.display = "none";
             }
             var activeMenu;
@@ -129,6 +129,7 @@
             function openImageFrame(id, height) {
                 if (id !== active) {
                     oppened = 0;
+
                     leaveImage();
                     if (opennedMenu == 1) {
                         closeMenuFrame();
@@ -137,6 +138,8 @@
                     var idImg = id * 2.41111;
                     var idComN = id * 2.21111;
                     active = id;
+
+                    height = document.getElementById(idComN).value;
                     document.getElementById(idComN).style.display = "none";
                     document.getElementById(idImg).style.clip = "auto";
                     var image = document.getElementById(idImg);
@@ -150,12 +153,24 @@
                         imgH = imgH / 4;
                         imgW = imgW / 4;
                     }
+
+
                     document.getElementById(id).style.position = "absolute";
+                    document.getElementById(id).style.margin = "auto";
+                    document.getElementById(id).style.left = "0px";
+                    document.getElementById(id).style.right = "0px";
+                    document.getElementById(id).style.height = imgH / 50 + "px";
+                    document.getElementById(id).style.width = imgW / 50 + "px";
                     document.getElementById("close").style.visibility = "visible";
+                    document.getElementById(idImg).style.width = imgW / 50 + "px";
+                    document.getElementById(idImg).style.height = imgH / 50 + "px";
                     $('#' + id).animate({width: imgW,
-                        height: 25 * (height + 10) + imgH,
-                        left: "50%",
-                        marginLeft: -imgW / 2, }, 1000);
+                        height: 25 * (parseInt(height) + 10) + imgH,
+                    }, 1000);
+//                    $('#' + id).animate({width: imgW,
+//                        height: 25 * (parseInt(height) + 10) + imgH,
+//                        left: "50%",
+//                        marginLeft: -imgW / 2, }, 1000);
                     setTimeout(function () {
                         document.getElementById(idForm).style.display = "table";
                         document.getElementById(idForm).style.marginTop = imgH + "px";
@@ -174,12 +189,16 @@
             }
 
             function leaveImage() {
+
                 id = active;
-                setTimeout(function () {
+                if (id != null) {
+                    // setTimeout(function () {
                     var idForm = id * 2.31111;
                     var idImg = id * 2.41111;
                     var idComN = id * 2.21111;
-                    document.getElementById(idComN).style.display = "table";
+                    if (idComN != null) {
+                        document.getElementById(idComN).style.display = "table";
+                    }
                     document.getElementById("close").style.visibility = "hidden";
                     var image = document.getElementById(idImg);
                     var imgW = image.naturalWidth;
@@ -189,7 +208,7 @@
                         imgH = imgH / 1.1;
                     }
 
-
+                    document.getElementById(id).style.margin = "15px";
                     document.getElementById(idImg).style.width = imgW + "px";
                     document.getElementById(idImg).style.height = imgH + "px";
                     document.getElementById(idForm).style.display = "none";
@@ -206,9 +225,25 @@
                     setTimeout(function () {
                         document.getElementById(idImg).style.position = "absolute";
                     }, 1000);
-                }, 100);
-                active = null;
+                    // }, 100);
+                    active = null;
+                }
             }
+            function increaseSizeCom(id) {
+                var commentsCount = id * 2.21111;
+
+                var h = document.getElementById(commentsCount).value;
+
+
+
+                var idImg = id * 2.41111;
+                var imgH = document.getElementById(idImg).style.height;
+                newH = 25 * (parseInt(h) + 10) + parseInt(imgH);
+
+                document.getElementById(id).style.height = newH + "px";
+               
+            }
+
             function submitForm() {
                 $('#uploadFormOrg').submit();
             }
@@ -282,6 +317,8 @@
                     }
                 }
             }
+
+
             function ajaxDeleteComment(imgID) {
                 var getdate = new Date(); //Used to prevent caching during ajax call
                 if (xmlhttp) {
@@ -299,6 +336,34 @@
                         var resp = xmlhttp.responseText;
                         alert(resp);
                         //document.getElementById(commentsID).innerHTML = xmlhttp.responseText; //Update the HTML Form element
+                    } else {
+                        alert("Error during AJAX call. Please try again");
+                    }
+                }
+            }
+            var xmlhttp2 = new getXMLObject(); //xmlhttp holds the ajax object
+
+            var commentID2 = 0;
+            function ajaxGetCommentsCount(imgID) {
+                var getdate = new Date(); //Used to prevent caching during ajax call
+                if (xmlhttp2) {
+
+                    var command = "getCommentsCount";
+                    commentID2 = imgID;
+                    xmlhttp2.open("POST", "ImageOperationsServlet?command=" + command + "&imgID=" + imgID, true); //gettime will be the servlet name
+                    xmlhttp2.onreadystatechange = handleServerGetCommentsCount;
+                    xmlhttp2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xmlhttp2.send();
+                }
+            }
+            function handleServerGetCommentsCount() {
+                if (xmlhttp2.readyState == 4) {
+                    if (xmlhttp2.status == 200) {
+                        var resp = xmlhttp2.responseText;
+
+                        id2 = commentID2 * 2.21111;
+                        document.getElementById(id2).innerHTML = xmlhttp2.responseText;
+                        document.getElementById(id2).value = xmlhttp2.responseText;//Update the HTML Form element
                     } else {
                         alert("Error during AJAX call. Please try again");
                     }
@@ -506,8 +571,8 @@
                         Image p = (Image) it.next();
                 %>
 
-                <article  style="height:140px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:openImageFrame(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>);
-                        ajaxOpenFrame('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>)"  >
+                <article onmouseover="javascrtipt:ajaxGetCommentsCount(<%=p.getId()%>);"  style="height:140px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:openImageFrame(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>);
+                        ajaxOpenFrame('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>);"  >
                     <header> 
                         <%
                             out.print("<p>" + p.getTag() + "</p>");
@@ -518,11 +583,15 @@
                         %>
                         <img src="data:image/png;base64,<%=b64%>"  width="200px"  style="margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;" id="<%=p.getId() * 2.41111%>"/>
                         <%//   out.print("<img src=" + p.getPath() + " width=200px  style='margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;' id='" + p.getId() * 2.41111 + "'/>");
-                            out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.21111 + "'> comments " + p.getCommentsCount(p.getId()) + "</p>");
+                            // out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.21111 + "'> comments " + p.getCommentsCount(p.getId()) + "</p>");
 
 
                         %>
+                        <br><p  style="position: absolute;margin-top: 90px;" id='<%=p.getId() * 2.21111%>'>
 
+
+
+                        </p>
                         <div style="display:none;margin-top: 10px; position: absolute;"  id='<%=p.getId() * 2.31111%>'>
                             <a  href="#" onclick="javascript:deleteImgConf(<%=p.getId()%>)"  ><img src="icons/bin_icon.png" alt="Delete" width="14%"  ></a>
                             <br>
@@ -532,7 +601,8 @@
 
                                 <textarea   id="comment<%=p.getId() * 2.31111%>"  rows="4" cols="30" autofocus>      </textarea>
                                 <br>
-                                <input type="button" onclick="javascript:ajaxAddComment('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>);" value="Post Comment"> </td>
+                                <input type="button" onclick="javascript:ajaxAddComment('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>);
+                                        increaseSizeCom(<%=p.getId()%>);" value="Post Comment"> </td>
                             </form>
                             <p  id="commentscomment<%=p.getId() * 2.31111%>">
                             </p>
@@ -559,30 +629,30 @@
 
             <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
             <script type="text/javascript">
-                    $(function () {
+                                    $(function () {
 
-                        var $container = $('#ib-container'),
-                                $articles = $container.children('article'),
-                                timeout;
-                        $articles.on('mouseenter', function (event) {
+                                        var $container = $('#ib-container'),
+                                                $articles = $container.children('article'),
+                                                timeout;
+                                        $articles.on('mouseenter', function (event) {
 
-                            var $article = $(this);
-                            clearTimeout(timeout);
-                            timeout = setTimeout(function () {
+                                            var $article = $(this);
+                                            clearTimeout(timeout);
+                                            timeout = setTimeout(function () {
 
-                                if ($article.hasClass('active'))
-                                    return false;
-                                $articles.not($article.removeClass('blur').addClass('active'))
-                                        .removeClass('active')
-                                        .addClass('blur');
-                            }, 65);
-                        });
-                        $container.on('mouseleave', function (event) {
+                                                if ($article.hasClass('active'))
+                                                    return false;
+                                                $articles.not($article.removeClass('blur').addClass('active'))
+                                                        .removeClass('active')
+                                                        .addClass('blur');
+                                            }, 65);
+                                        });
+                                        $container.on('mouseleave', function (event) {
 
-                            clearTimeout(timeout);
-                            $articles.removeClass('active blur');
-                        });
-                    });
+                                            clearTimeout(timeout);
+                                            $articles.removeClass('active blur');
+                                        });
+                                    });
             </script>
 
             <script type="text/javascript">

@@ -43,9 +43,7 @@
               //  audio.play();
 				},3600); 
 			 
-			 function test(){
-				 alert('lal');
-			 }
+			 
 			 
 			 
 			 setTimeout(function(){
@@ -227,13 +225,13 @@
 				 
 				<article  style="height:60px;">
 					<header> 
-						<h3><a target="_blank" href="login.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Log in</a></h3>
+						<h3><a   href="login.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Log in</a></h3>
 						 
 					</header>
 			  </article>
 				<article style="height:60px;">
 					<header> 
-						<h3><a target="_blank" href="register.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Register</a></h3>
+						<h3><a  href="register.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Register</a></h3>
 						
 			    </article>
 			 </section>

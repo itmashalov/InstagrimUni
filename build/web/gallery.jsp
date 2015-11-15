@@ -24,60 +24,149 @@
             var openned = 0;
             setTimeout(function () {
 
-                document.getElementById('ib-container').style.display = "table";
-                $("#ib-container").animate({//top: "120%",
-                    opacity: '1.0'}, 2000);
-            }, 100);
+                document.getElementById('ib-container2').style.display = "table";
+                $("#ib-container2").animate({//top: "120%",
+                    opacity: '1.0'}, 3000);
+            }, 1500);
 
+            setTimeout(function () {
+
+                document.getElementsByClassName("message-box-icon")[0].style.display = "none";
+            }, 1500);
+
+            function lightsOff() {
+                document.getElementById("galleryLights").style.display = "block";
+                 document.getElementById("galleryLights").style.opacity = "0.7";
+                $('#galleryLights').animate({opacity: "0.7"}, 1000);
+            }
+            function lightsOn() {
+                //$('#galleryLights').animate({opacity: "0.0"}, 1000);
+              //  document.getElementById("galleryLights").style.opacity: = "0.0";
+                document.getElementById("galleryLights").style.display = "none";
+            }
+            var activeMenu;
             var active;
-            function enterImage(id, height) {
+            var opennedMenu = 0;
+            function openMenuFrame(id, width, height) {
+                if (id !== activeMenu) {
+
+                    closeMenuFrame();
+                    leaveImage();
+                    activeMenu = id;
+                    opennedMenu = 1;
+                    if (id === "uploadImg") {
+                        document.getElementById("uploadHeader").style.display = "none";
+                        document.getElementById("uploadForm").style.display = "table";
+                        document.getElementById("save").style.display = "table";
+                    }
+                    document.getElementById(id).style.position = "absolute";
+                    document.getElementById(id).style.backgroundColor = "white";
+                    document.getElementById("closeMenuButton").style.visibility = "visible";
+                    $('#' + id).animate({width: "200px",
+                        height: "200px",
+                        left: "50%",
+                        marginLeft: "-100px", }, 1000);
+
+                    setTimeout(function () {
+                        $('#' + id).animate({
+                            top: "200%",
+                            backgroundColor: "white"}, 2000);
+
+                    }, 1000);
+
+                    if (id === "uploadImg") {
+                        setTimeout(function () {
+                            $('#save').animate({
+                                top: "1900%",
+                            }, 2000);
+                        }, 1000);
+                    }
+                }
+            }
+
+            function closeMenuFrame() {
+                id = activeMenu;
+                if (id != null) {
+                    if (id === "uploadImg") {
+                        document.getElementById("uploadHeader").style.display = "block";
+                        document.getElementById("uploadForm").style.display = "none";
+                    }
+                    opennedMenu = 0;
+
+
+                    document.getElementById(id).style.position = "static";
+                    document.getElementById(id).style.backgroundColor = "none";
+                    document.getElementById("closeMenuButton").style.visibility = "hidden";
+
+                    document.getElementById(id).style.marginLeft = "47px";
+                    document.getElementById(id).style.width = "2.5px";
+                    document.getElementById(id).style.height = "2.7px";
+
+                    $('#' + id).animate({width: "140px",
+                        height: '25px'}, 1000);
+
+                    if (id === "uploadImg") {
+                        setTimeout(function () {
+                            $('#save').animate({
+                                top: "4300%",
+                            }, 2000);
+                        }, 1000);
+                        setTimeout(function () {
+                            document.getElementById("save").style.display = "none";
+                        }, 2500);
+
+                    }
+                    activeMenu = null;
+                }
+            }
+
+
+
+
+
+
+
+            function openImageFrame(id, height) {
                 if (id !== active) {
                     oppened = 0;
                     leaveImage();
+                    if (opennedMenu == 1) {
+                        closeMenuFrame();
+                    }
+                    var idForm = id * 2.31111;
+                    var idImg = id * 2.41111;
+                    var idComN = id * 2.21111;
+                    active = id;
+                    document.getElementById(idComN).style.display = "none";
+                    document.getElementById(idImg).style.clip = "auto";
+                    var image = document.getElementById(idImg);
+                    var imgW = image.naturalWidth;
+                    var imgH = image.naturalHeight;
+                    if (imgW > 1600) {
+                        imgW = imgW / 4;
+                        imgH = imgH / 4;
+                    }
+                    if (imgH > 1080) {
+                        imgH = imgH / 4;
+                        imgW = imgW / 4;
+                    }
+                    document.getElementById(id).style.position = "absolute";
+                    document.getElementById("close").style.visibility = "visible";
+                    $('#' + id).animate({width: imgW,
+                        height: 25 * (height + 10) + imgH,
+                        left: "50%",
+                        marginLeft: -imgW / 2, }, 1000);
                     setTimeout(function () {
+                        document.getElementById(idForm).style.display = "table";
+                        document.getElementById(idForm).style.marginTop = imgH + "px";
+                    }, 500);
+                    setTimeout(function () {
+                        document.getElementById(idImg).style.width = imgW + "px";
+                        document.getElementById(idImg).style.height = imgH + "px";
+                    }, 200);
 
-                        var idForm = id * 2.31111;
-                        var idImg = id * 2.41111;
-                        var idComN = id * 2.21111;
-                        active = id;
-                        document.getElementById(idComN).style.display = "none";
-
-                        document.getElementById(idImg).style.clip = "auto";
-
-                        var image = document.getElementById(idImg);
-                        var imgW = image.naturalWidth;
-                        var imgH = image.naturalHeight;
-
-                        if (imgW > 1600) {
-                            imgW = imgW / 4;
-                            imgH = imgH / 4;
-                        }
-                        if (imgH > 1080) {
-                            imgH = imgH / 4;
-                            imgW = imgW / 4;
-                        }
-                        document.getElementById(id).style.position = "absolute";
-                        document.getElementById("close").style.visibility = "visible";
-
-
-
-                        $('#' + id).animate({width: imgW,
-                            height: 25 * (height + 10) + imgH,
-                            left: "50%",
-                            marginLeft: -imgW / 2, }, 1000);
-
-
-                        setTimeout(function () {
-                            document.getElementById(idForm).style.display = "table";
-                            document.getElementById(idForm).style.marginTop = imgH + "px";
-                        }, 500);
-                        setTimeout(function () {
-                            document.getElementById(idImg).style.width = imgW + "px";
-                            document.getElementById(idImg).style.height = imgH + "px";
-                        }, 200);
-
-                    }, 100);
                     $('body').scrollTop(0);
+
                 } else {
                     oppened = 1;
                 }
@@ -90,26 +179,20 @@
                     var idForm = id * 2.31111;
                     var idImg = id * 2.41111;
                     var idComN = id * 2.21111;
-
                     document.getElementById(idComN).style.display = "table";
                     document.getElementById("close").style.visibility = "hidden";
-
                     var image = document.getElementById(idImg);
                     var imgW = image.naturalWidth;
                     var imgH = image.naturalHeight;
-
                     while (imgW > 200) {
                         imgW = imgW / 1.1;
                         imgH = imgH / 1.1;
-
                     }
 
 
                     document.getElementById(idImg).style.width = imgW + "px";
                     document.getElementById(idImg).style.height = imgH + "px";
-
                     document.getElementById(idForm).style.display = "none";
-
                     document.getElementById(id).style.position = "static";
                     document.getElementById(idImg).style.clip = "rect(0px,200px,100px,0px)";
                     document.getElementById(id).style.width = "10px";
@@ -125,9 +208,10 @@
                     }, 1000);
                 }, 100);
                 active = null;
-
             }
-
+            function submitForm() {
+                $('#uploadFormOrg').submit();
+            }
         </script>
 
 
@@ -152,20 +236,18 @@
                     }
                 }
                 if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
-                    xmlHttp = new XMLHttpRequest();        //For Mozilla, Opera Browsers
+                    xmlHttp = new XMLHttpRequest(); //For Mozilla, Opera Browsers
                 }
-                return xmlHttp;  // Mandatory Statement returning the ajax object created
+                return xmlHttp; // Mandatory Statement returning the ajax object created
             }
 
-            var xmlhttp = new getXMLObject();	//xmlhttp holds the ajax object
+            var xmlhttp = new getXMLObject(); //xmlhttp holds the ajax object
             var commentsID;
             function ajaxAddComment(newCommentID, imgID) {
-
-                var getdate = new Date();  //Used to prevent caching during ajax call
+                var getdate = new Date(); //Used to prevent caching during ajax call
                 if (xmlhttp) {
 
                     var comment = document.getElementById(newCommentID).value;
-
                     commentsID = "comments" + newCommentID;
                     xmlhttp.open("POST", "AddCommentServlet?comment=" + comment + "&imgID=" + imgID, true); //gettime will be the servlet name
                     xmlhttp.onreadystatechange = handleServerResponseComments;
@@ -177,11 +259,10 @@
             function ajaxOpenFrame(newCommentID, imgID) {
 
                 if (oppened == 0) {
-                    var getdate = new Date();  //Used to prevent caching during ajax call
+                    var getdate = new Date(); //Used to prevent caching during ajax call
                     if (xmlhttp) {
 
                         var comment = "";
-
                         commentsID = "comments" + newCommentID;
                         xmlhttp.open("POST", "AddCommentServlet?comment=" + comment + "&imgID=" + imgID, true); //gettime will be the servlet name
                         xmlhttp.onreadystatechange = handleServerResponseComments;
@@ -190,7 +271,6 @@
                     }
                 }
                 openned = 1;
-
             }
 
             function handleServerResponseComments() {
@@ -203,13 +283,10 @@
                 }
             }
             function ajaxDeleteComment(imgID) {
-
-                var getdate = new Date();  //Used to prevent caching during ajax call
+                var getdate = new Date(); //Used to prevent caching during ajax call
                 if (xmlhttp) {
 
                     var command = "delete";
-
-
                     xmlhttp.open("POST", "ImageOperationsServlet?command=" + command + "&imgID=" + imgID, true); //gettime will be the servlet name
                     xmlhttp.onreadystatechange = handleServerResponseDeleteImg;
                     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -234,8 +311,6 @@
                 if (confirm("Are you Sure that you want to delete this image?") == true) {
                     ajaxDeleteComment(id);
                     document.getElementById(id).style.display = "none";
-
-
                     //call ajax
                 } else {
 
@@ -261,15 +336,161 @@
                 </span>
                 <div class="clr"></div>
             </div>
-            <header>
-                <h1>JAVA WEB UNI PROJECT <span>MYINSTAGALLERY</span></h1>
-                <h2>Using jsp,mvc framework, jquery,mysql and more. </h2>
-            </header>
-            <a href="#" id="close" onclick="leaveImage();" style="position:absolute;color:white;visibility:hidden">Close</a>
+
             <section class="ib-container" id="ib-container" style="
                      position: absolute;
+                     width:1140px;     
+                     top:90%;  
+                     left:0;
+                     right:0;
+                     margin-left:auto;
+                     margin-right:auto;
+
+                     opacity:1; display:table;" >
+
+
+
+
+                <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();" onclick="javascript:openMenuFrame('findImages', 0, 0)" id="findImages"  style="height:25px;margin-left:47px;">
+                    <header> 
+
+                        <a  href="#" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                            Find Images</a></h3>
+
+                        </form> 
+                    </header>
+                </article>
+                <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();"  onclick="javascript:openMenuFrame('profile', 400, 400)" id="profile"  style="height:25px;margin-left:47px;">
+                    <header> 
+                        <h3><a  href="#" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                                My Profile</a>
+                        </h3>
+
+                    </header>
+                </article>
+                <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();" onclick="javascript:openMenuFrame('uploadImg', 0, 0)" id="uploadImg" style="height:25px;margin-left:47px;margin-left:47px;">
+                    <header>
+                        <h3 id="uploadHeader"  style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                            Upload Image
+                        </h3>
+                        <div id="uploadForm" style="display:none">
+
+                            <% if (session.getAttribute("uploaded") == "True") {
+                            %>
+                            Image Uploaded Successfully, You can Visit Gallery(link) to see your images.
+                            <%
+                                }
+                            %>
+
+                            <% if (session.getAttribute("uploaded") == "False") {
+                            %>
+                            No Image Selected!!!
+                            <%
+                                }
+                            %>
+
+                            <% if (session.getAttribute("uploaded") == "TooBig") {
+                            %>
+                            The Selected Image is Larger than 10MB!
+                            <%
+                                }
+                            %>
+
+                            <% if (session.getAttribute("uploaded") == null) {
+                            %>
+                            hello <%=   session.getAttribute("user")%>
+                            Upload Your Picture Here
+                            <%
+                                }
+                            %>
+
+                            <form name="myForm"  method="post" action="UploadImageServlet" id="uploadFormOrg"    enctype="multipart/form-data" >
+                                <br><input type="text" name="nametag" placeholder="Nametag" size="50"/>
+                                <br>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <br>
+                                        </td> 
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Public Pic:
+                                        </td> 
+                                        <td>
+                                            <input type="checkbox" name="type" style="width:35px;float:left;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Profile Pic:
+                                        </td> 
+                                        <td>
+                                            <input type="checkbox" name="profile" style="width:35px;float:left;">
+                                        </td>
+                                    </tr>
+                                </table> 
+
+
+
+                                <br><input type="file" name="photo" size="50"/></td>
+
+                            </form>
+                        </div>
+                    </header>
+                </article>
+
+
+
+                <article onmouseover="javascript:lightsOff();"onmouseleave="javascript:lightsOn();"  onclick="javascript:openMenuFrame('findFriends', 0, 0)" id="findFriends"  style="height:25px;margin-left:47px;">
+                    <header> 
+                        <h3><a  href="#" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                                Find Friends</a></h3>
+
+                    </header>
+                </article>
+                <article  style="height:25px;margin-left:47px;">
+                    <header> 
+                        <h3><a  href="LogoutServlet" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">Log out</a></h3>
+
+                    </header>
+                </article>
+
+            </section>
+
+            <div style="position: absolute; width: 175px; height: 60px; left: 0px; right:0px;margin:auto;top: 4300%; display:none" id="save">
+                <button onclick="javascript: submitForm();"  class="button button--nina button--border-thin button--round-s" data-text="Save" id="myButton">
+                    <span>S</span><span>a</span><span>v</span><span>e</span>  
+                </button>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <a href="#" id="close"             onclick="leaveImage();" style="position:absolute;color:white;left:0;right:0;visibility:hidden">Close</a>
+            <a href="#" id="closeMenuButton"   onclick="closeMenuFrame();" style="position:absolute;color:white;left:0;right:0;visibility:hidden">Close</a>
+            <div style=" position: absolute; z-index: 1; left:   0%; text-align: center;margin-top:-5%;  width:100%; " >
+
+            </div>
+
+            <hr style="position:absolute;top:550%;width:96%;left:50%;margin-left:-48%;">
+            <div class="message-box-icon" style="position:absolute;top:1950%; display: block;left:0%;right:0%;margin:auto; " >
+
+            </div>
+
+            <section class="ib-container" id="ib-container2" style="
+                     position: absolute;
                      width:100%;     
-                     top:120%;  
+                     top:630%;  
                      left:0;
                      right:0;
                      margin-left:auto;
@@ -285,7 +506,7 @@
                         Image p = (Image) it.next();
                 %>
 
-                <article  style="height:140px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:enterImage(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>);
+                <article  style="height:140px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:openImageFrame(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>);
                         ajaxOpenFrame('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>)"  >
                     <header> 
                         <%
@@ -317,11 +538,11 @@
                             </p>
                             <%
                                 //out.print("<br>"+  p.getId()); 
-//                                List comments = p.getComments(p.getId());
-//                                List users = p.getUsers(p.getId());
-//                                for (int i = 0; i < comments.size(); i++) {
-//                                    out.print("<br>" + users.get(i) + ": " + comments.get(i));
-//                                }
+                                //                                List comments = p.getComments(p.getId());
+                                //                                List users = p.getUsers(p.getId());
+                                //                                for (int i = 0; i < comments.size(); i++) {
+                                //                                    out.print("<br>" + users.get(i) + ": " + comments.get(i));
+                                //                                }
 
                             %>
                         </div>
@@ -332,42 +553,63 @@
 
 
 
-
+                <div id="galleryLights"   style="position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none"></div>
             </section>
-        </div>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script type="text/javascript">
-                                    $(function () {
 
-                                        var $container = $('#ib-container'),
-                                                $articles = $container.children('article'),
-                                                timeout;
 
-                                        $articles.on('mouseenter', function (event) {
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+            <script type="text/javascript">
+                    $(function () {
 
-                                            var $article = $(this);
-                                            clearTimeout(timeout);
-                                            timeout = setTimeout(function () {
+                        var $container = $('#ib-container'),
+                                $articles = $container.children('article'),
+                                timeout;
+                        $articles.on('mouseenter', function (event) {
 
-                                                if ($article.hasClass('active'))
-                                                    return false;
+                            var $article = $(this);
+                            clearTimeout(timeout);
+                            timeout = setTimeout(function () {
 
-                                                $articles.not($article.removeClass('blur').addClass('active'))
-                                                        .removeClass('active')
-                                                        .addClass('blur');
+                                if ($article.hasClass('active'))
+                                    return false;
+                                $articles.not($article.removeClass('blur').addClass('active'))
+                                        .removeClass('active')
+                                        .addClass('blur');
+                            }, 65);
+                        });
+                        $container.on('mouseleave', function (event) {
 
-                                            }, 65);
+                            clearTimeout(timeout);
+                            $articles.removeClass('active blur');
+                        });
+                    });
+            </script>
 
-                                        });
+            <script type="text/javascript">
+                $(function () {
+                    var $container = $('#ib-container2'),
+                            $articles = $container.children('article'),
+                            timeout;
+                    $articles.on('mouseenter', function (event) {
 
-                                        $container.on('mouseleave', function (event) {
+                        var $article = $(this);
+                        clearTimeout(timeout);
+                        timeout = setTimeout(function () {
 
-                                            clearTimeout(timeout);
-                                            $articles.removeClass('active blur');
+                            if ($article.hasClass('active'))
+                                return false;
+                            $articles.not($article.removeClass('blur').addClass('active'))
+                                    .removeClass('active')
+                                    .addClass('blur');
+                        }, 65);
+                    });
+                    $container.on('mouseleave', function (event) {
 
-                                        });
-
-                                    });
-        </script>
+                        clearTimeout(timeout);
+                        $articles.removeClass('active blur');
+                    });
+                }
+                );
+            </script>
     </body>
 </html>

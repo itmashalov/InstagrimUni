@@ -147,4 +147,20 @@
 .ib-container article.active p{
   opacity: 1;
 }
+@-moz-keyframes busy-spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes busy-spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes busy-spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
+ .message-box-icon
+{
+    background: url(../images/busy_icon_50.png);
+    width: 50px;
+    height: 50px;
+    background-size: 100%;
+    -webkit-animation:busy-spin 0.8s linear infinite;
+    -moz-animation:busy-spin 0.8s linear infinite;
+    animation:busy-spin 0.8s linear infinite;
+
+   
+  margin-right:20px;
+}

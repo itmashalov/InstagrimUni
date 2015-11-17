@@ -29,5 +29,14 @@ public class Gallery {
 
         return Pics;
     }
+    
+        public Image getLatestImgForUser(String User) {
+         Image Pic  = new Image();
+
+        MySql sql = new MySql();
+        Pic = sql.getLatestImgForUser(user);
+
+        return Pic;
+    }
 
 }

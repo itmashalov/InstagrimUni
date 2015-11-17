@@ -365,7 +365,7 @@ public class MySql {
 
             Connection con = DriverManager.getConnection(dataBase, this.user, password);
             //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=? ");
+            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=?  ORDER BY `id`  DESC");
 
             query.setString(1, usr);
             ResultSet rs = query.executeQuery();
@@ -391,6 +391,41 @@ public class MySql {
         }
 
         return Pics;
+    }
+        public  Image getLatestImgForUser(String usr) {
+        Image img = new Image();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=? ORDER BY `id` DESC LIMIT 1");
+
+            query.setString(1, usr);
+            ResultSet rs = query.executeQuery();
+
+            if (rs.next()) {
+                 
+                String nametag = rs.getString("nametag");
+                String id = rs.getString("id");
+                Blob blob = rs.getBlob("image");
+
+                img.setTag(nametag);
+                img.setImgBlob(blob);
+
+                img.setId(Integer.parseInt(id));
+             
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return img;
     }
 
     //Image functions end FUNCTIONS ***************************************************************************************************************************

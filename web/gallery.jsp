@@ -437,8 +437,23 @@
             function handleServerResponseUpload() {
                 if (xmlhttp4.readyState == 4) {
                     if (xmlhttp4.status == 200) {
-                        document.getElementById("uploadMsg").innerHTML = xmlhttp4.responseText; //Update the HTML Form element
-                        ajaxGetGallery('<%= session.getAttribute("user")%>', '');
+
+ 
+
+
+var req=xmlhttp4.responseText;
+                        if (xmlhttp4.responseText == "") {
+                            document.getElementById("uploadMsg").innerHTML = "<p style=\"color:red; \">No image Selected</p>";
+                            spinIconOff();
+                        }
+                        else {
+                            $("#ib-container2").prepend(xmlhttp4.responseText);
+                            spinIconOff();
+                            document.getElementById("uploadMsg").innerHTML = "<p style=\"color:green; \">Successfuly Uploaded</p>";
+                        }
+                        // document.getElementById("uploadMsg").innerHTML = xmlhttp4.responseText;
+
+                        //document.getElementById("ib-container2").innerHTML = xmlhttp4.responseText+old_html;
 
                     } else {
                         alert("Error during AJAX call. Please try again");
@@ -614,7 +629,7 @@
                      margin-right:auto;
 
                      opacity:0.1; display:none;" >
-                
+
 
             </section>
 
@@ -649,32 +664,32 @@
 
             <script type="text/javascript">
                 function galleryBlurEffect() {
-                    
-                        $(document).ready(function () {
-                            var $container = $('#ib-container2'),
-                                    $articles = $container.children('article'),
-                                    timeout;
-                            $articles.on('mouseenter', function (event) {
 
-                                var $article = $(this);
-                                clearTimeout(timeout);
-                                timeout = setTimeout(function () {
+                    $(document).ready(function () {
+                        var $container = $('#ib-container2'),
+                                $articles = $container.children('article'),
+                                timeout;
+                        $articles.on('mouseenter', function (event) {
 
-                                    if ($article.hasClass('active'))
-                                        return false;
-                                    $articles.not($article.removeClass('blur').addClass('active'))
-                                            .removeClass('active')
-                                            .addClass('blur');
-                                }, 65);
-                            });
-                            $container.on('mouseleave', function (event) {
+                            var $article = $(this);
+                            clearTimeout(timeout);
+                            timeout = setTimeout(function () {
 
-                                clearTimeout(timeout);
-                                $articles.removeClass('active blur');
-                            });
-                        }
-                        );
-                     
+                                if ($article.hasClass('active'))
+                                    return false;
+                                $articles.not($article.removeClass('blur').addClass('active'))
+                                        .removeClass('active')
+                                        .addClass('blur');
+                            }, 65);
+                        });
+                        $container.on('mouseleave', function (event) {
+
+                            clearTimeout(timeout);
+                            $articles.removeClass('active blur');
+                        });
+                    }
+                    );
+
                 }
             </script>
     </body>

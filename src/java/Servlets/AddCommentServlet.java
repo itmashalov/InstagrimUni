@@ -54,28 +54,7 @@ public class AddCommentServlet extends HttpServlet {
         for (int i = 0; i < comments.size(); i++) {
             out.println("<br>" + users.get(i) + ": " + comments.get(i));
         }
-
-//        Date df = new Date();
-//        out.println(df.getTime());
-//        List test = new ArrayList();
-//        int i = 10;
-//        while (i > 0) {
-//            i = i - 1;
-//            test.add("test");
-//        }
-//        for (int j = 0; j <= test.size(); j++) {
-//            out.println("<br> " + test.get(i));
-//        }
-//        out.println("<br>" + comment);
-//        out.println("<br>" + imgID);
-//        try {
-//            Comment comObj = new Comment();
-//            comObj.addComment(comment, user, id_img);
-//
-//            response.sendRedirect("/GalleryServlet");
-//        } catch (Exception e2) {
-//            System.out.println(e2);
-//        }
+ 
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

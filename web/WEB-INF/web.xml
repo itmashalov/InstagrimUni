@@ -8,6 +8,10 @@
         <servlet-name>ImageOperationsServlet</servlet-name>
         <servlet-class>Servlets.ImageOperationsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadImgServlet</servlet-name>
+        <servlet-class>Servlets.UploadImgServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>ImageOperationsServlet</servlet-name>
         <url-pattern>/ImageOperationsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadImgServlet</servlet-name>
+        <url-pattern>/UploadImgServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

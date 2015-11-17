@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -41,6 +42,7 @@ public class UploadImageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // gets values of text fields
+        String profile = request.getParameter("profile");
         String nametag = request.getParameter("nametag");
         String checkBox = request.getParameter("type");
         int type = 0;
@@ -66,14 +68,15 @@ public class UploadImageServlet extends HttpServlet {
             if (inputStream != null && filePart.getSize() <= size) {
                 HttpSession session = request.getSession();
                 String user = (String) session.getAttribute("user");
-                if(nametag.isEmpty()){
-                    nametag="untagged";
+                if (nametag.isEmpty()) {
+                    nametag = "untagged";
                 }
                 Image image = new Image(type, nametag, user, inputStream);
                 boolean success = false;
                 success = image.addImage();
                 if (success == true) {
-                    response.sendRedirect("/GalleryServlet");
+                  //  response.sendRedirect(request.getContextPath() + "/GalleryServlet");
+
                     session.setAttribute("uploaded", "True");
                 } else {
                     response.sendRedirect("register.jsp");
@@ -82,12 +85,12 @@ public class UploadImageServlet extends HttpServlet {
                 if (filePart.getSize() > size) {
                     HttpSession session = request.getSession();
                     session.setAttribute("uploaded", "TooBig");
-                    response.sendRedirect("index.jsp");
+                    //response.sendRedirect("index.jsp");
                 }
                 if (inputStream == null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("uploaded", "False");
-                    response.sendRedirect("index.jsp");
+                   // response.sendRedirect("index.jsp");
                 }
             }
 

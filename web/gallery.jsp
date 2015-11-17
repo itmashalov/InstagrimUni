@@ -28,20 +28,26 @@
                 $("#ib-container2").animate({//top: "120%",
                     opacity: '1.0'}, 3000);
             }, 1500);
-
-            setTimeout(function () {
+            function spinIconOff() {
+                // setTimeout(function () {
 
                 document.getElementsByClassName("message-box-icon")[0].style.display = "none";
-            }, 1500);
+                //  }, 1500);
+            }
+            function spinIconOn() {
+                //   setTimeout(function () {
+
+                document.getElementsByClassName("message-box-icon")[0].style.display = "block";
+                //    }, 1500);
+            }
 
             function lightsOff() {
                 document.getElementById("galleryLights").style.display = "block";
                 document.getElementById("galleryLights").style.opacity = "0.7";
-                $('#galleryLights').animate({opacity: "0.7"}, 1000);
+                //$('#galleryLights').animate({opacity: "0.7"}, 1000);
             }
             function lightsOn() {
-                //$('#galleryLights').animate({opacity: "0.0"}, 1000);
-                //  document.getElementById("galleryLights").style.opacity: = "0.0";
+
                 document.getElementById("galleryLights").style.display = "none";
             }
             var activeMenu;
@@ -241,12 +247,10 @@
                 newH = 25 * (parseInt(h) + 10) + parseInt(imgH);
 
                 document.getElementById(id).style.height = newH + "px";
-               
+
             }
 
-            function submitForm() {
-                $('#uploadFormOrg').submit();
-            }
+
         </script>
 
 
@@ -341,6 +345,7 @@
                     }
                 }
             }
+            //comments count
             var xmlhttp2 = new getXMLObject(); //xmlhttp holds the ajax object
 
             var commentID2 = 0;
@@ -369,6 +374,78 @@
                     }
                 }
             }
+            //get gallery 
+            var xmlhttp3 = new getXMLObject(); //xmlhttp holds the ajax object
+            function ajaxGetGallery(usrID, tag) {
+
+
+                var getdate = new Date(); //Used to prevent caching during ajax call
+                if (xmlhttp3) {
+
+                    xmlhttp3.open("POST", "GalleryServlet?userID=" + usrID + "&tag=" + tag, true); //gettime will be the servlet name
+                    xmlhttp3.onreadystatechange = handleServerResponseGallery;
+                    xmlhttp3.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xmlhttp3.send();
+                    spinIconOn()
+                }
+
+
+            }
+
+            function handleServerResponseGallery() {
+                if (xmlhttp3.readyState == 4) {
+                    if (xmlhttp3.status == 200) {
+                        document.getElementById("ib-container2").innerHTML = xmlhttp3.responseText; //Update the HTML Form element
+                        spinIconOff();
+                    } else {
+                        alert("Error during AJAX call. Please try again");
+                    }
+                }
+            }
+            //Upload Image
+            var xmlhttp4 = new getXMLObject(); //xmlhttp holds the ajax object
+            function ajaxUploadImage() {
+
+
+                var getdate = new Date(); //Used to prevent caching during ajax call
+                if (xmlhttp4) {
+                    var form = document.getElementById("uploadFormOrg");
+                    var photo = document.getElementById("photo");
+
+
+                    var nametag = document.getElementById('nametag').value;
+                    var type = document.getElementById('type').value;
+                    var profile = document.getElementById('profile').value;
+
+                    var fd = new FormData();
+                    fd.append("nametag", nametag);
+                    fd.append("type", type);
+                    fd.append("profile", profile);
+                    fd.append("photo", photo.files[0]);
+
+                    xmlhttp4.open("POST", "UploadImgServlet", true);
+                    xmlhttp4.onreadystatechange = handleServerResponseUpload;
+                    xmlhttp4.send(fd);
+
+                    spinIconOn();
+                }
+
+
+            }
+
+            function handleServerResponseUpload() {
+                if (xmlhttp4.readyState == 4) {
+                    if (xmlhttp4.status == 200) {
+                        document.getElementById("uploadMsg").innerHTML = xmlhttp4.responseText; //Update the HTML Form element
+                        ajaxGetGallery('<%= session.getAttribute("user")%>', '');
+                    
+                    } else {
+                        alert("Error during AJAX call. Please try again");
+                    }
+                }
+            }
+
+
             //AJAX========================================================================================================================================
 
             function deleteImgConf(id) {
@@ -387,7 +464,7 @@
 
         </script>
     </head>
-    <body   >
+    <body   onload="javascript:ajaxGetGallery('<%= session.getAttribute("user")%>', '')">
 
         <div class="container">
             <div class="header">
@@ -439,38 +516,12 @@
                             Upload Image
                         </h3>
                         <div id="uploadForm" style="display:none">
-
-                            <% if (session.getAttribute("uploaded") == "True") {
-                            %>
-                            Image Uploaded Successfully, You can Visit Gallery(link) to see your images.
-                            <%
-                                }
-                            %>
-
-                            <% if (session.getAttribute("uploaded") == "False") {
-                            %>
-                            No Image Selected!!!
-                            <%
-                                }
-                            %>
-
-                            <% if (session.getAttribute("uploaded") == "TooBig") {
-                            %>
-                            The Selected Image is Larger than 10MB!
-                            <%
-                                }
-                            %>
-
-                            <% if (session.getAttribute("uploaded") == null) {
-                            %>
-                            hello <%=   session.getAttribute("user")%>
-                            Upload Your Picture Here
-                            <%
-                                }
-                            %>
+                            <div id="uploadMsg"  >
+                                Upload You Image here.
+                            </div>
 
                             <form name="myForm"  method="post" action="UploadImageServlet" id="uploadFormOrg"    enctype="multipart/form-data" >
-                                <br><input type="text" name="nametag" placeholder="Nametag" size="50"/>
+                                <br><input type="text" id="nametag" name="nametag"   placeholder="Nametag" size="50"/>
                                 <br>
                                 <table>
                                     <tr>
@@ -484,7 +535,7 @@
                                             Public Pic:
                                         </td> 
                                         <td>
-                                            <input type="checkbox" name="type" style="width:35px;float:left;">
+                                            <input type="checkbox" name="type" id="type" style="width:35px;float:left;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -492,14 +543,14 @@
                                             Profile Pic:
                                         </td> 
                                         <td>
-                                            <input type="checkbox" name="profile" style="width:35px;float:left;">
+                                            <input type="checkbox" name="profile" id="profile"  style="width:35px;float:left;">
                                         </td>
                                     </tr>
                                 </table> 
 
 
 
-                                <br><input type="file" name="photo" size="50"/></td>
+                                <br><input type="file" name="photo" id="photo" size="50"/></td>
 
                             </form>
                         </div>
@@ -525,7 +576,7 @@
             </section>
 
             <div style="position: absolute; width: 175px; height: 60px; left: 0px; right:0px;margin:auto;top: 4300%; display:none" id="save">
-                <button onclick="javascript: submitForm();"  class="button button--nina button--border-thin button--round-s" data-text="Save" id="myButton">
+                <button onclick="javascript: ajaxUploadImage();"  class="button button--nina button--border-thin button--round-s" data-text="Save" id="myButton">
                     <span>S</span><span>a</span><span>v</span><span>e</span>  
                 </button>
             </div>
@@ -562,102 +613,17 @@
                      margin-right:auto;
 
                      opacity:0.1; display:none;" >
-
-                <%
-                    java.util.LinkedList<Image> images = (java.util.LinkedList<Image>) request.getAttribute("images");
-                    // List images = (List) request.getAttribute("images");
-                    Iterator<Image> it = images.iterator();
-                    while (it.hasNext()) {
-                        Image p = (Image) it.next();
-                %>
-
-                <article onmouseover="javascrtipt:ajaxGetCommentsCount(<%=p.getId()%>);"  style="height:140px;width:200px;margin-left:47px;" id='<%=p.getId()%>' onclick="javascript:openImageFrame(<%=p.getId()%>,<%=p.getCommentsCount(p.getId())%>);
-                        ajaxOpenFrame('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>);"  >
-                    <header> 
-                        <%
-                            out.print("<p>" + p.getTag() + "</p>");
-                            byte[] imgData = new byte[10];
-                            imgData = p.getImgBlob().getBytes(1, (int) p.getImgBlob().length());
-
-                            String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
-                        %>
-                        <img src="data:image/png;base64,<%=b64%>"  width="200px"  style="margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;" id="<%=p.getId() * 2.41111%>"/>
-                        <%//   out.print("<img src=" + p.getPath() + " width=200px  style='margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;' id='" + p.getId() * 2.41111 + "'/>");
-                            // out.print("<br><p style='position: absolute;margin-top: 90px;' id='" + p.getId() * 2.21111 + "'> comments " + p.getCommentsCount(p.getId()) + "</p>");
+                <article  style='height:25px;margin-left:47px;'><header> <h3> Something Went wrong</h3></header></article>
 
 
-                        %>
-                        <br><p  style="position: absolute;margin-top: 90px;" id='<%=p.getId() * 2.21111%>'>
-
-
-
-                        </p>
-                        <div style="display:none;margin-top: 10px; position: absolute;"  id='<%=p.getId() * 2.31111%>'>
-                            <a  href="#" onclick="javascript:deleteImgConf(<%=p.getId()%>)"  ><img src="icons/bin_icon.png" alt="Delete" width="14%"  ></a>
-                            <br>
-                            <form name="myForm"   method="post" >
-                                <input type="hidden"   name="u"  value="<%=   session.getAttribute("user")%>"> 
-                                <input type="hidden"   name="id"  value="<%=   p.getId()%>"> 
-
-                                <textarea   id="comment<%=p.getId() * 2.31111%>"  rows="4" cols="30" autofocus>      </textarea>
-                                <br>
-                                <input type="button" onclick="javascript:ajaxAddComment('comment<%=p.getId() * 2.31111%>',<%=p.getId()%>);
-                                        increaseSizeCom(<%=p.getId()%>);" value="Post Comment"> </td>
-                            </form>
-                            <p  id="commentscomment<%=p.getId() * 2.31111%>">
-                            </p>
-                            <%
-                                //out.print("<br>"+  p.getId()); 
-                                //                                List comments = p.getComments(p.getId());
-                                //                                List users = p.getUsers(p.getId());
-                                //                                for (int i = 0; i < comments.size(); i++) {
-                                //                                    out.print("<br>" + users.get(i) + ": " + comments.get(i));
-                                //                                }
-
-                            %>
-                        </div>
-                    </header>
-                </article>
-                <%                    }
-                %>
-
-
-
-                <div id="galleryLights"   style="position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none"></div>
             </section>
 
 
             <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
             <script type="text/javascript">
-                                    $(function () {
-
-                                        var $container = $('#ib-container'),
-                                                $articles = $container.children('article'),
-                                                timeout;
-                                        $articles.on('mouseenter', function (event) {
-
-                                            var $article = $(this);
-                                            clearTimeout(timeout);
-                                            timeout = setTimeout(function () {
-
-                                                if ($article.hasClass('active'))
-                                                    return false;
-                                                $articles.not($article.removeClass('blur').addClass('active'))
-                                                        .removeClass('active')
-                                                        .addClass('blur');
-                                            }, 65);
-                                        });
-                                        $container.on('mouseleave', function (event) {
-
-                                            clearTimeout(timeout);
-                                            $articles.removeClass('active blur');
-                                        });
-                                    });
-            </script>
-
-            <script type="text/javascript">
                 $(function () {
-                    var $container = $('#ib-container2'),
+
+                    var $container = $('#ib-container'),
                             $articles = $container.children('article'),
                             timeout;
                     $articles.on('mouseenter', function (event) {
@@ -678,8 +644,36 @@
                         clearTimeout(timeout);
                         $articles.removeClass('active blur');
                     });
-                }
-                );
+                });
+            </script>
+
+            <script type="text/javascript">
+                setTimeout(function () {
+                    $(document).ready(function () {
+                        var $container = $('#ib-container2'),
+                                $articles = $container.children('article'),
+                                timeout;
+                        $articles.on('mouseenter', function (event) {
+
+                            var $article = $(this);
+                            clearTimeout(timeout);
+                            timeout = setTimeout(function () {
+
+                                if ($article.hasClass('active'))
+                                    return false;
+                                $articles.not($article.removeClass('blur').addClass('active'))
+                                        .removeClass('active')
+                                        .addClass('blur');
+                            }, 65);
+                        });
+                        $container.on('mouseleave', function (event) {
+
+                            clearTimeout(timeout);
+                            $articles.removeClass('active blur');
+                        });
+                    }
+                    );
+                }, 5000);
             </script>
     </body>
 </html>

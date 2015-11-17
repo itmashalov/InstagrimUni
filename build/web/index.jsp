@@ -98,12 +98,12 @@
 				 <article  style="height:60px;margin-left:47px;">
 					<header> 
 						
-						 <form action="GalleryServlet" method="get" id="ff">
+						 
         
    
-						<h3><a  href="javascript: submitForm();" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Gallery</a></h3>
+						<h3><a  href="gallery.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Gallery</a></h3>
 						 
-						   </form>
+						   
 					</header>
 			  </article>
 			  <article  style="height:60px;margin-left:47px;">

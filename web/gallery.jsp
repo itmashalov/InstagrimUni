@@ -614,8 +614,7 @@
                      margin-right:auto;
 
                      opacity:0.1; display:none;" >
-                <article  style='height:25px;margin-left:47px;'><header> <h3> Something Went wrong</h3></header></article>
-
+                
 
             </section>
 

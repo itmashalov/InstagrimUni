@@ -49,27 +49,30 @@ public class UploadImgServlet extends HttpServlet {
 
         InputStream inputStream = null; // input stream of the upload file
         int size = 1024 * 1024 * 10;//1MB
-        if (filePart.getSize() > 0) {
+        if (filePart.getSize() > 1000) {
             inputStream = filePart.getInputStream();
-            inputStream = filePart.getInputStream();
-        }
-        if (inputStream != null && filePart.getSize() <= size) {
-            HttpSession session = request.getSession();
-            String user = (String) session.getAttribute("user");
-            if (nametag.isEmpty()) {
-                nametag = "untagged";
-            }
-            Image image = new Image(0, nametag, user, inputStream);
-            boolean success = false;
-            success = image.addImage();
-            if (success == true) {
-                out.println("<p>Successfuly Uploaded</p>");
 
-            } else {
-                out.println("<p>Something went wrong</p>");
-            }
+            if (inputStream != null && filePart.getSize() <= size) {
+                HttpSession session = request.getSession();
+                String user = (String) session.getAttribute("user");
+                if (nametag.isEmpty()) {
+                    nametag = "untagged";
+                }
+                Image image = new Image(type, nametag, user, inputStream);
+                boolean success = false;
+                success = image.addImage();
+                if (success == true) {
+                    out.println("<p>Successfuly Uploaded</p>");
 
+                } else {
+                    out.println("<p>Something went wrong</p>");
+                }
+
+            }
+        } else {
+            out.println("<p style=\"color:red; \">No image Selected</p>");
         }
+
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

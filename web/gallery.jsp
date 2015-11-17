@@ -338,7 +338,7 @@
                 if (xmlhttp.readyState == 4) {
                     if (xmlhttp.status == 200) {
                         var resp = xmlhttp.responseText;
-                        alert(resp);
+                        //alert(resp);
                         //document.getElementById(commentsID).innerHTML = xmlhttp.responseText; //Update the HTML Form element
                     } else {
                         alert("Error during AJAX call. Please try again");
@@ -397,6 +397,7 @@
                     if (xmlhttp3.status == 200) {
                         document.getElementById("ib-container2").innerHTML = xmlhttp3.responseText; //Update the HTML Form element
                         spinIconOff();
+                        galleryBlurEffect();
                     } else {
                         alert("Error during AJAX call. Please try again");
                     }
@@ -438,7 +439,7 @@
                     if (xmlhttp4.status == 200) {
                         document.getElementById("uploadMsg").innerHTML = xmlhttp4.responseText; //Update the HTML Form element
                         ajaxGetGallery('<%= session.getAttribute("user")%>', '');
-                    
+
                     } else {
                         alert("Error during AJAX call. Please try again");
                     }
@@ -449,14 +450,14 @@
             //AJAX========================================================================================================================================
 
             function deleteImgConf(id) {
-                var x;
-                if (confirm("Are you Sure that you want to delete this image?") == true) {
-                    ajaxDeleteComment(id);
-                    document.getElementById(id).style.display = "none";
-                    //call ajax
-                } else {
 
-                }
+                //  if (confirm("Are you Sure that you want to delete this image?") == true) {
+                ajaxDeleteComment(id);
+                document.getElementById(id).style.display = "none";
+                //call ajax
+                //} else {
+
+                //}
 
 
             }
@@ -464,7 +465,7 @@
 
         </script>
     </head>
-    <body   onload="javascript:ajaxGetGallery('<%= session.getAttribute("user")%>', '')">
+    <body   onload="javascript:ajaxGetGallery('<%= session.getAttribute("user")%>', '');">
 
         <div class="container">
             <div class="header">
@@ -599,7 +600,7 @@
             </div>
 
             <hr style="position:absolute;top:550%;width:96%;left:50%;margin-left:-48%;">
-            <div class="message-box-icon" style="position:absolute;top:1950%; display: block;left:0%;right:0%;margin:auto; " >
+            <div class="message-box-icon" style="position:absolute;top:1600%;z-index:10; display: block;left:0%;right:0%;margin:auto; " >
 
             </div>
 
@@ -648,32 +649,34 @@
             </script>
 
             <script type="text/javascript">
-                setTimeout(function () {
-                    $(document).ready(function () {
-                        var $container = $('#ib-container2'),
-                                $articles = $container.children('article'),
-                                timeout;
-                        $articles.on('mouseenter', function (event) {
+                function galleryBlurEffect() {
+                    
+                        $(document).ready(function () {
+                            var $container = $('#ib-container2'),
+                                    $articles = $container.children('article'),
+                                    timeout;
+                            $articles.on('mouseenter', function (event) {
 
-                            var $article = $(this);
-                            clearTimeout(timeout);
-                            timeout = setTimeout(function () {
+                                var $article = $(this);
+                                clearTimeout(timeout);
+                                timeout = setTimeout(function () {
 
-                                if ($article.hasClass('active'))
-                                    return false;
-                                $articles.not($article.removeClass('blur').addClass('active'))
-                                        .removeClass('active')
-                                        .addClass('blur');
-                            }, 65);
-                        });
-                        $container.on('mouseleave', function (event) {
+                                    if ($article.hasClass('active'))
+                                        return false;
+                                    $articles.not($article.removeClass('blur').addClass('active'))
+                                            .removeClass('active')
+                                            .addClass('blur');
+                                }, 65);
+                            });
+                            $container.on('mouseleave', function (event) {
 
-                            clearTimeout(timeout);
-                            $articles.removeClass('active blur');
-                        });
-                    }
-                    );
-                }, 5000);
+                                clearTimeout(timeout);
+                                $articles.removeClass('active blur');
+                            });
+                        }
+                        );
+                     
+                }
             </script>
     </body>
 </html>

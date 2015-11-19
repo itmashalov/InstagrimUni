@@ -12,6 +12,14 @@
         <servlet-name>UploadImgServlet</servlet-name>
         <servlet-class>Servlets.UploadImgServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchImagesServlet</servlet-name>
+        <servlet-class>Servlets.SearchImagesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsersServlet</servlet-name>
+        <servlet-class>Servlets.UsersServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -33,14 +41,6 @@
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>UploadImageServlet</servlet-name>
-        <servlet-class>Servlets.UploadImageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UploadImageServlet</servlet-name>
-        <url-pattern>/UploadImageServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>GalleryServlet</servlet-name>
         <servlet-class>Servlets.GalleryServlet</servlet-class>
     </servlet>
@@ -55,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>UploadImgServlet</servlet-name>
         <url-pattern>/UploadImgServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchImagesServlet</servlet-name>
+        <url-pattern>/SearchImagesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersServlet</servlet-name>
+        <url-pattern>/UsersServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

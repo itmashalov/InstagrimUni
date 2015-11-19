@@ -1,6 +1,7 @@
 package DataBases;
 
 import Models.Image;
+import Models.User;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -75,7 +76,7 @@ public class MySql {
             Class.forName(driver);
 
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mysql", this.user, password);
-           //Connection con = DriverManager.getConnection("jdbc:mysql://127.3.225.130/mysql", this.user, password);
+            //Connection con = DriverManager.getConnection("jdbc:mysql://127.3.225.130/mysql", this.user, password);
             //-----------------Getting Connection----------------------------------------- 
 
             PreparedStatement createDataBase = con.prepareStatement("CREATE DATABASE IF NOT EXISTS " + dataBaseName);
@@ -105,7 +106,7 @@ public class MySql {
                     "CREATE TABLE IF NOT EXISTS users(id integer,username varchar(255),pass varchar(255),name varchar(255),email varchar(255))");
 
             PreparedStatement createImages = con.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS images(id integer, username varchar(255),nametag varchar(255),type BOOL, image mediumblob) ");
+                    "CREATE TABLE IF NOT EXISTS images(id integer, username varchar(255),nametag varchar(255),profile BOOL,type BOOL, image mediumblob) ");
 
             PreparedStatement createComments = con.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS comments( id integer,comment varchar(255),img_id integer, username varchar(20)) ");
@@ -245,6 +246,44 @@ public class MySql {
         }
         return maxID;
     }
+
+    public java.util.LinkedList<User> getUsersByUserName(String usr) {
+        java.util.LinkedList<User> users = new java.util.LinkedList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select id,username,name from users where username like ?  ORDER BY `id`  DESC");
+            usr = "%" + usr + "";
+            query.setString(1, usr);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                User user = new User("", "", "", "");
+
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String name = rs.getString("name");
+
+                user.setId(id);
+                user.setUserName(username);
+                user.setName(name);
+                user.setProfilePic(getProfilePic(username));
+
+                users.add(user);
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return users;
+    }
     //USER FUNCTIONS END***************************************************************************************************************************************
 
     //IMAGES FUNCTIONS*****************************************************************************************************************************************
@@ -365,7 +404,7 @@ public class MySql {
 
             Connection con = DriverManager.getConnection(dataBase, this.user, password);
             //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("select id,image,nametag from images where username=?  ORDER BY `id`  DESC");
+            PreparedStatement query = con.prepareStatement("select id,image,nametag,username from images where username=?  ORDER BY `id`  DESC");
 
             query.setString(1, usr);
             ResultSet rs = query.executeQuery();
@@ -374,8 +413,88 @@ public class MySql {
                 Image img = new Image();
                 String nametag = rs.getString("nametag");
                 String id = rs.getString("id");
+                String user = rs.getString("username");
                 Blob blob = rs.getBlob("image");
 
+                img.setTag(nametag);
+                img.setImgBlob(blob);
+                img.setOwner(user);
+
+                img.setId(Integer.parseInt(id));
+                Pics.add(img);
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return Pics;
+    }
+
+    public Image getProfilePic(String usr) {
+        Image img = new Image();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select id,image,nametag,username from images where username=?  and profile=? ORDER BY `id`  DESC");
+
+            query.setString(1, usr);
+            query.setInt(2, 1);
+            ResultSet rs = query.executeQuery();
+
+            if (rs.next()) {
+
+                String nametag = rs.getString("nametag");
+                String id = rs.getString("id");
+                String user = rs.getString("username");
+                Blob blob = rs.getBlob("image");
+
+                img.setTag(nametag);
+                img.setImgBlob(blob);
+                img.setOwner(user);
+
+                img.setId(Integer.parseInt(id));
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return img;
+    }
+
+    public java.util.LinkedList<Image> getPicsForTag(String tag, String loggedUser) {
+        java.util.LinkedList<Image> Pics = new java.util.LinkedList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select id,image,nametag,username from images where (type=? or username=?) and nametag like ?  ORDER BY `id`  DESC");
+            tag = "%" + tag + "%";
+            query.setInt(1, 1);
+            query.setString(2, loggedUser);
+            query.setString(3, tag);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                Image img = new Image();
+                String nametag = rs.getString("nametag");
+                String id = rs.getString("id");
+                String user = rs.getString("username");
+                Blob blob = rs.getBlob("image");
+
+                img.setOwner(user);
                 img.setTag(nametag);
                 img.setImgBlob(blob);
 
@@ -392,7 +511,8 @@ public class MySql {
 
         return Pics;
     }
-        public  Image getLatestImgForUser(String usr) {
+
+    public Image getLatestImgForUser(String usr) {
         Image img = new Image();
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -406,7 +526,7 @@ public class MySql {
             ResultSet rs = query.executeQuery();
 
             if (rs.next()) {
-                 
+
                 String nametag = rs.getString("nametag");
                 String id = rs.getString("id");
                 Blob blob = rs.getBlob("image");
@@ -415,7 +535,6 @@ public class MySql {
                 img.setImgBlob(blob);
 
                 img.setId(Integer.parseInt(id));
-             
 
             }
 

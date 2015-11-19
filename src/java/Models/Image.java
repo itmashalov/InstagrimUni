@@ -35,6 +35,13 @@ public class Image {
         this.image = image;
     }
 
+    public void setOwner(String user) {
+        this.user = user;
+    }
+
+    public String getOwner() {
+        return user;
+    }
 
     public void setTag(String nametag) {
         this.nametag = nametag;
@@ -90,7 +97,7 @@ public class Image {
         success = sql.addImage(type, nametag, user, image);
 
         if (success == true) {
-            
+
         }
         return success;
     }
@@ -112,7 +119,7 @@ public class Image {
         success = sql.deleteComments(id);
 
         if (success == true) {
-            
+
         }
         return success;
     }

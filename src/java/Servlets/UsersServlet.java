@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Models.Image;
+import Models.User;
+import Models.Users;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -30,7 +32,7 @@ import javax.servlet.http.HttpSession;
  * @author Admin
  */
 //
-public class GalleryServlet extends HttpServlet {
+public class UsersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -38,16 +40,16 @@ public class GalleryServlet extends HttpServlet {
 
         // response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        String user = (String) request.getParameter("userID");
-        String imgID = request.getParameter("tag");
+        String user = (String) request.getParameter("user");
+        
 
-        Gallery gal = new Gallery();
+        Users users = new Users();
         HttpSession session = request.getSession();
         String loggedUser = (String) session.getAttribute("user");
-        java.util.LinkedList<Image> images = gal.getPicsForUser(user);
+        java.util.LinkedList<User> usrsList = users.getUsersByUserName(user);
 
-        String htmlGal = gal.getHtmlForImages(images, loggedUser);
-        out.println(htmlGal);
+        String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
+        out.println(htmlUsers);
 
         out.close();
     }

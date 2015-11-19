@@ -30,23 +30,22 @@ import javax.servlet.http.HttpSession;
  * @author Admin
  */
 //
-public class GalleryServlet extends HttpServlet {
+public class SearchImagesServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        String user = (String) request.getParameter("userID");
-        String imgID = request.getParameter("tag");
+
+        String tag = request.getParameter("tag");
 
         Gallery gal = new Gallery();
         HttpSession session = request.getSession();
         String loggedUser = (String) session.getAttribute("user");
-        java.util.LinkedList<Image> images = gal.getPicsForUser(user);
+        java.util.LinkedList<Image> images = gal.getPicsForTag(tag,loggedUser);
 
-        String htmlGal = gal.getHtmlForImages(images, loggedUser);
+        String htmlGal = gal.getHtmlForImages(images,loggedUser);
         out.println(htmlGal);
 
         out.close();

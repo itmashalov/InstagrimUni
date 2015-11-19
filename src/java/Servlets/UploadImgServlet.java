@@ -48,13 +48,13 @@ public class UploadImgServlet extends HttpServlet {
         String profile = request.getParameter("profile");
         Part filePart = request.getPart("photo");
         int type = 0;
-        if (checkBox != null) {
+        if (checkBox.equals("true")) {
             type = 1;
         }
 
         InputStream inputStream = null; // input stream of the upload file
         int size = 1024 * 1024 * 10;//1MB
-        if (filePart.getSize()>1000) {
+        if (filePart.getSize() > 1000) {
             inputStream = filePart.getInputStream();
 
             if (inputStream != null && filePart.getSize() <= size) {
@@ -69,21 +69,20 @@ public class UploadImgServlet extends HttpServlet {
                 if (success == true) {
                     out.println(AddTheNewImage(user));
 
-
                 } else {
                     out.println("Something went wrong");
                 }
 
             }
         } else {
-            
+
         }
 
     }
 
     public String AddTheNewImage(String user) {
 
-        Gallery gal = new Gallery(user);
+        Gallery gal = new Gallery();
         String newArticle;
         Image p = gal.getLatestImgForUser(user);
 

@@ -48,8 +48,12 @@ public class UploadImgServlet extends HttpServlet {
         String profile = request.getParameter("profile");
         Part filePart = request.getPart("photo");
         int type = 0;
+        int prof=0;
         if (checkBox.equals("true")) {
             type = 1;
+        }
+        if (profile.equals("true")) {
+            prof = 1;
         }
 
         InputStream inputStream = null; // input stream of the upload file
@@ -63,7 +67,7 @@ public class UploadImgServlet extends HttpServlet {
                 if (nametag.isEmpty()) {
                     nametag = "untagged";
                 }
-                Image image = new Image(type, nametag, user, inputStream);
+                Image image = new Image(type,prof, nametag, user, inputStream);
                 boolean success = false;
                 success = image.addImage();
                 if (success == true) {

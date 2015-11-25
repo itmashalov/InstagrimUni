@@ -23,6 +23,7 @@ import java.nio.file.NoSuchFileException;
 import java.sql.Blob;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -111,9 +112,13 @@ public class MySql {
             PreparedStatement createComments = con.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS comments( id integer,comment varchar(255),img_id integer, username varchar(20)) ");
 
+            PreparedStatement createFriends = con.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS friends( id integer,username varchar(255),friend varchar(255),status varchar(255), date DATE) ");
+
             createUsers.executeUpdate();
             createImages.executeUpdate();
             createComments.executeUpdate();
+            createFriends.executeUpdate();
 
             con.close();
 
@@ -247,6 +252,58 @@ public class MySql {
         return maxID;
     }
 
+    private int getMaxFriendsID() {
+        int maxID = -1;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            Statement s2 = con.createStatement();
+            s2.execute("SELECT MAX(id) FROM friends");
+            ResultSet rs2 = s2.getResultSet();
+            if (rs2.next()) {
+                maxID = rs2.getInt(1);
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return maxID;
+    }
+
+    public void sendFriendRequest(String sender , String receiver) {
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            int id = getMaxFriendsID();
+
+            PreparedStatement insertUser = con.prepareStatement(
+                    "insert into friends values(?,?,?,?,?)");
+            Date date = new Date();
+
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+            id = id + 1;
+            insertUser.setInt(1, id);
+            insertUser.setString(2, receiver);
+            insertUser.setString(3, sender);
+            insertUser.setString(4, "sent");
+            insertUser.setDate(5, sqlDate);
+            int i = insertUser.executeUpdate();
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+    }
+
     public java.util.LinkedList<User> getUsersByUserName(String usr) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
         try {
@@ -256,7 +313,7 @@ public class MySql {
             Connection con = DriverManager.getConnection(dataBase, this.user, password);
             //-----------------Getting Connection----------------------------------------- 
             PreparedStatement query = con.prepareStatement("select id,username,name from users where username like ?  ORDER BY `id`  DESC");
-            usr = "%" + usr + "";
+            usr = "%" + usr + "%";
             query.setString(1, usr);
             ResultSet rs = query.executeQuery();
 
@@ -310,7 +367,26 @@ public class MySql {
         return maxID;
     }
 
-    public boolean addImage(int type, String nametag, String usr, InputStream img) {
+    public void unsetProfilePicForUser(String user) {
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+
+            PreparedStatement unsetProfilePic = con.prepareStatement("update images set profile=? where username=?");
+            unsetProfilePic.setInt(1, 0);
+            unsetProfilePic.setString(2, user);
+            int i = unsetProfilePic.executeUpdate();
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+    }
+
+    public boolean addImage(int type, int profile, String nametag, String usr, InputStream img) {
         boolean success = false;
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -320,16 +396,21 @@ public class MySql {
             //-----------------Getting Connection----------------------------------------- 
             int id = getMaxImgID();
 
-            PreparedStatement insertImage = con.prepareStatement("insert into images values(?,?,?,?,?)");
+            PreparedStatement insertImage = con.prepareStatement("insert into images values(?,?,?,?,?,?)");
 
             id = id + 1;
             insertImage.setInt(1, id);
             insertImage.setString(2, usr);
             insertImage.setString(3, nametag);
-            insertImage.setInt(4, type);
-            insertImage.setBlob(5, img);
+            insertImage.setInt(4, profile);
+            insertImage.setInt(5, type);
+            insertImage.setBlob(6, img);
+            if (profile == 1) {
+                unsetProfilePicForUser(usr);
+            }
 
             int i = insertImage.executeUpdate();
+
             con.close();
 
             int newID = getMaxImgID();

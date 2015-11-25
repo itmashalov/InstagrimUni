@@ -21,6 +21,10 @@
         <script src="js/modernizr.custom.34978.js"></script>	
 
         <script>
+            $(document).ready(function () {
+                $('[data-toggle="disabledMsgButton"]').tooltip();
+            });
+
             var openned = 0;
             setTimeout(function () {
 
@@ -70,6 +74,11 @@
                         document.getElementById("SearchImagesForm").style.display = "table";
                         document.getElementById("searchButton").style.display = "table";
                     }
+                    if (id === "findFriends") {
+                        document.getElementById("findFriendsHeader").style.display = "none";
+                        document.getElementById("SearchFriendsForm").style.display = "table";
+                        document.getElementById("searchFriendsButton").style.display = "table";
+                    }
 
                     document.getElementById(id).style.position = "absolute";
                     document.getElementById(id).style.background = "rgba(255,255,255,0.9)";
@@ -81,7 +90,7 @@
 
                     setTimeout(function () {
                         $('#' + id).animate({
-                            top: "200%",}, 2000);
+                            top: "200%", }, 2000);
 
                     }, 1000);
 
@@ -99,6 +108,13 @@
                             }, 2000);
                         }, 1000);
                     }
+                    if (id === "findFriends") {
+                        setTimeout(function () {
+                            $('#searchFriendsButton').animate({
+                                top: "1900%",
+                            }, 2000);
+                        }, 1000);
+                    }
                 }
             }
 
@@ -112,6 +128,10 @@
                     if (id === "findImages") {
                         document.getElementById("findImagesHeader").style.display = "block";
                         document.getElementById("SearchImagesForm").style.display = "none";
+                    }
+                    if (id === "findFriends") {
+                        document.getElementById("findFriendsHeader").style.display = "block";
+                        document.getElementById("SearchFriendsForm").style.display = "none";
                     }
                     opennedMenu = 0;
 
@@ -149,6 +169,17 @@
                         }, 2500);
 
                     }
+                    if (id === "findFriends") {
+                        setTimeout(function () {
+                            $('#searchFriendsButton').animate({
+                                top: "4300%",
+                            }, 2000);
+                        }, 1000);
+                        setTimeout(function () {
+                            document.getElementById("searchFriendsButton").style.display = "none";
+                        }, 2500);
+
+                    }
                     activeMenu = null;
                 }
             }
@@ -173,7 +204,12 @@
                     active = id;
 
                     height = document.getElementById(idComN).value;
-                    document.getElementById(idComN).style.display = "none";
+                    if (typeof height === 'undefined') {
+                        height = 5;
+                    }
+                    if (typeof idComN !== 'undefined') {
+                        document.getElementById(idComN).style.display = "none";
+                    }
                     document.getElementById(idImg).style.clip = "auto";
                     var image = document.getElementById(idImg);
                     var imgW = image.naturalWidth;
@@ -224,18 +260,21 @@
             function leaveImage() {
 
                 id = active;
-                if (id != null) {
+                if (id != null && document.getElementById(id)!=null) {
                     // setTimeout(function () {
                     var idForm = id * 2.31111;
                     var idImg = id * 2.41111;
                     var idComN = id * 2.21111;
-                    if (idComN != null) {
+                    var existingComN = document.getElementById(idComN);
+                    if (existingComN != null) {
                         document.getElementById(idComN).style.display = "table";
                     }
                     document.getElementById("close").style.visibility = "hidden";
                     var image = document.getElementById(idImg);
-                    var imgW = image.naturalWidth;
-                    var imgH = image.naturalHeight;
+                    if (image != null) {
+                        var imgW = image.naturalWidth;
+                        var imgH = image.naturalHeight;
+                    }
                     while (imgW > 200) {
                         imgW = imgW / 1.1;
                         imgH = imgH / 1.1;
@@ -443,8 +482,8 @@
 
                     var nametag = document.getElementById('nametag').value;
                     var type = document.getElementById('type').checked;
-                   // alert(type);
-                    var profile = document.getElementById('profile').checked;
+                    // alert(type);
+                    var profile = document.getElementById('prof').checked;
 
                     var fd = new FormData();
                     fd.append("nametag", nametag);
@@ -526,7 +565,72 @@
 
 
 
+//Search Friends
+            var xmlhttp6 = new getXMLObject(); //xmlhttp holds the ajax object
+            function ajaxSearchFriend() {
 
+
+                var getdate = new Date(); //Used to prevent caching during ajax call
+                if (xmlhttp6) {
+                    var username = document.getElementById('friendsSearchInput').value;
+                    xmlhttp6.open("POST", "SearchFriendsServlet?username=" + username, true); //gettime will be the servlet name
+                    xmlhttp6.onreadystatechange = handleServerResponseSearchFriend;
+                    xmlhttp6.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xmlhttp6.send();
+                    spinIconOn()
+
+
+                }
+
+
+            }
+
+            function handleServerResponseSearchFriend() {
+                if (xmlhttp6.readyState == 4) {
+                    if (xmlhttp6.status == 200) {
+                        document.getElementById("ib-container2").innerHTML = xmlhttp6.responseText; //Update the HTML Form element
+                        spinIconOff();
+                        galleryBlurEffect();
+
+                    } else {
+                        alert("Error during AJAX call. Please try again");
+                    }
+                }
+            }
+
+            //Send Friend Request Friends
+            var xmlhttp7 = new getXMLObject(); //xmlhttp holds the ajax object
+            function ajaxSendFriendRequest(sender, receiver) {
+
+
+                var getdate = new Date(); //Used to prevent caching during ajax call
+                if (xmlhttp7) {
+                    var username = document.getElementById('friendsSearchInput').value;
+                    xmlhttp7.open("POST", "SendFriendRequestServlet?sender=" + sender + "&receiver=" + receiver, true); //gettime will be the servlet name
+                    xmlhttp7.onreadystatechange = handleServerResponseSendFriendRequest;
+                    xmlhttp7.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xmlhttp7.send();
+                    spinIconOn()
+
+
+                }
+
+
+            }
+
+            function handleServerResponseSendFriendRequest() {
+                if (xmlhttp7.readyState == 4) {
+                    if (xmlhttp7.status == 200) {
+                        alert(xmlhttp7.responseText);
+                        //document.getElementById("ib-container2").innerHTML = xmlhttp6.responseText; //Update the HTML Form element
+                        //spinIconOff();
+                        //galleryBlurEffect();
+
+                    } else {
+                        alert("Error during AJAX call. Please try again");
+                    }
+                }
+            }
 
             //AJAX========================================================================================================================================
 
@@ -588,12 +692,7 @@
                                 <div id="imgSearchMsg"  >
                                     Search Images by tag:
                                 </div>
-
-                                <form name="SearchImages"  method="post" action="UploadImageServlet" id="uploadFormOrg"    enctype="multipart/form-data" >
-                                    <br><input type="text" id="nametagSearch" name="nametagSearch"   placeholder="Nametag" size="50"/>
-
-
-                                </form>
+                                <br><input type="text" id="nametagSearch" name="nametagSearch"   placeholder="Nametag" size="50"/>
                             </div>
                         </header>
 
@@ -641,7 +740,7 @@
                                             Profile Pic:
                                         </td> 
                                         <td>
-                                            <input type="checkbox" name="profile" id="profile"  style="width:35px;float:left;">
+                                            <input type="checkbox"  id="prof"   style="width:35px;float:left;">
                                         </td>
                                     </tr>
                                 </table> 
@@ -658,10 +757,16 @@
 
 
                 <article onmouseover="javascript:lightsOff();"onmouseleave="javascript:lightsOn();"  onclick="javascript:openMenuFrame('findFriends', 0, 0)" id="findFriends"  style="height:25px;margin-left:47px;">
-                    <header> 
-                        <h3><a  href="#" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
-                                Find Friends</a></h3>
-
+                    <header>
+                        <h3 id="findFriendsHeader"  style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                            Find Friends
+                        </h3>
+                        <div id="SearchFriendsForm" style="display:none">
+                            <div id="friendsSearchMsg"  >
+                                Search Friends by username:
+                            </div>
+                            <br><input type="text" id="friendsSearchInput"    placeholder="Username" size="50"/>
+                        </div>
                     </header>
                 </article>
                 <article onclick="javascript:spinIconOn();
@@ -681,7 +786,13 @@
             </div>
             <div style="position: absolute; width: 175px; height: 60px; left: 0px; right:0px;margin:auto;top: 4300%; display:none" id="searchButton">
                 <button onclick="javascript: ajaxSearchImage();"  class="button button--nina button--border-thin button--round-s" data-text="Search" id="myButton">
-                    <span>S</span><span>e</span><span>a</span><span>r</span> <span>c</span> <span>h</span>  
+                    <span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span>  
+                </button>
+            </div>
+
+            <div style="position: absolute; width: 175px; height: 60px; left: 0px; right:0px;margin:auto;top: 4300%; display:none" id="searchFriendsButton">
+                <button onclick="javascript: ajaxSearchFriend();"  class="button button--nina button--border-thin button--round-s" data-text="Search" id="myButton">
+                    <span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span>  
                 </button>
             </div>
 
@@ -718,7 +829,7 @@
 
                      opacity:0.1; display:none;" >
 
-<div id="galleryLights"   style="position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none"></div>"
+                <div id="galleryLights"   style="position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none"></div>
             </section>
 
 

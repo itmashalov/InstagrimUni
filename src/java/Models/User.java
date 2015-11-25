@@ -19,7 +19,7 @@ public class User {
     private String email;
     private String name;
     private int id;
-    private Image img;
+    private Image img =new Image();
 
     private boolean isValid = false;
 
@@ -59,6 +59,7 @@ public class User {
     }
 
     public Image getProfilePic() {
+        
         return img;
     }
 

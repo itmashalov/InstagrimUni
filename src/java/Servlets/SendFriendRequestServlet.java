@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Models.Image;
-import Models.User;
 import Models.Users;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -32,7 +31,7 @@ import javax.servlet.http.HttpSession;
  * @author Admin
  */
 //
-public class UsersServlet extends HttpServlet {
+public class SendFriendRequestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,18 +39,22 @@ public class UsersServlet extends HttpServlet {
 
         // response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        String user = (String) request.getParameter("user");
+        String sender = (String) request.getParameter("sender");
+        String receiver = (String) request.getParameter("receiver");
         
-
         Users users = new Users();
-        HttpSession session = request.getSession();
-        String loggedUser = (String) session.getAttribute("user");
-        java.util.LinkedList<User> usrsList = users.getUsersByUserName(user);
-
-        String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
-        out.println(htmlUsers);
-
-        out.close();
+        users.sendFriendRequest(sender, receiver);
+//        String imgID = request.getParameter("tag");
+//
+//        Gallery gal = new Gallery();
+//        HttpSession session = request.getSession();
+//        String loggedUser = (String) session.getAttribute("user");
+//        java.util.LinkedList<Image> images = gal.getPicsForUser(user);
+//
+//        String htmlGal = gal.getHtmlForImages(images, loggedUser);
+      out.println(sender+receiver);
+//
+      out.close();
     }
 
 }

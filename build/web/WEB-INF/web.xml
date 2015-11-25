@@ -17,8 +17,16 @@
         <servlet-class>Servlets.SearchImagesServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UsersServlet</servlet-name>
-        <servlet-class>Servlets.UsersServlet</servlet-class>
+        <servlet-name>SearchUsersServlet</servlet-name>
+        <servlet-class>Servlets.SearchUsersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFriendsServlet</servlet-name>
+        <servlet-class>Servlets.SearchFriendsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendFriendRequestServlet</servlet-name>
+        <servlet-class>Servlets.SendFriendRequestServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -61,8 +69,16 @@
         <url-pattern>/SearchImagesServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UsersServlet</servlet-name>
-        <url-pattern>/UsersServlet</url-pattern>
+        <servlet-name>SearchUsersServlet</servlet-name>
+        <url-pattern>/SearchUsersServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFriendsServlet</servlet-name>
+        <url-pattern>/SearchFriendsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendFriendRequestServlet</servlet-name>
+        <url-pattern>/SendFriendRequestServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

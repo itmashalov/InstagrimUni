@@ -23,13 +23,15 @@ public class Image {
     private InputStream image;
     private int id;
     private Blob img;
+    private int profile;
 
     public Image() {
 
     }
 
-    public Image(int type, String nametag, String user, InputStream image) {
+    public Image(int type, int profile, String nametag, String user, InputStream image) {
         this.type = type;
+        this.profile = profile;
         this.nametag = nametag;
         this.user = user;
         this.image = image;
@@ -94,7 +96,7 @@ public class Image {
     public boolean addImage() {
         boolean success = false;
         MySql sql = new MySql();
-        success = sql.addImage(type, nametag, user, image);
+        success = sql.addImage(type,profile, nametag, user, image);
 
         if (success == true) {
 

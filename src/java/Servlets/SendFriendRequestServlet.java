@@ -37,24 +37,16 @@ public class SendFriendRequestServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         String sender = (String) request.getParameter("sender");
         String receiver = (String) request.getParameter("receiver");
-        
+
         Users users = new Users();
-        users.sendFriendRequest(sender, receiver);
-//        String imgID = request.getParameter("tag");
-//
-//        Gallery gal = new Gallery();
-//        HttpSession session = request.getSession();
-//        String loggedUser = (String) session.getAttribute("user");
-//        java.util.LinkedList<Image> images = gal.getPicsForUser(user);
-//
-//        String htmlGal = gal.getHtmlForImages(images, loggedUser);
-      out.println(sender+receiver);
-//
-      out.close();
+        boolean sent = users.sendFriendRequest(sender, receiver);
+
+        out.println(sent);
+
+        out.close();
     }
 
 }

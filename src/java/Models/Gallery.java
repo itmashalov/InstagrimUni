@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author imashalov
  */
-public class Gallery {
+public class Gallery extends MySql {
 
     public Gallery() {
 
@@ -27,17 +27,14 @@ public class Gallery {
     public java.util.LinkedList<Image> getPicsForUser(String User) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
 
-        MySql sql = new MySql();
-        Pics = sql.getPicsForUser(User);
-
+        Pics = super.getPicsForUser(User);
         return Pics;
     }
 
     public Image getLatestImgForUser(String User) {
         Image Pic = new Image();
 
-        MySql sql = new MySql();
-        Pic = sql.getLatestImgForUser(User);
+        Pic = super.getLatestImgForUser(User);
 
         return Pic;
     }
@@ -45,8 +42,7 @@ public class Gallery {
     public java.util.LinkedList<Image> getPicsForTag(String tag,String loggedUser) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
 
-        MySql sql = new MySql();
-        Pics = sql.getPicsForTag(tag,loggedUser);
+        Pics = super.getPicsForTag(tag,loggedUser);
 
         return Pics;
     }

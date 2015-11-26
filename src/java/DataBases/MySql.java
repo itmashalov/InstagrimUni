@@ -64,7 +64,7 @@ public class MySql {
     }
 
     //CONIFGURATION FUNCTIONS**********************************************************************************************************************************
-    public void configure() {
+    protected void configure() {
         createDatabase();
         createTables();
         setUploadLimit();
@@ -147,7 +147,7 @@ public class MySql {
     //CONIFGURATION FUNCTIONS END******************************************************************************************************************************
 
     //USER FUNCTIONS ******************************************************************************************************************************************
-    public boolean isAuthenticated(String u, String p) {
+    protected boolean isAuthenticated(String u, String p) {
         boolean auth = false;
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -176,7 +176,7 @@ public class MySql {
         return auth;
     }
 
-    public boolean isExistingUser(String user) {
+    protected boolean isExistingUser(String user) {
         boolean isExisting = true;
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -204,7 +204,7 @@ public class MySql {
         return isExisting;
     }
 
-    public void register(String user, String pass, String name, String email) {
+    protected void register(String user, String pass, String name, String email) {
         try {
             //-----------------Getting Connection-----------------------------------------        
             Class.forName(driver);
@@ -275,36 +275,52 @@ public class MySql {
         return maxID;
     }
 
-    public void sendFriendRequest(String sender, String receiver) {
+    protected boolean sendFriendRequest(String sender, String receiver) {
+        boolean success = false;
         try {
             //-----------------Getting Connection-----------------------------------------        
             Class.forName(driver);
 
             Connection con = DriverManager.getConnection(dataBase, this.user, password);
             //-----------------Getting Connection----------------------------------------- 
-            int id = getMaxFriendsID();
+            //check if request exist already;
 
-            PreparedStatement insertUser = con.prepareStatement(
-                    "insert into friends values(?,?,?,?,?)");
-            Date date = new Date();
+            PreparedStatement query = con.prepareStatement("SELECT * FROM friends WHERE username =? and friend=?");
 
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            query.setString(1, receiver);
+            query.setString(2, sender);
+            ResultSet rs = query.executeQuery();
 
-            id = id + 1;
-            insertUser.setInt(1, id);
-            insertUser.setString(2, receiver);
-            insertUser.setString(3, sender);
-            insertUser.setString(4, "sent");
-            insertUser.setDate(5, sqlDate);
-            int i = insertUser.executeUpdate();
+            if (rs.next()) {
+                success = false;
+            } else {
+                success = true;
+
+                int id = getMaxFriendsID();
+
+                PreparedStatement insertUser = con.prepareStatement(
+                        "insert into friends values(?,?,?,?,?)");
+                Date date = new Date();
+
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+                id = id + 1;
+                insertUser.setInt(1, id);
+                insertUser.setString(2, receiver);
+                insertUser.setString(3, sender);
+                insertUser.setString(4, "sent");
+                insertUser.setDate(5, sqlDate);
+                int i = insertUser.executeUpdate();
+            }
             con.close();
 
         } catch (Exception e2) {
             System.out.println(e2);
         }
+        return success;
     }
 
-    public java.util.LinkedList<User> getUsersByUserName(String usr) {
+    protected java.util.LinkedList<User> getUsersByUserName(String usr) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -367,7 +383,7 @@ public class MySql {
         return maxID;
     }
 
-    public boolean isProfilePicSet(String usr) {
+    protected boolean isProfilePicSet(String usr) {
         boolean isSet = false;
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -393,7 +409,7 @@ public class MySql {
         return isSet;
     }
 
-    public void unsetProfilePicForUser(String user) {
+    protected void unsetProfilePicForUser(String user) {
         try {
             //-----------------Getting Connection-----------------------------------------        
             Class.forName(driver);
@@ -412,7 +428,7 @@ public class MySql {
         }
     }
 
-    public boolean addImage(int type, int profile, String nametag, String usr, InputStream img) {
+    protected boolean addImage(int type, int profile, String nametag, String usr, InputStream img) {
         boolean success = false;
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -449,7 +465,7 @@ public class MySql {
         return success;
     }
 
-    public boolean deleteImage(int id) {
+    protected boolean deleteImage(int id) {
         boolean success = false;
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -476,7 +492,7 @@ public class MySql {
         return success;
     }
 
-    public boolean deleteComments(int id) {
+    protected boolean deleteComments(int id) {
         boolean success = false;
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -503,7 +519,7 @@ public class MySql {
         return success;
     }
 
-    public java.util.LinkedList<Image> getPicsForUser(String usr) {
+    protected java.util.LinkedList<Image> getPicsForUser(String usr) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -541,7 +557,7 @@ public class MySql {
         return Pics;
     }
 
-    public Image getProfilePic(String usr) {
+    protected Image getProfilePic(String usr) {
         Image img = new Image();
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -579,7 +595,7 @@ public class MySql {
         return img;
     }
 
-    public java.util.LinkedList<Image> getPicsForTag(String tag, String loggedUser) {
+    protected java.util.LinkedList<Image> getPicsForTag(String tag, String loggedUser) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -619,7 +635,7 @@ public class MySql {
         return Pics;
     }
 
-    public Image getLatestImgForUser(String usr) {
+    protected Image getLatestImgForUser(String usr) {
         Image img = new Image();
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -656,7 +672,7 @@ public class MySql {
 
     //Image functions end FUNCTIONS ***************************************************************************************************************************
     //Comments FUNCTIONS ***************************************************************************************************************************************
-    public List getCommentsForID(int id) {
+    protected List getCommentsForID(int id) {
         List comments = new ArrayList();
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -684,7 +700,7 @@ public class MySql {
         return (comments);
     }
 
-    public List getUserForImageID(int id) {
+    protected List getUserForImageID(int id) {
         List usernames = new ArrayList();
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -712,7 +728,7 @@ public class MySql {
         return (usernames);
     }
 
-    public int getCommentsCount(int id) {
+    protected int getCommentsCount(int id) {
         int count = 0;
         try {
             //-----------------Getting Connection-----------------------------------------        
@@ -759,7 +775,7 @@ public class MySql {
         return maxID;
     }
 
-    public void addComment(String comment, String user, int img_id) {
+    protected void addComment(String comment, String user, int img_id) {
         try {
             //-----------------Getting Connection-----------------------------------------        
             Class.forName(driver);

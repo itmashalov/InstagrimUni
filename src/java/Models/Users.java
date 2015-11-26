@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Ivan
  */
-public class Users {
+public class Users extends MySql {
 
     public Users() {
 
@@ -25,16 +25,16 @@ public class Users {
     public java.util.LinkedList<User> getUsersByUserName(String User) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
 
-        MySql sql = new MySql();
-        users = sql.getUsersByUserName(User);
+        users = super.getUsersByUserName(User);
 
         return users;
     }
 
-    public void sendFriendRequest(String sender, String receiver) {
-
-        MySql sql = new MySql();
-        sql.sendFriendRequest(sender, receiver);
+    public boolean sendFriendRequest(String sender, String receiver) {
+        boolean sent;
+       // MySql sql = new MySql();
+        sent=super.sendFriendRequest(sender, receiver);
+        return sent;
     }
 
     public String getHtmlUsers(java.util.LinkedList<User> users, String loggedUser) {

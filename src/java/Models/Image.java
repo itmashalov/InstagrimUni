@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Ivan
  */
-public class Image {
+public class Image extends MySql {
 
     private int type;
     private String nametag;
@@ -71,43 +71,37 @@ public class Image {
 
     public int getCommentsCount(int id) {
         int count;
-        MySql sql = new MySql();
-        count = sql.getCommentsCount(id);
+
+        count = super.getCommentsCount(id);
 
         return count;
     }
 
     public List getComments(int id) {
         List comments = new ArrayList();
-        MySql sql = new MySql();
-        comments = sql.getCommentsForID(id);
 
+        comments = super.getCommentsForID(id);
         return comments;
     }
 
     public List getUsers(int id) {
         List usernames = new ArrayList();
-        MySql sql = new MySql();
-        usernames = sql.getUserForImageID(id);
 
+        usernames = super.getUserForImageID(id);
         return usernames;
     }
 
     public boolean addImage() {
         boolean success = false;
-        MySql sql = new MySql();
-        success = sql.addImage(type,profile, nametag, user, image);
 
-        if (success == true) {
-
-        }
+        success = super.addImage(type, profile, nametag, user, image);
         return success;
     }
 
     public boolean deleteImage(int id) {
         boolean success = false;
-        MySql sql = new MySql();
-        success = sql.deleteImage(id);
+
+        success = super.deleteImage(id);
 
         if (success == true) {
             boolean deletedComments = deleteComments(id);
@@ -115,14 +109,10 @@ public class Image {
         return success;
     }
 
-    private boolean deleteComments(int id) {
+    public boolean deleteComments(int id) {
         boolean success = false;
-        MySql sql = new MySql();
-        success = sql.deleteComments(id);
 
-        if (success == true) {
-
-        }
+        success = super.deleteComments(id);
         return success;
     }
 }

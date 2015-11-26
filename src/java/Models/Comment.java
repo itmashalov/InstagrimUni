@@ -11,16 +11,13 @@ import DataBases.MySql;
  *
  * @author Ivan
  */
-public class Comment {
-    
-    
-    public Comment(){
+public class Comment extends MySql {
+
+    public Comment() {
     }
 
-    public void addComment(String comment,String user, int img_id){
-       MySql sql = new MySql();
-       sql.addComment(comment, user, img_id);
-               
+    public void addComment(String comment, String user, int img_id) {
+
+        super.addComment(comment, user, img_id);
     }
-    
 }

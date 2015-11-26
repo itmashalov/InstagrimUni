@@ -8,12 +8,11 @@ import java.sql.Blob;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Ivan
  */
-public class User {
+public class User extends MySql {
 
     private String username;
     private String password;
@@ -66,16 +65,16 @@ public class User {
 
     public boolean isProfilePicSet(String user) {
         boolean isSet = false;
-        MySql sql = new MySql();
-        isSet = sql.isProfilePicSet(user);
+
+        isSet = super.isProfilePicSet(user);
         return isSet;
     }
 
     public boolean isValid() {
         boolean isExistingUser;
-        MySql sql = new MySql();
-        sql.configure();
-        isExistingUser = sql.isExistingUser(username);
+
+        super.configure();
+        isExistingUser = super.isExistingUser(username);
 
         if (isExistingUser == false) {
             isValid = true;
@@ -85,23 +84,17 @@ public class User {
     }
 
     public void registerUser() {
-        MySql sql = new MySql();
-        sql.register(username, password, name, email);
 
+        super.register(username, password, name, email);
     }
 
     public boolean isAuthenticated() {
-        MySql sql = new MySql();
-        boolean auth = sql.isAuthenticated(username, password);
-        if (auth == true) {
-
-        }
+        boolean auth = super.isAuthenticated(username, password);
         return auth;
     }
 
     public void logOutUser() {
         MySql sql = new MySql();
-
     }
 
 }

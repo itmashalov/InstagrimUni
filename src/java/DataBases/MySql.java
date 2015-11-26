@@ -275,7 +275,7 @@ public class MySql {
         return maxID;
     }
 
-    public void sendFriendRequest(String sender , String receiver) {
+    public void sendFriendRequest(String sender, String receiver) {
         try {
             //-----------------Getting Connection-----------------------------------------        
             Class.forName(driver);
@@ -365,6 +365,32 @@ public class MySql {
             System.out.println(e2);
         }
         return maxID;
+    }
+
+    public boolean isProfilePicSet(String usr) {
+        boolean isSet = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            int id = getMaxImgID();
+
+            PreparedStatement isProfilePicSet = con.prepareStatement("SELECT * From images WHERE profile=? and username=?");
+
+            isProfilePicSet.setInt(1, 1);
+            isProfilePicSet.setString(2, usr);
+            ResultSet rs = isProfilePicSet.executeQuery();
+
+            if (rs.next()) {
+                isSet = true;
+            }
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return isSet;
     }
 
     public void unsetProfilePicForUser(String user) {

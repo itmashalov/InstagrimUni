@@ -45,22 +45,26 @@ public class Users {
             if (loggedUser.equals(u.getUserName())) {
 
             } else {
-                Image profilePic = u.getProfilePic();
-                byte[] imgData = new byte[10];
-                try {
-                    imgData = profilePic.getImgBlob().getBytes(1, (int) profilePic.getImgBlob().length());
-                } catch (SQLException ex) {
-                    Logger.getLogger(GalleryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                boolean isProfilePicSet = u.isProfilePicSet(u.getUserName());
+                String img = "";
+                if (isProfilePicSet == true) {
+                    Image profilePic = u.getProfilePic();
+                    byte[] imgData = new byte[10];
+                    try {
+                        imgData = profilePic.getImgBlob().getBytes(1, (int) profilePic.getImgBlob().length());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(GalleryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
+                    img = " <img src='data:image/png;base64," + b64 + "'  width=\"200px\"  style=\"margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;\" id='" + u.getId() * 2.41111 + "'/>";
                 }
-
-                String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
-
                 htm = htm + "<article   style=\"height:140px;width:200px;margin-left:47px;\" id='" + u.getId()
                         + "' onclick=\"javascript:openImageFrame(" + u.getId() + ", 180); \">"
                         //     + "   ajaxOpenFrame('comment" + p.getId() * 2.31111 + "'," + p.getId() + "); \">"
                         + "                    <header> "
                         + "<p>" + "Username: " + u.getUserName() + " </p>"
-                        + " <img src='data:image/png;base64," + b64 + "'  width=\"200px\"  style=\"margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;\" id='" + u.getId() * 2.41111 + "'/>"
+                        + img
                         + "<br><p  style=\"position: absolute;margin-top: 90px;\" id='" + u.getId() * 2.21111 + "'>"
                         + "</p>"
                         + "  <div style=\"display:none;margin-top: 10px; position: absolute;\"  id='" + u.getId() * 2.31111 + "'>"

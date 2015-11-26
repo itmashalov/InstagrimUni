@@ -2,6 +2,7 @@ package Models;
 
 import DataBases.MySql;
 import java.sql.Blob;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,7 +20,7 @@ public class User {
     private String email;
     private String name;
     private int id;
-    private Image img =new Image();
+    private Image img = new Image();
 
     private boolean isValid = false;
 
@@ -59,8 +60,15 @@ public class User {
     }
 
     public Image getProfilePic() {
-        
+
         return img;
+    }
+
+    public boolean isProfilePicSet(String user) {
+        boolean isSet = false;
+        MySql sql = new MySql();
+        isSet = sql.isProfilePicSet(user);
+        return isSet;
     }
 
     public boolean isValid() {

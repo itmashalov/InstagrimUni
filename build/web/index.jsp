@@ -210,19 +210,20 @@
                     if (typeof idComN !== 'undefined') {
                         document.getElementById(idComN).style.display = "none";
                     }
-                    document.getElementById(idImg).style.clip = "auto";
-                    var image = document.getElementById(idImg);
-                    var imgW = image.naturalWidth;
-                    var imgH = image.naturalHeight;
-                    if (imgW > 1600) {
-                        imgW = imgW / 4;
-                        imgH = imgH / 4;
-                    }
-                    if (imgH > 1080) {
-                        imgH = imgH / 4;
-                        imgW = imgW / 4;
-                    }
+                    var imgW = window.innerWidth / 4;
+                    var imgH = window.innerHeight / 8;
+                    if (typeof idImg !== 'undefined' && document.getElementById(idImg) != null) {
+                        document.getElementById(idImg).style.clip = "auto";
 
+                        var image = document.getElementById(idImg);
+                        imgW = image.naturalWidth;
+                        imgH = image.naturalHeight;
+
+                        while (imgW > window.innerWidth * 0.6) {
+                            imgW = imgW / 1.1;
+                            imgH = imgH / 1.1;
+                        }
+                    }
 
                     document.getElementById(id).style.position = "absolute";
                     document.getElementById(id).style.margin = "auto";
@@ -231,8 +232,10 @@
                     document.getElementById(id).style.height = imgH / 50 + "px";
                     document.getElementById(id).style.width = imgW / 50 + "px";
                     document.getElementById("close").style.visibility = "visible";
-                    document.getElementById(idImg).style.width = imgW / 50 + "px";
-                    document.getElementById(idImg).style.height = imgH / 50 + "px";
+                    if (typeof idImg !== 'undefined' && document.getElementById(idImg) != null) {
+                        document.getElementById(idImg).style.width = imgW / 50 + "px";
+                        document.getElementById(idImg).style.height = imgH / 50 + "px";
+                    }
                     $('#' + id).animate({width: imgW,
                         height: 25 * (parseInt(height) + 10) + imgH,
                     }, 1000);
@@ -244,10 +247,12 @@
                         document.getElementById(idForm).style.display = "table";
                         document.getElementById(idForm).style.marginTop = imgH + "px";
                     }, 500);
-                    setTimeout(function () {
-                        document.getElementById(idImg).style.width = imgW + "px";
-                        document.getElementById(idImg).style.height = imgH + "px";
-                    }, 200);
+                    if (typeof idImg !== 'undefined' && document.getElementById(idImg) != null) {
+                        setTimeout(function () {
+                            document.getElementById(idImg).style.width = imgW + "px";
+                            document.getElementById(idImg).style.height = imgH + "px";
+                        }, 200);
+                    }
 
                     $('body').scrollTop(0);
 
@@ -260,7 +265,7 @@
             function leaveImage() {
 
                 id = active;
-                if (id != null && document.getElementById(id)!=null) {
+                if (id != null && document.getElementById(id) != null) {
                     // setTimeout(function () {
                     var idForm = id * 2.31111;
                     var idImg = id * 2.41111;
@@ -281,23 +286,28 @@
                     }
 
                     document.getElementById(id).style.margin = "15px";
-                    document.getElementById(idImg).style.width = imgW + "px";
-                    document.getElementById(idImg).style.height = imgH + "px";
+                    if (typeof idImg !== 'undefined' && document.getElementById(idImg) != null) {
+                        document.getElementById(idImg).style.width = imgW + "px";
+                        document.getElementById(idImg).style.height = imgH + "px";
+                        document.getElementById(idImg).style.clip = "rect(0px,200px,100px,0px)";
+                        document.getElementById(idImg).style.position = "static";
+                    }
                     document.getElementById(idForm).style.display = "none";
                     document.getElementById(id).style.position = "static";
-                    document.getElementById(idImg).style.clip = "rect(0px,200px,100px,0px)";
+
                     document.getElementById(id).style.width = "10px";
                     document.getElementById(id).style.height = "7px";
                     document.getElementById(id).style.marginLeft = "47px";
-                    document.getElementById(idImg).style.position = "static";
+
                     $('#' + id).animate({width: "200px",
                         //left: "0%",
                         //marginLeft: "47px",
                         height: '140px'}, 1000);
-                    setTimeout(function () {
-                        document.getElementById(idImg).style.position = "absolute";
-                    }, 1000);
-                    // }, 100);
+                    if (typeof idImg !== 'undefined' && document.getElementById(idImg) != null) {
+                        setTimeout(function () {
+                            document.getElementById(idImg).style.position = "absolute";
+                        }, 1000);
+                    }
                     active = null;
                 }
             }
@@ -512,8 +522,7 @@
                         if (xmlhttp4.responseText == "") {
                             document.getElementById("uploadMsg").innerHTML = "<p style=\"color:red; \">No image Selected</p>";
                             spinIconOff();
-                        }
-                        else {
+                        } else {
                             $("#ib-container2").prepend(xmlhttp4.responseText);
                             spinIconOff();
                             document.getElementById("uploadMsg").innerHTML = "<p style=\"color:green; \">Successfuly Uploaded</p>";

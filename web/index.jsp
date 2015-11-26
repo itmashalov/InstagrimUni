@@ -7,8 +7,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
+        <meta charset="utf-8">
+
+        <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
         <title>MyInstaGallery University Project</title>
         <meta charset="UTF-8" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <meta name="description" content="Item Blur Effect with CSS3 and jQuery - Using Box Shadows, Transform and Transitions" />
@@ -17,12 +25,16 @@
         <link rel="stylesheet" type="text/css" href="css/buttons.css" />
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <script type="text/javascript" src="scripts/jquery/jquery-2.1.1.js"  ></script>
+
         <script src="js/modernizr.custom.34978.js"></script>	
+
+
 
         <script>
             $(document).ready(function () {
-                $('[data-toggle="disabledMsgButton"]').tooltip();
+                if (document.getElementById('data-toggle="disabledMsgButton"]') != null) {
+                    $('[data-toggle="disabledMsgButton"]').tooltip();
+                }
             });
 
             var openned = 0;
@@ -86,13 +98,13 @@
                     $('#' + id).animate({width: "200px",
                         height: "200px",
                         left: "50%",
-                        marginLeft: "-100px", }, 1000);
+                        marginLeft: "-100px", }, 800);
 
                     setTimeout(function () {
                         $('#' + id).animate({
-                            top: "200%", }, 2000);
+                            top: "200%", }, 800);
 
-                    }, 1000);
+                    }, 500);
 
                     if (id === "uploadImg") {
                         setTimeout(function () {
@@ -630,9 +642,19 @@
             function handleServerResponseSendFriendRequest() {
                 if (xmlhttp7.readyState == 4) {
                     if (xmlhttp7.status == 200) {
-                        alert(xmlhttp7.responseText);
+
+                        var resp = xmlhttp7.responseText;
+document.getElementById("dialog-3").innerHTML=resp;
+
+                        $("#dialog-3").dialog({
+                            autoOpen: false,
+                            hide: "puff",
+                            show: "slide",
+                            height: 200
+                        });
+                        $("#dialog-3").dialog("open");
                         //document.getElementById("ib-container2").innerHTML = xmlhttp6.responseText; //Update the HTML Form element
-                        //spinIconOff();
+                        spinIconOff();
                         //galleryBlurEffect();
 
                     } else {
@@ -642,6 +664,7 @@
             }
 
             //AJAX========================================================================================================================================
+ 
 
             function deleteImgConf(id) {
 
@@ -658,11 +681,15 @@
 
 
         </script>
+
     </head>
     <body onload="javascript:spinIconOff();">
         <%
             if (session.getAttribute("is_logged") == "True") {
         %>   
+        <div id="dialog-3" title="Friend Request" style="display:none;">This my first jQuery UI Dialog!</div>
+        
+
         <div class="container">
             <div class="header">
                 <a href="http://tympanus.net/Tutorials/ExperimentsBackgroundClipText/">
@@ -842,7 +869,6 @@
             </section>
 
 
-            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
             <script type="text/javascript">
                 $(function () {
 
@@ -867,8 +893,7 @@
                         clearTimeout(timeout);
                         $articles.removeClass('active blur');
                     });
-                });
-            </script>
+                });</script>
 
             <script type="text/javascript">
                 function galleryBlurEffect() {

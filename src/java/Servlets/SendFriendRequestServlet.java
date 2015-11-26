@@ -43,8 +43,13 @@ public class SendFriendRequestServlet extends HttpServlet {
 
         Users users = new Users();
         boolean sent = users.sendFriendRequest(sender, receiver);
-
-        out.println(sent);
+        String msg = "";
+        if (sent == true) {
+            msg = "<div style=\"color:green;\">The friend request has been sent successfully</div>";
+        } else {
+            msg = "<div style=\"color:red;\">The friend request has been sent already and you need to wait for your friend to confirm it.</div>";
+        }
+        out.println(msg);
 
         out.close();
     }

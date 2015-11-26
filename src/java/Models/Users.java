@@ -32,8 +32,8 @@ public class Users extends MySql {
 
     public boolean sendFriendRequest(String sender, String receiver) {
         boolean sent;
-       // MySql sql = new MySql();
-        sent=super.sendFriendRequest(sender, receiver);
+        // MySql sql = new MySql();
+        sent = super.sendFriendRequest(sender, receiver);
         return sent;
     }
 
@@ -70,7 +70,7 @@ public class Users extends MySql {
                         + "  <div style=\"display:none;margin-top: 10px; position: absolute;\"  id='" + u.getId() * 2.31111 + "'>"
                         + "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>"
                         + "<br>"
-                        + "<button onclick=\"javascript:ajaxSendFriendRequest('" + loggedUser + "','" + u.getUserName() + "')\">Send Friend Request</button>"
+                        + "<button id=\"opener-3\" onclick=\"javascript:ajaxSendFriendRequest('" + loggedUser + "','" + u.getUserName() + "')\">Send Friend Request</button>"
                         + "<button disabled data-toggle=\"disabledMsgButton\" title=\"You can Send Messages only to Friends!\" id=\"disabledMsgButton\">Send Message</button>"
                         + "                            <br>\n"
                         + "                        </div>\n"

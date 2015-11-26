@@ -93,8 +93,11 @@
                     }
 
                     document.getElementById(id).style.position = "absolute";
+                    document.getElementById(id).style.left = "1%";
+                    document.getElementById(id).style.top = "10%";
                     document.getElementById(id).style.background = "rgba(255,255,255,0.9)";
                     document.getElementById("closeMenuButton").style.visibility = "visible";
+
                     $('#' + id).animate({width: "200px",
                         height: "200px",
                         left: "50%",
@@ -231,7 +234,7 @@
                         imgW = image.naturalWidth;
                         imgH = image.naturalHeight;
 
-                        while (imgW > window.innerWidth * 0.6) {
+                        while (imgW > window.innerWidth * 0.5) {
                             imgW = imgW / 1.1;
                             imgH = imgH / 1.1;
                         }
@@ -644,7 +647,7 @@
                     if (xmlhttp7.status == 200) {
 
                         var resp = xmlhttp7.responseText;
-document.getElementById("dialog-3").innerHTML=resp;
+                        document.getElementById("dialog-3").innerHTML = resp;
 
                         $("#dialog-3").dialog({
                             autoOpen: false,
@@ -664,7 +667,7 @@ document.getElementById("dialog-3").innerHTML=resp;
             }
 
             //AJAX========================================================================================================================================
- 
+
 
             function deleteImgConf(id) {
 
@@ -688,7 +691,7 @@ document.getElementById("dialog-3").innerHTML=resp;
             if (session.getAttribute("is_logged") == "True") {
         %>   
         <div id="dialog-3" title="Friend Request" style="display:none;">This my first jQuery UI Dialog!</div>
-        
+
 
         <div class="container">
             <div class="header">

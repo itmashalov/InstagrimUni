@@ -83,6 +83,13 @@ public class User extends MySql {
         return this.isValid;
     }
 
+    public boolean isExistingEmail() {
+        boolean isExistingEmail=true;
+
+        isExistingEmail = super.isExistingEmail(email);
+        return isExistingEmail;
+    }
+
     public void registerUser() {
 
         super.register(username, password, name, email);

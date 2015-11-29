@@ -204,6 +204,34 @@ public class MySql {
         return isExisting;
     }
 
+    protected boolean isExistingEmail(String email) {
+        boolean isExisting = true;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select count(*) from users where email=? ");
+
+            query.setString(1, email);
+            ResultSet rs = query.executeQuery();
+
+            rs.next();
+
+            int rowCount = rs.getInt(1);
+            if (rowCount == 0) {
+                isExisting = false;
+            }
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return isExisting;
+    }
+
     protected void register(String user, String pass, String name, String email) {
         try {
             //-----------------Getting Connection-----------------------------------------        

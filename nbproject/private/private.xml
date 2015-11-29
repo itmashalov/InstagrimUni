@@ -3,19 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/web/error.jsp</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/web/register.jsp</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Servlets/GalleryServlet.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Servlets/SearchFriendsServlet.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Models/Image.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/web/index.jsp</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/web/css/style.css</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/web/login.jsp</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Models/Comment.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Servlets/ImageOperationsServlet.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Models/User.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Servlets/SendFriendRequestServlet.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Models/Gallery.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/DataBases/MySql.java</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Models/Users.java</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Servlets/RegisterServlet.java</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/src/java/Servlets/Authenticator.java</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/web/scripts/animations/jquery.js</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/web/index.html</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/InstagrimUni/web/scripts/ajax/xmlhttp.js</file>
         </group>
     </open-files>
 </project-private>

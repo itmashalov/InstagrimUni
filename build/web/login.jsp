@@ -70,7 +70,7 @@
 
                 <article  style="height:60px;margin-left:47px;">
                     <header> 
-                        <h3><a target="_blank" href="register.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Register</a></h3>
+                        <h3><a  href="register.html" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Register</a></h3>
 
                     </header>
                 </article>

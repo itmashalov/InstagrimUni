@@ -338,13 +338,60 @@ function handleServerAuth() {
     if (xmlhttp8.readyState == 4) {
         if (xmlhttp8.status == 200) {
             var isLogged = xmlhttp8.responseText;
-            
-            if (isLogged.trim() === "True") {           
+
+            if (isLogged.trim() === "True") {
                 $("body").css({"display": "block"});
             } else {
                 window.location = "login.jsp";
 
             }
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
+
+//Register
+var xmlhttp9 = new getXMLObject(); //xmlhttp holds the ajax object
+function ajaxRegister() {
+
+
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp9) {
+        var username = document.getElementById('usr').value;
+        var password = document.getElementById('pass').value;
+        var repass = document.getElementById('repass').value;
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+
+        xmlhttp9.open("POST", "RegisterServlet?usr=" + username + "&pass=" + password + "&repass=" + repass + "&name=" + name + "&email=" + email, true); //gettime will be the servlet name
+        xmlhttp9.onreadystatechange = handleRegisterRequest;
+        xmlhttp9.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp9.send();
+        spinIconOn();
+    }
+
+
+}
+
+function handleRegisterRequest() {
+    if (xmlhttp9.readyState == 4) {
+        if (xmlhttp9.status == 200) {
+            spinIconOff();
+            var resp = xmlhttp9.responseText;
+            if (resp.trim() === "Success") {
+                spinIconOn();
+                document.getElementById("msg").style.color = "green";
+                setTimeout(function () {
+                    window.location = "login.jsp";
+                    spinIconOff();
+                }, 1500);
+            } else {
+                document.getElementById("msg").style.color = "red";
+            }
+            document.getElementById("msg").innerHTML = resp;
+
+
         } else {
             alert("Error during AJAX call. Please try again");
         }

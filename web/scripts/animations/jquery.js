@@ -10,22 +10,26 @@ $(document).ready(function () {
         $('[data-toggle="disabledMsgButton"]').tooltip();
     }
 });
-
 var openned = 0;
-setTimeout(function () {
+ 
+    
+    setTimeout(function () {
 
-    document.getElementById('ib-container2').style.display = "table";
-    $("#ib-container2").animate({//top: "120%",
-        opacity: '1.0'}, 3000);
-}, 1500);
+        document.getElementById('ib-container2').style.display = "table";
+        $("#ib-container2").animate({//top: "120%",
+            opacity: '1.0'}, 3000);
+
+    }, 1500);
+
+
 function spinIconOff() {
-    // setTimeout(function () {
+// setTimeout(function () {
 
     document.getElementsByClassName("message-box-icon")[0].style.display = "none";
     //  }, 1500);
 }
 function spinIconOn() {
-    //   setTimeout(function () {
+//   setTimeout(function () {
 
     document.getElementsByClassName("message-box-icon")[0].style.display = "block";
     //    }, 1500);
@@ -71,18 +75,14 @@ function openMenuFrame(id, width, height) {
         document.getElementById(id).style.top = "10%";
         document.getElementById(id).style.background = "rgba(255,255,255,0.9)";
         document.getElementById("closeMenuButton").style.visibility = "visible";
-
         $('#' + id).animate({width: "200px",
             height: "200px",
             left: "50%",
             marginLeft: "-100px", }, 800);
-
         setTimeout(function () {
             $('#' + id).animate({
                 top: "200%", }, 800);
-
         }, 500);
-
         if (id === "uploadImg") {
             setTimeout(function () {
                 $('#save').animate({
@@ -123,19 +123,14 @@ function closeMenuFrame() {
             document.getElementById("SearchFriendsForm").style.display = "none";
         }
         opennedMenu = 0;
-
-
         document.getElementById(id).style.position = "static";
         document.getElementById(id).style.background = "rgba(255,255,255,0.5)";
         document.getElementById("closeMenuButton").style.visibility = "hidden";
-
         document.getElementById(id).style.marginLeft = "47px";
         document.getElementById(id).style.width = "2.5px";
         document.getElementById(id).style.height = "2.7px";
-
         $('#' + id).animate({width: "140px",
             height: '25px'}, 1000);
-
         if (id === "uploadImg") {
             setTimeout(function () {
                 $('#save').animate({
@@ -145,7 +140,6 @@ function closeMenuFrame() {
             setTimeout(function () {
                 document.getElementById("save").style.display = "none";
             }, 2500);
-
         }
         if (id === "findImages") {
             setTimeout(function () {
@@ -156,7 +150,6 @@ function closeMenuFrame() {
             setTimeout(function () {
                 document.getElementById("searchButton").style.display = "none";
             }, 2500);
-
         }
         if (id === "findFriends") {
             setTimeout(function () {
@@ -167,7 +160,6 @@ function closeMenuFrame() {
             setTimeout(function () {
                 document.getElementById("searchFriendsButton").style.display = "none";
             }, 2500);
-
         }
         activeMenu = null;
     }
@@ -182,7 +174,6 @@ function closeMenuFrame() {
 function openImageFrame(id, height) {
     if (id !== active) {
         oppened = 0;
-
         leaveImage();
         if (opennedMenu == 1) {
             closeMenuFrame();
@@ -191,7 +182,6 @@ function openImageFrame(id, height) {
         var idImg = id * 2.41111;
         var idComN = id * 2.21111;
         active = id;
-
         height = document.getElementById(idComN).value;
         if (typeof height === 'undefined') {
             height = 5;
@@ -203,11 +193,9 @@ function openImageFrame(id, height) {
         var imgH = window.innerHeight / 8;
         if (typeof idImg !== 'undefined' && document.getElementById(idImg) != null) {
             document.getElementById(idImg).style.clip = "auto";
-
             var image = document.getElementById(idImg);
             imgW = image.naturalWidth;
             imgH = image.naturalHeight;
-
             while (imgW > window.innerWidth * 0.5) {
                 imgW = imgW / 1.1;
                 imgH = imgH / 1.1;
@@ -244,7 +232,6 @@ function openImageFrame(id, height) {
         }
 
         $('body').scrollTop(0);
-
     } else {
         oppened = 1;
     }
@@ -255,7 +242,7 @@ function leaveImage() {
 
     id = active;
     if (id != null && document.getElementById(id) != null) {
-        // setTimeout(function () {
+// setTimeout(function () {
         var idForm = id * 2.31111;
         var idImg = id * 2.41111;
         var idComN = id * 2.21111;
@@ -283,11 +270,9 @@ function leaveImage() {
         }
         document.getElementById(idForm).style.display = "none";
         document.getElementById(id).style.position = "static";
-
         document.getElementById(id).style.width = "10px";
         document.getElementById(id).style.height = "7px";
         document.getElementById(id).style.marginLeft = "47px";
-
         $('#' + id).animate({width: "200px",
             //left: "0%",
             //marginLeft: "47px",
@@ -302,17 +287,11 @@ function leaveImage() {
 }
 function increaseSizeCom(id) {
     var commentsCount = id * 2.21111;
-
     var h = document.getElementById(commentsCount).value;
-
-
-
     var idImg = id * 2.41111;
     var imgH = document.getElementById(idImg).style.height;
     newH = 25 * (parseInt(h) + 10) + parseInt(imgH);
-
     document.getElementById(id).style.height = newH + "px";
-
 }
 
 //blur effects
@@ -340,7 +319,6 @@ $(function () {
         $articles.removeClass('active blur');
     });
 });
-
 function galleryBlurEffect() {
 
     $(document).ready(function () {

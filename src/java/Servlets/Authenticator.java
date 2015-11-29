@@ -30,27 +30,16 @@ import javax.servlet.http.HttpSession;
  * @author Admin
  */
 //
-public class GalleryServlet extends HttpServlet {
+public class Authenticator extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // response.setContentType("text/html");
+ 
         PrintWriter out = response.getWriter();
-        String user = (String) request.getParameter("userID");
-        String imgID = request.getParameter("tag");
-
-        Gallery gal = new Gallery();
         HttpSession session = request.getSession();
-        String loggedUser = (String) session.getAttribute("user");
-        if (user.equals("")) {
-            user = loggedUser;
-        }
-        java.util.LinkedList<Image> images = gal.getPicsForUser(user);
 
-        String htmlGal = gal.getHtmlForImages(images, loggedUser);
-        out.println(htmlGal);
+        out.println(session.getAttribute("is_logged"));
 
         out.close();
     }

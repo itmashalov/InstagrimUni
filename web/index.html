@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+
+        <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script src="scripts/ajax/xmlhttp.js"></script>
+        <script src="scripts/animations/jquery.js"></script>
+
+        <title>MyInstaGallery University Project</title>
+        <meta charset="UTF-8" />
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="description" content="Item Blur Effect with CSS3 and jQuery - Using Box Shadows, Transform and Transitions" />
+        <meta name="keywords" content="blur, css3, transition, jquery, box shadow, text shadow, articles, scale, transform, animation" />
+        <meta name="author" content="Codrops" />
+        <link rel="stylesheet" type="text/css" href="css/buttons.css" />
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+        <script src="js/modernizr.custom.34978.js"></script>	
+
+
+
+    </head>
+    <body onload="javascript:spinIconOff();isLoggedAjax();" style="display:none;">
+
+        <div id="dialog-3" title="Friend Request" style="display:none;">This my first jQuery UI Dialog!</div>
+
+
+        <div class="container">
+            <div class="header">
+                <a href="http://tympanus.net/Tutorials/ExperimentsBackgroundClipText/">
+                    <strong>User Guide for:</strong>MyInstaGallery
+                </a>
+                <span class="right">
+
+                    <strong><a  href="LogoutServlet"  >log out</a></strong>
+
+                </span>
+                <div class="clr"></div>
+            </div>
+
+            <section class="ib-container" id="ib-container" style="
+                     position: absolute;
+                     width:1140px;     
+                     top:90%;  
+                     left:0;
+                     right:0;
+                     margin-left:auto;
+                     margin-right:auto;
+
+                     opacity:1; display:table;" >
+
+                <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();" onclick="javascript:openMenuFrame('findImages', 0, 0)" id="findImages"  style="height:25px;margin-left:47px;">
+                    <header> 
+
+                        <header>
+                            <h3 id="findImagesHeader"  style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                                Find images
+                            </h3>
+                            <div id="SearchImagesForm" style="display:none">
+                                <div id="imgSearchMsg"  >
+                                    Search Images by tag:
+                                </div>
+                                <br><input type="text" id="nametagSearch" name="nametagSearch"   placeholder="Nametag" size="50"/>
+                            </div>
+                        </header>
+
+
+                    </header>
+                </article>
+                <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();"  onclick="javascript:openMenuFrame('profile', 400, 400)" id="profile"  style="height:25px;margin-left:47px;">
+                    <header> 
+                        <h3><a  href="#" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                                My Profile</a>
+                        </h3>
+
+                    </header>
+                </article>
+                <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();" onclick="javascript:openMenuFrame('uploadImg', 0, 0)" id="uploadImg" style="height:25px;margin-left:47px;margin-left:47px;">
+                    <header>
+                        <h3 id="uploadHeader"  style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                            Upload Image
+                        </h3>
+                        <div id="uploadForm" style="display:none">
+                            <div id="uploadMsg"  >
+                                Upload You Image here.
+                            </div>
+
+                            <form name="myForm"  method="post" action="UploadImageServlet" id="uploadFormOrg"    enctype="multipart/form-data" >
+                                <br><input type="text" id="nametag" name="nametag"   placeholder="Nametag" size="50"/>
+                                <br>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <br>
+                                        </td> 
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Public Pic:
+                                        </td> 
+                                        <td>
+                                            <input type="checkbox" name="type" id="type"   checked="checked" style="width:35px;float:left;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Profile Pic:
+                                        </td> 
+                                        <td>
+                                            <input type="checkbox"  id="prof"   style="width:35px;float:left;">
+                                        </td>
+                                    </tr>
+                                </table> 
+
+
+
+                                <br><input type="file" name="photo" id="photo" size="50"/></td>
+
+                            </form>
+                        </div>
+                    </header>
+                </article>
+
+                <article onmouseover="javascript:lightsOff();"onmouseleave="javascript:lightsOn();"  onclick="javascript:openMenuFrame('findFriends', 0, 0)" id="findFriends"  style="height:25px;margin-left:47px;">
+                    <header>
+                        <h3 id="findFriendsHeader"  style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                            Find Friends
+                        </h3>
+                        <div id="SearchFriendsForm" style="display:none">
+                            <div id="friendsSearchMsg"  >
+                                Search Friends by username:
+                            </div>
+                            <br><input type="text" id="friendsSearchInput"    placeholder="Username" size="50"/>
+                        </div>
+                    </header>
+                </article>
+                <article onclick="javascript:spinIconOn();
+                        ajaxGetGallery('', '');"  style="height:25px;margin-left:47px;">
+                    <header> 
+                        <h3><a  href="#" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">Gallery</a></h3>
+
+                    </header>
+                </article>
+
+            </section>
+
+            <div style="position: absolute; width: 175px; height: 60px; left: 0px; right:0px;margin:auto;top: 4300%; display:none" id="save">
+                <button onclick="javascript: ajaxUploadImage();"  class="button button--nina button--border-thin button--round-s" data-text="Save" id="myButton">
+                    <span>S</span><span>a</span><span>v</span><span>e</span>  
+                </button>
+            </div>
+            <div style="position: absolute; width: 175px; height: 60px; left: 0px; right:0px;margin:auto;top: 4300%; display:none" id="searchButton">
+                <button onclick="javascript: ajaxSearchImage();"  class="button button--nina button--border-thin button--round-s" data-text="Search" id="myButton">
+                    <span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span>  
+                </button>
+            </div>
+
+            <div style="position: absolute; width: 175px; height: 60px; left: 0px; right:0px;margin:auto;top: 4300%; display:none" id="searchFriendsButton">
+                <button onclick="javascript: ajaxSearchFriend();"  class="button button--nina button--border-thin button--round-s" data-text="Search" id="myButton">
+                    <span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span>  
+                </button>
+            </div>
+
+            <a href="#" id="close"             onclick="leaveImage();" style="position:absolute;color:white;left:0;right:0;visibility:hidden">Close</a>
+            <a href="#" id="closeMenuButton"   onclick="closeMenuFrame();" style="position:absolute;color:white;left:0;right:0;visibility:hidden">Close</a>
+            <div style=" position: absolute; z-index: 1; left:   0%; text-align: center;margin-top:-5%;  width:100%; " >
+
+            </div>
+
+            <hr style="position:absolute;top:550%;width:96%;left:50%;margin-left:-48%;">
+            <div class="message-box-icon" style="position:absolute;top:1600%;z-index:10; display: block;left:0%;right:0%;margin:auto; " >
+
+            </div>
+
+            <section class="ib-container" id="ib-container2" style="
+                     position: absolute;
+                     width:100%;     
+                     top:630%;  
+                     left:0;
+                     right:0;
+                     margin-left:auto;
+                     margin-right:auto;
+
+                     opacity:0.1; display:none;" >
+
+                <div id="galleryLights"   style="position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none"></div>
+            </section>
+
+
+    </body>
+</html>

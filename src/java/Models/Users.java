@@ -9,6 +9,7 @@ import DataBases.MySql;
 import Servlets.GalleryServlet;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,17 +23,22 @@ public class Users extends MySql {
 
     }
 
+    public java.util.LinkedList<User> getUsersIdWhoSentReq(String loggedUser) {
+        java.util.LinkedList<User> potentialFriends = new java.util.LinkedList();
+        potentialFriends = super.getUsersIdWhoSentReq(loggedUser);
+
+        return potentialFriends;
+    }
+
     public java.util.LinkedList<User> getUsersByUserName(String User) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
-
         users = super.getUsersByUserName(User);
-
         return users;
     }
 
     public boolean sendFriendRequest(String sender, String receiver) {
         boolean sent;
-        // MySql sql = new MySql();
+        
         sent = super.sendFriendRequest(sender, receiver);
         return sent;
     }
@@ -115,9 +121,9 @@ public class Users extends MySql {
             html = "<div  style=\"margin-top:70px;\">You dont have any friend requests </div>";
         } else if (number == 1) {
             html = "<div style=\"margin-top:70px;\">One Person has sent you friend request.</div>";
-        } else   {
+        } else {
             html = "<div  style=\"margin-top:70px;\">" + number + " people have sent you friend requests.</div>";
-         }
+        }
 
         return html;
     }

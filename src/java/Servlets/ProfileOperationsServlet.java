@@ -42,30 +42,23 @@ public class ProfileOperationsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String command = (String) request.getParameter("command");
 
+        HttpSession session = request.getSession();
+        String loggedUser = (String) session.getAttribute("user");
+        Users users = new Users();
         if (command.equals("show")) {
-            HttpSession session = request.getSession();
-            String loggedUser = (String) session.getAttribute("user");
 
-            Users users = new Users();
             String htmlImg = users.getProfilePicForUserHtml(loggedUser);
             String htmlNumber = users.getNumberOfRequest(loggedUser);
             String html = htmlImg + "<br>" + htmlNumber;
             out.println(html);
         }
+        if (command.equals("showRequests")) {
+            java.util.LinkedList<User> usrsList = users.getUsersIdWhoSentReq(loggedUser);
+            String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
+            out.println(htmlUsers);
 
-//        String user = (String) request.getParameter("userID");
-//        String imgID = request.getParameter("tag");
-//
-//        Gallery gal = new Gallery();
-//        HttpSession session = request.getSession();
-//        String loggedUser = (String) session.getAttribute("user");
-//        if (user.equals("")) {
-//            user = loggedUser;
-//        }
-//        java.util.LinkedList<Image> images = gal.getPicsForUser(user);
-//
-//        String htmlGal = gal.getHtmlForImages(images, loggedUser);
-//        out.println(htmlGal);
+        }
+
         out.close();
     }
 

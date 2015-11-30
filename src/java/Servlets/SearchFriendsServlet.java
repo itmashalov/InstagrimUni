@@ -37,20 +37,18 @@ public class SearchFriendsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // response.setContentType("text/html");
+ 
         PrintWriter out = response.getWriter();
         String user = (String) request.getParameter("username");
-
-//
+ 
         Users users = new Users();
         HttpSession session = request.getSession();
         String loggedUser = (String) session.getAttribute("user");
         java.util.LinkedList<User> usrsList = users.getUsersByUserName(user);
 
-     String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
+        String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
         out.println(htmlUsers);
-       // out.println("test");
+         
         out.close();
     }
 

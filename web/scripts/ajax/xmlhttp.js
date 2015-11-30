@@ -408,7 +408,7 @@ function ajaxLogIn() {
     if (xmlhttp10) {
         var username = document.getElementById('u').value;
         var password = document.getElementById('p').value;
-    
+
 
         xmlhttp10.open("POST", "LoginServlet?u=" + username + "&p=" + password, true); //gettime will be the servlet name
         xmlhttp10.onreadystatechange = handleLoginRequest;
@@ -445,14 +445,14 @@ function handleLoginRequest() {
 }
 
 //Show User Profile
-var xmlhttp11 = new getXMLObject(); 
+var xmlhttp11 = new getXMLObject();
 function ajaxShowProfile() {
     var getdate = new Date(); //Used to prevent caching during ajax call
     if (xmlhttp11) {
 
- 
+
         var command = "show";
-        xmlhttp11.open("POST", "ProfileOperationsServlet?command=" + command , true); //gettime will be the servlet name
+        xmlhttp11.open("POST", "ProfileOperationsServlet?command=" + command, true); //gettime will be the servlet name
         xmlhttp11.onreadystatechange = handleajaxShowProfile;
         xmlhttp11.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xmlhttp11.send();
@@ -462,13 +462,41 @@ function handleajaxShowProfile() {
     if (xmlhttp11.readyState == 4) {
         if (xmlhttp11.status == 200) {
             var resp = xmlhttp11.responseText;
-             
-             document.getElementById("MyProfile").innerHTML = xmlhttp11.responseText; //Update the HTML Form element
+
+            document.getElementById("MyProfile").innerHTML = xmlhttp11.responseText; //Update the HTML Form element
         } else {
             alert("Error during AJAX call. Please try again");
         }
     }
 }
+
+//Show Requests
+var xmlhttp12 = new getXMLObject();
+function ajaxShowRequests() {
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp12) {
+
+        var command = "showRequests";
+        xmlhttp12.open("POST", "ProfileOperationsServlet?command=" + command, true); //gettime will be the servlet name
+        xmlhttp12.onreadystatechange = handleajaxShowRequest;
+        xmlhttp12.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp12.send();
+        spinIconOn();
+    }
+}
+function handleajaxShowRequest() {
+    if (xmlhttp12.readyState == 4) {
+        if (xmlhttp12.status == 200) {
+            
+            document.getElementById("ib-container2").innerHTML = xmlhttp12.responseText; //Update the HTML Form element
+            spinIconOff();
+            galleryBlurEffect();
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
+
 //AJAX========================================================================================================================================
 
 

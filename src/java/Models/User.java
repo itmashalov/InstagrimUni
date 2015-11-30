@@ -23,6 +23,10 @@ public class User extends MySql {
 
     private boolean isValid = false;
 
+    public User() {
+
+    }
+
     public User(String username, String password, String email, String name) {
         this.username = username;
         this.password = password;
@@ -63,6 +67,18 @@ public class User extends MySql {
         return img;
     }
 
+    public Image getProfilePic(String User) {
+        Image prof = new Image();
+        prof = super.getProfilePic(User);
+        return prof;
+    }
+
+    public int getNumberOfRequest(String usr) {
+        int num = 0;
+        num = super.getNumberOfRequests(usr);
+        return num;
+    }
+
     public boolean isProfilePicSet(String user) {
         boolean isSet = false;
 
@@ -84,7 +100,7 @@ public class User extends MySql {
     }
 
     public boolean isExistingEmail() {
-        boolean isExistingEmail=true;
+        boolean isExistingEmail = true;
 
         isExistingEmail = super.isExistingEmail(email);
         return isExistingEmail;

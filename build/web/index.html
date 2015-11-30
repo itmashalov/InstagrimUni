@@ -29,7 +29,7 @@
 
 
     </head>
-    <body onload="javascript:spinIconOff();isLoggedAjax();" style="display:none;">
+    <body onload="javascript:spinIconOff();isLoggedAjax();animateTop('1%');" style="display:none;">
 
         <div id="dialog-3" title="Friend Request" style="display:none;">This my first jQuery UI Dialog!</div>
 
@@ -50,13 +50,13 @@
             <section class="ib-container" id="ib-container" style="
                      position: absolute;
                      width:1140px;     
-                     top:90%;  
+                     margin-top:50%;  
                      left:0;
                      right:0;
                      margin-left:auto;
                      margin-right:auto;
 
-                     opacity:1; display:table;" >
+                     opacity:0; display:table;" >
 
                 <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();" onclick="javascript:openMenuFrame('findImages', 0, 0)" id="findImages"  style="height:25px;margin-left:47px;">
                     <header> 
@@ -76,11 +76,17 @@
 
                     </header>
                 </article>
-                <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();"  onclick="javascript:openMenuFrame('profile', 400, 400)" id="profile"  style="height:25px;margin-left:47px;">
+                <article onmouseover="javascript:lightsOff();" onmouseleave="javascript:lightsOn();"  onclick="javascript:ajaxShowProfile();openMenuFrame('profile', 400, 400);" id="profile"  style="height:25px;margin-left:47px;">
                     <header> 
-                        <h3><a  href="#" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
+                        <h3><a id="profileHeader"  href="#" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:40px;padding-top:0px;">
                                 My Profile</a>
                         </h3>
+                        <div id="MyProfile" style="display:none">
+                             
+                        </div>
+                        <button id="showMyFriends" style="display:none"> Show My Friends</button>
+                        <button id="showFriendRequest" style="display:none">Show Friend Requests </button>
+                        
 
                     </header>
                 </article>

@@ -17,17 +17,10 @@
         <script src="js/modernizr.custom.34978.js"></script>	
         <script src="scripts/animations/jquery.js"></script>
         <script src="scripts/ajax/xmlhttp.js"></script>
-        <script>
-            setTimeout(function () {
 
-                document.getElementById('ib-container').style.display = "table";
-                $("#ib-container").animate({top: "120%",
-                    opacity: '1.0'}, 2000);
-            }, 100);
-
-        </script>
     </head>
-    <body onload="javascript:spinIconOff();">
+    <body onload="javascript:spinIconOff();
+            animateTop('4%');">
         <div class="message-box-icon" style="position:absolute;top:50%;z-index:10; display: block;left:0%;right:0%;margin:auto; " >
 
         </div>
@@ -50,7 +43,7 @@
             <section class="ib-container" id="ib-container" style="
                      position: absolute;
                      width:220px;     
-                     top:900%;  
+                     margin-top:40%;   
                      left:0;
                      right:0;
                      margin-left:auto;
@@ -61,7 +54,7 @@
                 <article  style="height:180px;width:200px;">
                     <header>                    
                         <div id="msg"></div>
-                        <br><input type="text"style="background:rgba(255,255,255,0.6)"      placeholder="Username"    id="usr">
+                        <br><input type="text" style="background:rgba(255,255,255,0.6)"      placeholder="Username"    id="usr">
                         <br><input type="password" style="background:rgba(255,255,255,0.6)"  placeholder="Password"    id="pass">
                         <br><input type="password"  style="background:rgba(255,255,255,0.6)" placeholder="Retype Password"    id="repass">
                         <br><input type="text"  style="background:rgba(255,255,255,0.6)"     placeholder="Name"  id="name">
@@ -75,7 +68,7 @@
 
                 <article  style="height:60px;margin-left:47px;">
                     <header> 
-                        <h3><a  href="login.jsp" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Log in</a></h3>
+                        <h3><a  href="login.html" style="font-size:1.3em;;margin: 0 auto; display:block; text-align: center;height:70px;padding-top:17px;">Log in</a></h3>
 
                     </header>
                 </article>

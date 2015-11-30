@@ -4,22 +4,27 @@
  * and open the template in the editor.
  */
 
+function animateTop(top) {
 
+    document.getElementById('ib-container').style.display = "table";
+    $("#ib-container").animate({marginTop: top,
+        opacity: '1.0'}, 2000);
+}
 $(document).ready(function () {
     if (document.getElementById('data-toggle="disabledMsgButton"]') != null) {
         $('[data-toggle="disabledMsgButton"]').tooltip();
     }
 });
 var openned = 0;
- 
-    
-    setTimeout(function () {
 
-        document.getElementById('ib-container2').style.display = "table";
-        $("#ib-container2").animate({//top: "120%",
-            opacity: '1.0'}, 3000);
 
-    }, 1500);
+setTimeout(function () {
+
+    document.getElementById('ib-container2').style.display = "table";
+    $("#ib-container2").animate({//top: "120%",
+        opacity: '1.0'}, 3000);
+
+}, 1500);
 
 
 function spinIconOff() {
@@ -68,6 +73,12 @@ function openMenuFrame(id, width, height) {
             document.getElementById("findFriendsHeader").style.display = "none";
             document.getElementById("SearchFriendsForm").style.display = "table";
             document.getElementById("searchFriendsButton").style.display = "table";
+        }
+        if (id === "profile") {
+            document.getElementById("profileHeader").style.display = "none";
+            document.getElementById("MyProfile").style.display = "table";
+            document.getElementById("showMyFriends").style.display = "table";
+            document.getElementById("showFriendRequest").style.display = "table";
         }
 
         document.getElementById(id).style.position = "absolute";
@@ -122,6 +133,14 @@ function closeMenuFrame() {
             document.getElementById("findFriendsHeader").style.display = "block";
             document.getElementById("SearchFriendsForm").style.display = "none";
         }
+        if (id === "profile") {
+            document.getElementById("profileHeader").style.display = "block";
+            document.getElementById("MyProfile").style.display = "none";
+            document.getElementById("showMyFriends").style.display = "none";
+            document.getElementById("showFriendRequest").style.display = "none";
+        }
+        
+        
         opennedMenu = 0;
         document.getElementById(id).style.position = "static";
         document.getElementById(id).style.background = "rgba(255,255,255,0.5)";

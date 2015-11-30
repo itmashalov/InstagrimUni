@@ -26,7 +26,6 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
         String u = request.getParameter("u");
@@ -34,24 +33,22 @@ public class LoginServlet extends HttpServlet {
 
         try {
             User user = new User(u, p, "", "");
-            boolean auth =false;
-            auth=user.isAuthenticated();
-            if (auth==true) {
+            boolean auth = false;
+            auth = user.isAuthenticated();
+            if (auth == true) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", u);
 
                 session.setAttribute("is_logged", "True");
-                response.sendRedirect("index.html");
+                out.println("Success");
+            } else {
+                out.println("Wrong Username or Password");
             }
-            else{
-              response.sendRedirect("login_fail.jsp");
-            }
- 
         } catch (Exception e2) {
-            System.out.println(e2);
+            out.println("Something went wrong");
         }
-
         out.close();
+        
     }
 
 }

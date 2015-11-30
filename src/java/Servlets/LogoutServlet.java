@@ -31,7 +31,7 @@ protected void doGet(HttpServletRequest  request,HttpServletResponse response)
           //  String u =(String)session.getAttribute("user");
       //      User user = new User(u, "", "", "");
             session.invalidate();  
-             response.sendRedirect("login.jsp"); 
+             response.sendRedirect("login.html"); 
            // out.print("You are successfully logged out!");  
               
              

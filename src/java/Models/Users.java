@@ -82,4 +82,43 @@ public class Users extends MySql {
         htm = htm + "  <div id=\"galleryLights\"   style=\"position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none\"></div>";
         return htm;
     }
+
+    public String getProfilePicForUserHtml(String usr) {
+        String html = "";
+
+        User u = new User();
+
+        boolean isProfilePicSet = u.isProfilePicSet(usr);
+        String img = "";
+        if (isProfilePicSet == true) {
+            Image profilePic = u.getProfilePic(usr);
+            byte[] imgData = new byte[10];
+            try {
+                imgData = profilePic.getImgBlob().getBytes(1, (int) profilePic.getImgBlob().length());
+            } catch (SQLException ex) {
+                Logger.getLogger(GalleryServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
+            html = "<div> <img src='data:image/png;base64," + b64 + "'  width=\"100px\"  style=\"margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;\"  /></div>";
+        }
+
+        return html;
+    }
+
+    public String getNumberOfRequest(String usr) {
+        String html = "";
+        User u = new User();
+        int number = u.getNumberOfRequest(usr);
+
+        if (number < 1) {
+            html = "<div  style=\"margin-top:70px;\">You dont have any friend requests </div>";
+        } else if (number == 1) {
+            html = "<div style=\"margin-top:70px;\">One Person has sent you friend request.</div>";
+        } else   {
+            html = "<div  style=\"margin-top:70px;\">" + number + " people have sent you friend requests.</div>";
+         }
+
+        return html;
+    }
 }

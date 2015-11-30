@@ -342,7 +342,7 @@ function handleServerAuth() {
             if (isLogged.trim() === "True") {
                 $("body").css({"display": "block"});
             } else {
-                window.location = "login.jsp";
+                window.location = "login.html";
 
             }
         } else {
@@ -398,18 +398,81 @@ function handleRegisterRequest() {
     }
 }
 
+
+//Login
+var xmlhttp10 = new getXMLObject(); //xmlhttp holds the ajax object
+function ajaxLogIn() {
+
+
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp10) {
+        var username = document.getElementById('u').value;
+        var password = document.getElementById('p').value;
+    
+
+        xmlhttp10.open("POST", "LoginServlet?u=" + username + "&p=" + password, true); //gettime will be the servlet name
+        xmlhttp10.onreadystatechange = handleLoginRequest;
+        xmlhttp10.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp10.send();
+        spinIconOn();
+    }
+
+
+}
+
+function handleLoginRequest() {
+    if (xmlhttp10.readyState == 4) {
+        if (xmlhttp10.status == 200) {
+            spinIconOff();
+            var resp = xmlhttp10.responseText;
+            if (resp.trim() === "Success") {
+                spinIconOn();
+                document.getElementById("msg").style.color = "green";
+                setTimeout(function () {
+                    window.location = "index.html";
+                    spinIconOff();
+                }, 1500);
+            } else {
+                document.getElementById("msg").style.color = "red";
+            }
+            document.getElementById("msg").innerHTML = resp;
+
+
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
+
+//Show User Profile
+var xmlhttp11 = new getXMLObject(); 
+function ajaxShowProfile() {
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp11) {
+
+ 
+        var command = "show";
+        xmlhttp11.open("POST", "ProfileOperationsServlet?command=" + command , true); //gettime will be the servlet name
+        xmlhttp11.onreadystatechange = handleajaxShowProfile;
+        xmlhttp11.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp11.send();
+    }
+}
+function handleajaxShowProfile() {
+    if (xmlhttp11.readyState == 4) {
+        if (xmlhttp11.status == 200) {
+            var resp = xmlhttp11.responseText;
+             
+             document.getElementById("MyProfile").innerHTML = xmlhttp11.responseText; //Update the HTML Form element
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
 //AJAX========================================================================================================================================
 
 
 function deleteImgConf(id) {
-
-    //  if (confirm("Are you Sure that you want to delete this image?") == true) {
     ajaxDeleteComment(id);
     document.getElementById(id).style.display = "none";
-    //call ajax
-    //} else {
-
-    //}
-
-
 }

@@ -385,6 +385,31 @@ public class MySql {
 
         return users;
     }
+
+    protected int getNumberOfRequests(String username) {
+        int count = 0;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT count(*) FROM friends where username=? and status=? ");
+            String status = "sent";
+            query.setString(1, username);
+            query.setString(2, status);
+            ResultSet rs = query.executeQuery();
+            rs.next();
+            count = rs.getInt(1);
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return count;
+    }
     //USER FUNCTIONS END***************************************************************************************************************************************
 
     //IMAGES FUNCTIONS*****************************************************************************************************************************************

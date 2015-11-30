@@ -32,6 +32,10 @@
         <servlet-name>Authenticator</servlet-name>
         <servlet-class>Servlets.Authenticator</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProfileOperationsServlet</servlet-name>
+        <servlet-class>Servlets.ProfileOperationsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>Authenticator</servlet-name>
         <url-pattern>/Authenticator</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileOperationsServlet</servlet-name>
+        <url-pattern>/ProfileOperationsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

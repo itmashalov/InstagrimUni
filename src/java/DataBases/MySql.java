@@ -280,74 +280,6 @@ public class MySql {
         return maxID;
     }
 
-    private int getMaxFriendsID() {
-        int maxID = -1;
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            Statement s2 = con.createStatement();
-            s2.execute("SELECT MAX(id) FROM friends");
-            ResultSet rs2 = s2.getResultSet();
-            if (rs2.next()) {
-                maxID = rs2.getInt(1);
-            }
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-        return maxID;
-    }
-
-    protected boolean sendFriendRequest(String sender, String receiver) {
-        boolean success = false;
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            //check if request exist already;
-
-            PreparedStatement query = con.prepareStatement("SELECT * FROM friends WHERE username =? and friend=?");
-
-            query.setString(1, receiver);
-            query.setString(2, sender);
-            ResultSet rs = query.executeQuery();
-
-            if (rs.next()) {
-                success = false;
-            } else {
-                success = true;
-
-                int id = getMaxFriendsID();
-
-                PreparedStatement insertUser = con.prepareStatement(
-                        "insert into friends values(?,?,?,?,?)");
-                Date date = new Date();
-
-                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-
-                id = id + 1;
-                insertUser.setInt(1, id);
-                insertUser.setString(2, receiver);
-                insertUser.setString(3, sender);
-                insertUser.setString(4, "sent");
-                insertUser.setDate(5, sqlDate);
-                int i = insertUser.executeUpdate();
-            }
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-        return success;
-    }
-
     protected java.util.LinkedList<User> getUsersByUserName(String usr) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
         try {
@@ -385,75 +317,8 @@ public class MySql {
 
         return users;
     }
-    
-    
-    
-        protected java.util.LinkedList<User> getUsersIdWhoSentReq(String usr) {
-        java.util.LinkedList<User> users = new java.util.LinkedList();
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
 
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("SELECT u.id,u.username,u.name FROM users AS u INNER JOIN friends as f ON u.username = f.friend WHERE f.status =? AND f.username=?");
-            
-            String status="sent";
-            query.setString(1, status);
-            query.setString(2, usr);
-            ResultSet rs = query.executeQuery();
-
-            while (rs.next()) {
-                User user = new User("", "", "", "");
-
-                int id = rs.getInt("id");
-                String username = rs.getString("username");
-                String name = rs.getString("name");
-
-                user.setId(id);
-                user.setUserName(username);
-                user.setName(name);
-                user.setProfilePic(getProfilePic(username));
-
-                users.add(user);
-
-            }
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-
-        return users;
-    }
-
-    protected int getNumberOfRequests(String username) {
-        int count = 0;
-        try {
-            //-----------------Getting Connection-----------------------------------------        
-            Class.forName(driver);
-
-            Connection con = DriverManager.getConnection(dataBase, this.user, password);
-            //-----------------Getting Connection----------------------------------------- 
-            PreparedStatement query = con.prepareStatement("SELECT count(*) FROM friends where username=? and status=? ");
-            String status = "sent";
-            query.setString(1, username);
-            query.setString(2, status);
-            ResultSet rs = query.executeQuery();
-            rs.next();
-            count = rs.getInt(1);
-
-            con.close();
-
-        } catch (Exception e2) {
-            System.out.println(e2);
-        }
-
-        return count;
-    }
     //USER FUNCTIONS END***************************************************************************************************************************************
-
     //IMAGES FUNCTIONS*****************************************************************************************************************************************
     private int getMaxImgID() {
         int maxID = -1;
@@ -896,4 +761,164 @@ public class MySql {
     }
 
     //Comments FUNCTIONS END*************************************************************************************************************************************
+    //FRIENDS FUNCTIONS*****************************************************************************************************************************************
+    private int getMaxFriendsID() {
+        int maxID = -1;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            Statement s2 = con.createStatement();
+            s2.execute("SELECT MAX(id) FROM friends");
+            ResultSet rs2 = s2.getResultSet();
+            if (rs2.next()) {
+                maxID = rs2.getInt(1);
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return maxID;
+    }
+
+    protected boolean sendFriendRequest(String sender, String receiver) {
+        boolean success = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            //check if request exist already;
+
+            PreparedStatement query = con.prepareStatement("SELECT * FROM friends WHERE username =? and friend=?");
+
+            query.setString(1, receiver);
+            query.setString(2, sender);
+            ResultSet rs = query.executeQuery();
+
+            if (rs.next()) {
+                success = false;
+            } else {
+                success = true;
+
+                int id = getMaxFriendsID();
+
+                PreparedStatement insertUser = con.prepareStatement(
+                        "insert into friends values(?,?,?,?,?)");
+                Date date = new Date();
+
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+                id = id + 1;
+                insertUser.setInt(1, id);
+                insertUser.setString(2, receiver);
+                insertUser.setString(3, sender);
+                insertUser.setString(4, "sent");
+                insertUser.setDate(5, sqlDate);
+                int i = insertUser.executeUpdate();
+            }
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return success;
+    }
+
+    protected int getNumberOfRequests(String username) {
+        int count = 0;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT count(*) FROM friends where username=? and status=? ");
+            String status = "sent";
+            query.setString(1, username);
+            query.setString(2, status);
+            ResultSet rs = query.executeQuery();
+            rs.next();
+            count = rs.getInt(1);
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return count;
+    }
+
+    protected java.util.LinkedList<User> getUsersIdWhoSentReq(String usr) {
+        java.util.LinkedList<User> users = new java.util.LinkedList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT u.id,u.username,u.name FROM users AS u INNER JOIN friends as f ON u.username = f.friend WHERE f.status =? AND f.username=?");
+
+            String status = "sent";
+            query.setString(1, status);
+            query.setString(2, usr);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                User user = new User("", "", "", "");
+
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String name = rs.getString("name");
+
+                user.setId(id);
+                user.setUserName(username);
+                user.setName(name);
+                user.setProfilePic(getProfilePic(username));
+
+                users.add(user);
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return users;
+    }
+
+    protected String getFriendsStatus(String user, String friend) {
+        String status = "";
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT status FROM friends where username=? and friend=? ");
+
+            query.setString(1, user);
+            query.setString(2, friend);
+            ResultSet rs = query.executeQuery();
+            rs.next();
+            status = rs.getString("status");
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return status;
+    }
+
+    //FRIENDS FUNCTIONS END***************************************************************************************************************************************
 }

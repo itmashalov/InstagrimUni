@@ -38,14 +38,24 @@ public class Users extends MySql {
 
     public boolean sendFriendRequest(String sender, String receiver) {
         boolean sent;
-        
+
         sent = super.sendFriendRequest(sender, receiver);
         return sent;
+    }
+
+    public String getFriendsStatus(String user, String friend) {
+        String status = "";
+        status = super.getFriendsStatus(user, friend);
+
+        return status;
     }
 
     public String getHtmlUsers(java.util.LinkedList<User> users, String loggedUser) {
         String htm = "";
         Iterator<User> it = users.iterator();
+        String status = "none";
+        String options = "";
+
         while (it.hasNext()) {
             User u = (User) it.next();
             if (loggedUser.equals(u.getUserName())) {
@@ -65,6 +75,23 @@ public class Users extends MySql {
                     String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
                     img = " <img src='data:image/png;base64," + b64 + "'  width=\"200px\"  style=\"margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;\" id='" + u.getId() * 2.41111 + "'/>";
                 }
+                status = getFriendsStatus(loggedUser, u.getUserName());
+                if (status.equals("sent")) {
+                    options = "<button onclick=\"javascript:ajaxConfirmFriend('" + u.getUserName() + "')\">Confirm</button>"
+                            + "<br>"
+                            + "<button onclick=\"javascript:ajaxDeclineFriend('" + u.getUserName() + "')\">Decline</button>"
+                            + "<button disabled data-toggle=\"disabledMsgButton\" title=\"You can Send Messages only to Friends!\" id=\"disabledMsgButton\">Send Message</button>"
+                            + "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>";
+                } else if (status.equals("confirmed")) {
+
+                } else if (status.equals("")) {
+                    options = "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>"
+                            + "<br>"
+                            + "<button id=\"opener-3\" onclick=\"javascript:ajaxSendFriendRequest('" + loggedUser + "','" + u.getUserName() + "')\">Send Friend Request</button>"
+                            + "<button disabled data-toggle=\"disabledMsgButton\" title=\"You can Send Messages only to Friends!\" id=\"disabledMsgButton\">Send Message</button>";
+
+                }
+
                 htm = htm + "<article   style=\"height:140px;width:200px;margin-left:47px;\" id='" + u.getId()
                         + "' onclick=\"javascript:openImageFrame(" + u.getId() + ", 180); \">"
                         //     + "   ajaxOpenFrame('comment" + p.getId() * 2.31111 + "'," + p.getId() + "); \">"
@@ -74,10 +101,7 @@ public class Users extends MySql {
                         + "<br><p  style=\"position: absolute;margin-top: 90px;\" id='" + u.getId() * 2.21111 + "'>"
                         + "</p>"
                         + "  <div style=\"display:none;margin-top: 10px; position: absolute;\"  id='" + u.getId() * 2.31111 + "'>"
-                        + "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>"
-                        + "<br>"
-                        + "<button id=\"opener-3\" onclick=\"javascript:ajaxSendFriendRequest('" + loggedUser + "','" + u.getUserName() + "')\">Send Friend Request</button>"
-                        + "<button disabled data-toggle=\"disabledMsgButton\" title=\"You can Send Messages only to Friends!\" id=\"disabledMsgButton\">Send Message</button>"
+                        + options
                         + "                            <br>\n"
                         + "                        </div>\n"
                         + "                    </header>"

@@ -494,7 +494,6 @@ public class MySql {
             ResultSet rs = query.executeQuery();
             if (rs.next()) {
                 isPublicPic = true;
-
             }
 
             con.close();

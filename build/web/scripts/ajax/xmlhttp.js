@@ -503,7 +503,7 @@ var xmlhttp13 = new getXMLObject();
 function ajaxConfirmRequest(friend) {
     var getdate = new Date(); //Used to prevent caching during ajax call
     if (xmlhttp13) {
- 
+
         var command = "confirmRequest";
         xmlhttp13.open("POST", "ProfileOperationsServlet?command=" + command + "&friend=" + friend, true); //gettime will be the servlet name
         xmlhttp13.onreadystatechange = handleajaxConfirmRequest;
@@ -527,6 +527,36 @@ function handleajaxConfirmRequest() {
                 height: 200
             });
             $("#dialog-3").dialog("open");
+            ajaxShowFriends();
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
+
+
+//Show Friends
+var xmlhttp14 = new getXMLObject();
+function ajaxShowFriends() {
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp14) {
+
+        var command = "showFriends";
+        xmlhttp14.open("POST", "ProfileOperationsServlet?command=" + command, true); //gettime will be the servlet name
+        xmlhttp14.onreadystatechange = handleajaxShowFriends;
+        xmlhttp14.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp14.send();
+        spinIconOn();
+    }
+}
+function handleajaxShowFriends() {
+    if (xmlhttp14.readyState == 4) {
+        if (xmlhttp14.status == 200) {
+            
+            document.getElementById("ib-container2").innerHTML = xmlhttp14.responseText; //Update the HTML Form element
+            spinIconOff();
+            galleryBlurEffect();
+            
         } else {
             alert("Error during AJAX call. Please try again");
         }

@@ -38,7 +38,6 @@ public class ProfileOperationsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         String command = (String) request.getParameter("command");
         String friend = (String) request.getParameter("friend");
@@ -57,18 +56,27 @@ public class ProfileOperationsServlet extends HttpServlet {
             java.util.LinkedList<User> usrsList = users.getUsersIdWhoSentReq(loggedUser);
             String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
             out.println(htmlUsers);
-
         }
         if (command.equals("confirmRequest")) {
-            boolean isAdded = users.confirmFriendRequest(loggedUser, friend);
-            String msg = "";
-            if (isAdded == true) {
-                msg = "<div style=\"color:green;\">The friend has beed added successfully.</div>";
-            } else {
-                msg = "<div style=\"color:red;\">Something went wrong</div>";
+            String status = users.getFriendsStatus(loggedUser, friend);
+            String msg = "Error";
+            if (status.equals("sent")) {
+                boolean isAdded = users.confirmFriendRequest(loggedUser, friend);
+
+                if (isAdded == true) {
+                    msg = "<div style=\"color:green;\">The friend has beed added successfully.</div>";
+                } else {
+                    msg = "<div style=\"color:red;\">Something went wrong</div>";
+                }
+            } else if (status.equals("confirmed")) {
+                msg = "<div style=\"color:blue;\">You are already friends</div>";
             }
             out.println(msg);
-
+        }
+        if (command.equals("showFriends")) {
+            java.util.LinkedList<User> usrsList = users.getFriends(loggedUser);
+            String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
+            out.println(htmlUsers);
         }
 
         out.close();

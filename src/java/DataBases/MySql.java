@@ -920,6 +920,46 @@ public class MySql {
 
         return users;
     }
+    
+    protected java.util.LinkedList<User> getFriends(String usr) {
+        java.util.LinkedList<User> users = new java.util.LinkedList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT u.id,u.username,u.name FROM users AS u INNER JOIN friends as f ON u.username = f.friend WHERE f.status =? AND f.username=?");
+
+            String status = "confirmed";
+            query.setString(1, status);
+            query.setString(2, usr);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                User user = new User("", "", "", "");
+
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String name = rs.getString("name");
+
+                user.setId(id);
+                user.setUserName(username);
+                user.setName(name);
+                user.setProfilePic(getProfilePic(username));
+
+                users.add(user);
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return users;
+    }
 
     protected String getFriendsStatus(String user, String friend) {
         String status = "";

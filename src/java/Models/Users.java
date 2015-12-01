@@ -30,6 +30,13 @@ public class Users extends MySql {
         return potentialFriends;
     }
 
+    public java.util.LinkedList<User> getFriends(String loggedUser) {
+        java.util.LinkedList<User> myFriends = new java.util.LinkedList();
+        myFriends = super.getFriends(loggedUser);
+
+        return myFriends;
+    }
+
     public java.util.LinkedList<User> getUsersByUserName(String User) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
         users = super.getUsersByUserName(User);
@@ -44,7 +51,7 @@ public class Users extends MySql {
     }
 
     public boolean confirmFriendRequest(String user, String friend) {
-        boolean sent=false;
+        boolean sent = false;
 
         sent = super.confirmFriendRequest(user, friend);
         return sent;

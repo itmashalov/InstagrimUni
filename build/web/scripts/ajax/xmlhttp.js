@@ -487,7 +487,7 @@ function ajaxShowRequests() {
 function handleajaxShowRequest() {
     if (xmlhttp12.readyState == 4) {
         if (xmlhttp12.status == 200) {
-            
+
             document.getElementById("ib-container2").innerHTML = xmlhttp12.responseText; //Update the HTML Form element
             spinIconOff();
             galleryBlurEffect();
@@ -497,6 +497,41 @@ function handleajaxShowRequest() {
     }
 }
 
+
+//Confirm Friend Request
+var xmlhttp13 = new getXMLObject();
+function ajaxConfirmRequest(friend) {
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp13) {
+ 
+        var command = "confirmRequest";
+        xmlhttp13.open("POST", "ProfileOperationsServlet?command=" + command + "&friend=" + friend, true); //gettime will be the servlet name
+        xmlhttp13.onreadystatechange = handleajaxConfirmRequest;
+        xmlhttp13.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp13.send();
+        spinIconOn();
+    }
+}
+function handleajaxConfirmRequest() {
+    if (xmlhttp13.readyState == 4) {
+        if (xmlhttp13.status == 200) {
+
+            spinIconOff();
+            var resp = xmlhttp13.responseText;
+            document.getElementById("dialog-3").innerHTML = resp;
+
+            $("#dialog-3").dialog({
+                autoOpen: false,
+                hide: "puff",
+                show: "slide",
+                height: 200
+            });
+            $("#dialog-3").dialog("open");
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
 //AJAX========================================================================================================================================
 
 

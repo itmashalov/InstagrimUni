@@ -946,5 +946,49 @@ public class MySql {
         return status;
     }
 
+    protected boolean confirmFriendRequest(String user, String friend) {
+        boolean success = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+
+            Date date = new Date();
+
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            int id = getMaxFriendsID();
+
+            PreparedStatement confirmFriend = con.prepareStatement("update friends set status=?, date=? where username=? and friend=?");
+            confirmFriend.setString(1, "confirmed");
+            confirmFriend.setDate(2, sqlDate);
+            confirmFriend.setString(3, user);
+            confirmFriend.setString(4, friend);
+            int i = confirmFriend.executeUpdate();
+
+            PreparedStatement insertUser = con.prepareStatement("insert into friends values(?,?,?,?,?)");
+
+            id = id + 1;
+            insertUser.setInt(1, id);
+            insertUser.setString(2, friend);
+            insertUser.setString(3, user);
+            insertUser.setString(4, "confirmed");
+            insertUser.setDate(5, sqlDate);
+            int j = insertUser.executeUpdate();
+            int newId = getMaxFriendsID();
+            if (newId > id - 1) {
+                success = true;
+            } else {
+                success = false;
+            }
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return success;
+    }
+
     //FRIENDS FUNCTIONS END***************************************************************************************************************************************
 }

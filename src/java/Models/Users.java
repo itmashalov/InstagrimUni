@@ -43,6 +43,13 @@ public class Users extends MySql {
         return sent;
     }
 
+    public boolean confirmFriendRequest(String user, String friend) {
+        boolean sent=false;
+
+        sent = super.confirmFriendRequest(user, friend);
+        return sent;
+    }
+
     public String getFriendsStatus(String user, String friend) {
         String status = "";
         status = super.getFriendsStatus(user, friend);
@@ -77,7 +84,7 @@ public class Users extends MySql {
                 }
                 status = getFriendsStatus(loggedUser, u.getUserName());
                 if (status.equals("sent")) {
-                    options = "<button onclick=\"javascript:ajaxConfirmFriend('" + u.getUserName() + "')\">Confirm</button>"
+                    options = "<button onclick=\"javascript:ajaxConfirmRequest('" + u.getUserName() + "')\">Confirm</button>"
                             + "<br>"
                             + "<button onclick=\"javascript:ajaxDeclineFriend('" + u.getUserName() + "')\">Decline</button>"
                             + "<button disabled data-toggle=\"disabledMsgButton\" title=\"You can Send Messages only to Friends!\" id=\"disabledMsgButton\">Send Message</button>"

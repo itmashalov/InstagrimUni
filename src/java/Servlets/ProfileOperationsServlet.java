@@ -41,6 +41,7 @@ public class ProfileOperationsServlet extends HttpServlet {
         // response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         String command = (String) request.getParameter("command");
+        String friend = (String) request.getParameter("friend");
 
         HttpSession session = request.getSession();
         String loggedUser = (String) session.getAttribute("user");
@@ -56,6 +57,17 @@ public class ProfileOperationsServlet extends HttpServlet {
             java.util.LinkedList<User> usrsList = users.getUsersIdWhoSentReq(loggedUser);
             String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
             out.println(htmlUsers);
+
+        }
+        if (command.equals("confirmRequest")) {
+            boolean isAdded = users.confirmFriendRequest(loggedUser, friend);
+            String msg = "";
+            if (isAdded == true) {
+                msg = "<div style=\"color:green;\">The friend has beed added successfully.</div>";
+            } else {
+                msg = "<div style=\"color:red;\">Something went wrong</div>";
+            }
+            out.println(msg);
 
         }
 

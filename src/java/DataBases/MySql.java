@@ -479,6 +479,33 @@ public class MySql {
         return success;
     }
 
+    protected boolean isPublicPic(int id) {
+        boolean isPublicPic = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select * from images where  type=?  and id=? ORDER BY `id`  DESC");
+
+            query.setInt(1, 1);
+            query.setInt(2, id);
+            ResultSet rs = query.executeQuery();
+            if (rs.next()) {
+                isPublicPic = true;
+
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return isPublicPic;
+    }
+
     protected java.util.LinkedList<Image> getPicsForUser(String usr) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
         try {

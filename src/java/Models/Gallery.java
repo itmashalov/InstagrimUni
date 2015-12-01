@@ -39,10 +39,10 @@ public class Gallery extends MySql {
         return Pic;
     }
 
-    public java.util.LinkedList<Image> getPicsForTag(String tag,String loggedUser) {
+    public java.util.LinkedList<Image> getPicsForTag(String tag, String loggedUser) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
 
-        Pics = super.getPicsForTag(tag,loggedUser);
+        Pics = super.getPicsForTag(tag, loggedUser);
 
         return Pics;
     }
@@ -51,47 +51,51 @@ public class Gallery extends MySql {
         String htm = "";
         Iterator<Image> it = images.iterator();
         while (it.hasNext()) {
+
             Image p = (Image) it.next();
+            boolean isPublicPic = p.isPublicPic(p.getId());
+            if (isPublicPic == true || user.equals(p.getOwner())) {
+                byte[] imgData = new byte[10];
+                try {
+                    imgData = p.getImgBlob().getBytes(1, (int) p.getImgBlob().length());
+                } catch (SQLException ex) {
+                    Logger.getLogger(GalleryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-            byte[] imgData = new byte[10];
-            try {
-                imgData = p.getImgBlob().getBytes(1, (int) p.getImgBlob().length());
-            } catch (SQLException ex) {
-                Logger.getLogger(GalleryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
+                String del = "";
+                if (user.equals(p.getOwner())) {
+                    del = "<a  href=\"#\" onclick=\"javascript:deleteImgConf(" + p.getId() + ")\" ><img src=\"icons/bin_icon.png\" alt=\"Delete\" width=\"14%\"  ></a>\n";
+                }
+                htm = htm + "<article onmouseover=\"javascrtipt:ajaxGetCommentsCount(" + p.getId() + ");\""
+                        + "  style=\"height:140px;width:200px;margin-left:47px;\" id='" + p.getId() + "'"
+                        + "  onclick=\"javascript:openImageFrame(" + p.getId() + "," + p.getCommentsCount(p.getId()) + ") ;"
+                        + "   ajaxOpenFrame('comment" + p.getId() * 2.31111 + "'," + p.getId() + "); \">"
+                        + "                    <header> "
+                        + "<p>" + "#" + p.getTag() + "   Owner:" + p.getOwner() + "</p>"
+                        + " <img src='data:image/png;base64," + b64 + "'  width=\"200px\"  style=\"margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;\" id='" + p.getId() * 2.41111 + "'/>"
+                        + "<br><p  style=\"position: absolute;margin-top: 90px;\" id='" + p.getId() * 2.21111 + "'>"
+                        + "</p>"
+                        + "  <div style=\"display:none;margin-top: 10px; position: absolute;\"  id='" + p.getId() * 2.31111 + "'>"
+                        + del
+                        + "                            <br>\n"
+                        + "                            <form name=\"myForm\"   method=\"post\" >"
+                        + "  <input type=\"hidden\"   name=\"id\"  value=\"" + p.getId() + "\"> "
+                        + "   <textarea   id=\"comment" + p.getId() * 2.31111 + "\"  rows=\"4\" cols=\"30\" autofocus>      </textarea>\n"
+                        + "  <br>\n"
+                        + "   <input type=\"button\" onclick=\"javascript:ajaxAddComment('comment" + p.getId() * 2.31111 + "'," + p.getId() + ");"
+                        + "  increaseSizeCom(" + p.getId() + ");\" value=\"Post Comment\"> </td>"
+                        + "   </form> "
+                        + "  <p  id=\"commentscomment" + p.getId() * 2.31111 + "\">"
+                        + "                            </p>\n"
+                        + "                        </div>\n"
+                        + "                    </header>"
+                        + "                </article>";
+
             }
-
-            String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
-            String del = "";
-            if (user.equals(p.getOwner())) {
-                del = "<a  href=\"#\" onclick=\"javascript:deleteImgConf(" + p.getId() + ")\" ><img src=\"icons/bin_icon.png\" alt=\"Delete\" width=\"14%\"  ></a>\n";
-            }
-            htm = htm + "<article onmouseover=\"javascrtipt:ajaxGetCommentsCount(" + p.getId() + ");\""
-                    + "  style=\"height:140px;width:200px;margin-left:47px;\" id='" + p.getId() + "'"
-                    + "  onclick=\"javascript:openImageFrame(" + p.getId() + "," + p.getCommentsCount(p.getId()) + ") ;"
-                    + "   ajaxOpenFrame('comment" + p.getId() * 2.31111 + "'," + p.getId() + "); \">"
-                    + "                    <header> "
-                    + "<p>" + "#" + p.getTag() + "   Owner:" + p.getOwner() + "</p>"
-                    + " <img src='data:image/png;base64," + b64 + "'  width=\"200px\"  style=\"margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;\" id='" + p.getId() * 2.41111 + "'/>"
-                    + "<br><p  style=\"position: absolute;margin-top: 90px;\" id='" + p.getId() * 2.21111 + "'>"
-                    + "</p>"
-                    + "  <div style=\"display:none;margin-top: 10px; position: absolute;\"  id='" + p.getId() * 2.31111 + "'>"
-                    + del
-                    + "                            <br>\n"
-                    + "                            <form name=\"myForm\"   method=\"post\" >"
-                    + "  <input type=\"hidden\"   name=\"id\"  value=\"" + p.getId() + "\"> "
-                    + "   <textarea   id=\"comment" + p.getId() * 2.31111 + "\"  rows=\"4\" cols=\"30\" autofocus>      </textarea>\n"
-                    + "  <br>\n"
-                    + "   <input type=\"button\" onclick=\"javascript:ajaxAddComment('comment" + p.getId() * 2.31111 + "'," + p.getId() + ");"
-                    + "  increaseSizeCom(" + p.getId() + ");\" value=\"Post Comment\"> </td>"
-                    + "   </form> "
-                    + "  <p  id=\"commentscomment" + p.getId() * 2.31111 + "\">"
-                    + "                            </p>\n"
-                    + "                        </div>\n"
-                    + "                    </header>"
-                    + "                </article>";
-
         }
         htm = htm + "  <div id=\"galleryLights\"   style=\"position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none\"></div>";
+
         return htm;
     }
 

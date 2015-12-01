@@ -91,6 +91,11 @@ public class Image extends MySql {
         return usernames;
     }
 
+    public boolean isPublicPic(int id) {
+        boolean isPublicPic = super.isPublicPic(id);
+        return isPublicPic;
+    }
+
     public boolean addImage() {
         boolean success = false;
 

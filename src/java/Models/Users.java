@@ -106,7 +106,7 @@ public class Users extends MySql {
             }
 
             String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
-            html = "<div> <img src='data:image/png;base64," + b64 + "'  width=\"100px\"  style=\"margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;\"  /></div>";
+            html = "<div> <img src='data:image/png;base64," + b64 + "'  width=\"200px\"  style=\"margin-top: 8px;clip: rect(0px,200px,100px,0px); position: absolute;\"  /></div>";
         }
 
         return html;
@@ -118,11 +118,11 @@ public class Users extends MySql {
         int number = u.getNumberOfRequest(usr);
 
         if (number < 1) {
-            html = "<div  style=\"margin-top:70px;\">You dont have any friend requests </div>";
+            html = "<div  style=\"margin-top:110px;\">You dont have any friend requests </div>";
         } else if (number == 1) {
-            html = "<div style=\"margin-top:70px;\">One Person has sent you friend request.</div>";
+            html = "<div style=\"margin-top:110px;\">One Person has sent you friend request.</div>";
         } else {
-            html = "<div  style=\"margin-top:70px;\">" + number + " people have sent you friend requests.</div>";
+            html = "<div  style=\"margin-top:100px;\">" + number + " people have sent you friend requests.</div>";
         }
 
         return html;

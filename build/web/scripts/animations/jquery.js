@@ -59,6 +59,13 @@ function openMenuFrame(id, width, height) {
         leaveImage();
         activeMenu = id;
         opennedMenu = 1;
+        if (width == 0 && height == 0) {
+            width = "200px";
+            height = "200px";
+        } else {
+            width = width + "px";
+            height = height + "px";
+        }
         if (id === "uploadImg") {
             document.getElementById("uploadHeader").style.display = "none";
             document.getElementById("uploadForm").style.display = "table";
@@ -85,11 +92,14 @@ function openMenuFrame(id, width, height) {
         document.getElementById(id).style.left = "1%";
         document.getElementById(id).style.top = "10%";
         document.getElementById(id).style.background = "rgba(255,255,255,0.9)";
+        document.getElementById(id).style.marginLeft = "auto";
+        document.getElementById(id).style.marginRight = "auto";
         document.getElementById("closeMenuButton").style.visibility = "visible";
-        $('#' + id).animate({width: "200px",
-            height: "200px",
-            left: "50%",
-            marginLeft: "-100px", }, 800);
+        $('#' + id).animate({width: width,
+            height: height,
+            left: "0",
+            right: "0",
+            }, 800);
         setTimeout(function () {
             $('#' + id).animate({
                 top: "200%", }, 800);
@@ -139,8 +149,8 @@ function closeMenuFrame() {
             document.getElementById("showMyFriends").style.display = "none";
             document.getElementById("showFriendRequest").style.display = "none";
         }
-        
-        
+
+
         opennedMenu = 0;
         document.getElementById(id).style.position = "static";
         document.getElementById(id).style.background = "rgba(255,255,255,0.5)";

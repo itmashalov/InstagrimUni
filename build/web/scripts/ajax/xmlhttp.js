@@ -383,7 +383,7 @@ function handleRegisterRequest() {
                 spinIconOn();
                 document.getElementById("msg").style.color = "green";
                 setTimeout(function () {
-                    window.location = "login.jsp";
+                    window.location = "login.html";
                     spinIconOff();
                 }, 1500);
             } else {

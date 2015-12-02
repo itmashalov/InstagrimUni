@@ -58,9 +58,14 @@ public class Users extends MySql {
     }
 
     public boolean declineFriendRequest(String user, String friend) {
+        boolean declined = super.declineFriendRequest(user, friend);
+        return declined;
+    }
+
+    public boolean removeFriend(String user, String friend) {
         boolean declined = false;
 
-        declined = super.declineFriendRequest(user, friend);
+        declined = super.removeFriend(user, friend);
         return declined;
     }
 

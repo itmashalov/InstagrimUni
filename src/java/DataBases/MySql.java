@@ -1064,8 +1064,7 @@ public class MySql {
             Connection con = DriverManager.getConnection(dataBase, this.user, password);
             //-----------------Getting Connection----------------------------------------- 
 
-            int id = getMaxFriendsID();
-
+            
             PreparedStatement declineFriend = con.prepareStatement("Delete from friends where status=? and username=? and friend=?");
             declineFriend.setString(1, "sent");
 
@@ -1073,8 +1072,47 @@ public class MySql {
             declineFriend.setString(3, friend);
             int i = declineFriend.executeUpdate();
 
-            int newId = getMaxFriendsID();
-            if (newId < id) {
+             
+            if (i!=0) {
+                success = true;
+            } else {
+                success = false;
+            }
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return success;
+    }
+
+    protected boolean removeFriend(String user, String friend) {
+        boolean success = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+
+            int id = getNumberOfFriends(user);
+
+            PreparedStatement removeFriendFirst = con.prepareStatement("Delete from friends where status=? and username=? and friend=?");
+            removeFriendFirst.setString(1, "confirmed");
+
+            removeFriendFirst.setString(2, user);
+            removeFriendFirst.setString(3, friend);
+            int i = removeFriendFirst.executeUpdate();
+
+            PreparedStatement removeFriendSecond = con.prepareStatement("Delete from friends where status=? and username=? and friend=?");
+            removeFriendSecond.setString(1, "confirmed");
+
+            removeFriendSecond.setString(2, friend);
+            removeFriendSecond.setString(3, user);
+            int j = removeFriendSecond.executeUpdate();
+
+            int newId = getNumberOfFriends(user);
+            if (newId < id ) {
                 success = true;
             } else {
                 success = false;

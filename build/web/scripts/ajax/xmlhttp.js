@@ -527,6 +527,11 @@ function handleajaxConfirmRequest() {
                 height: 200
             });
             $("#dialog-3").dialog("open");
+            spinIconOn();
+            setTimeout(function () {
+                ajaxShowFriends();
+                spinIconOff();
+            }, 2000);
             ajaxShowFriends();
         } else {
             alert("Error during AJAX call. Please try again");
@@ -581,10 +586,62 @@ function handleajaxDeclineRequest() {
     if (xmlhttp15.readyState == 4) {
         if (xmlhttp15.status == 200) {
 
+            var resp = xmlhttp15.responseText;
+            if (resp.trim() != "Error") {
+                document.getElementById("dialog-3").innerHTML = "<div style='color:green;'>You Declined The Friend Request.</div>";
+
+                $("#dialog-3").dialog({
+                    autoOpen: false,
+                    hide: "puff",
+                    show: "slide",
+                    height: 200
+                });
+                $("#dialog-3").dialog("open")
+            }
             document.getElementById("ib-container2").innerHTML = xmlhttp15.responseText; //Update the HTML Form element
             spinIconOff();
             galleryBlurEffect();
-            
+
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
+
+//Remove Friend 
+var xmlhttp17 = new getXMLObject();
+function ajaxRemoveFriend(friend) {
+
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp17) {
+
+        var command = "removeFriend";
+        xmlhttp17.open("POST", "ProfileOperationsServlet?command=" + command + "&friend=" + friend, true); //gettime will be the servlet name
+        xmlhttp17.onreadystatechange = handleajaxRemoveFriend;
+        xmlhttp17.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp17.send();
+        spinIconOn();
+    }
+}
+function handleajaxRemoveFriend() {
+    if (xmlhttp17.readyState == 4) {
+        if (xmlhttp17.status == 200) {
+            var resp = xmlhttp17.responseText;
+            if (resp.trim() != "Error") {
+                document.getElementById("dialog-3").innerHTML = "<div style='color:green;'>The friend has been removed successfully.</div>";
+
+                $("#dialog-3").dialog({
+                    autoOpen: false,
+                    hide: "puff",
+                    show: "slide",
+                    height: 200
+                });
+                $("#dialog-3").dialog("open")
+            }
+            document.getElementById("ib-container2").innerHTML = xmlhttp17.responseText; //Update the HTML Form element
+            spinIconOff();
+            galleryBlurEffect();
+
         } else {
             alert("Error during AJAX call. Please try again");
         }

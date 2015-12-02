@@ -79,6 +79,12 @@ public class User extends MySql {
         return num;
     }
 
+    public int getNumberOfFriends(String usr) {
+        int num = 0;
+        num = super.getNumberOfFriends(usr);
+        return num;
+    }
+
     public boolean isProfilePicSet(String user) {
         boolean isSet = false;
 

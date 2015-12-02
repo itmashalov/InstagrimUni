@@ -49,7 +49,8 @@ public class ProfileOperationsServlet extends HttpServlet {
 
             String htmlImg = users.getProfilePicForUserHtml(loggedUser);
             String htmlNumber = users.getNumberOfRequest(loggedUser);
-            String html = htmlImg + "<br>" + htmlNumber;
+            String friendsCount = users.getFriendsCount(loggedUser);
+            String html = htmlImg + "<br>" + htmlNumber +"<br>" + friendsCount;
             out.println(html);
         }
         if (command.equals("showRequests")) {
@@ -72,6 +73,18 @@ public class ProfileOperationsServlet extends HttpServlet {
                 msg = "<div style=\"color:blue;\">You are already friends</div>";
             }
             out.println(msg);
+        }
+        if (command.equals("declineRequest")) {
+
+            boolean isDeclined = users.declineFriendRequest(loggedUser, friend);
+            if (isDeclined == true) {
+                java.util.LinkedList<User> usrsList = users.getUsersIdWhoSentReq(loggedUser);
+                String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
+                out.println(htmlUsers);
+            } else {
+                out.println("Error");
+            }
+
         }
         if (command.equals("showFriends")) {
             java.util.LinkedList<User> usrsList = users.getFriends(loggedUser);

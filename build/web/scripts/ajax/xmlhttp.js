@@ -552,8 +552,36 @@ function ajaxShowFriends() {
 function handleajaxShowFriends() {
     if (xmlhttp14.readyState == 4) {
         if (xmlhttp14.status == 200) {
-            
+
             document.getElementById("ib-container2").innerHTML = xmlhttp14.responseText; //Update the HTML Form element
+            spinIconOff();
+            galleryBlurEffect();
+
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
+
+//Decline Request
+var xmlhttp15 = new getXMLObject();
+function ajaxDeclineRequest(friend) {
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp15) {
+
+        var command = "declineRequest";
+        xmlhttp15.open("POST", "ProfileOperationsServlet?command=" + command + "&friend=" + friend, true); //gettime will be the servlet name
+        xmlhttp15.onreadystatechange = handleajaxDeclineRequest;
+        xmlhttp15.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp15.send();
+        spinIconOn();
+    }
+}
+function handleajaxDeclineRequest() {
+    if (xmlhttp15.readyState == 4) {
+        if (xmlhttp15.status == 200) {
+
+            document.getElementById("ib-container2").innerHTML = xmlhttp15.responseText; //Update the HTML Form element
             spinIconOff();
             galleryBlurEffect();
             

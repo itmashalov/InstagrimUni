@@ -881,6 +881,31 @@ public class MySql {
         return count;
     }
 
+    protected int getNumberOfFriends(String username) {
+        int count = 0;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("SELECT count(*) FROM friends where username=? and status=? ");
+            String status = "confirmed";
+            query.setString(1, username);
+            query.setString(2, status);
+            ResultSet rs = query.executeQuery();
+            rs.next();
+            count = rs.getInt(1);
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return count;
+    }
+
     protected java.util.LinkedList<User> getUsersIdWhoSentReq(String usr) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
         try {
@@ -920,7 +945,7 @@ public class MySql {
 
         return users;
     }
-    
+
     protected java.util.LinkedList<User> getFriends(String usr) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
         try {
@@ -1018,6 +1043,38 @@ public class MySql {
             int j = insertUser.executeUpdate();
             int newId = getMaxFriendsID();
             if (newId > id - 1) {
+                success = true;
+            } else {
+                success = false;
+            }
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return success;
+    }
+
+    protected boolean declineFriendRequest(String user, String friend) {
+        boolean success = false;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+
+            int id = getMaxFriendsID();
+
+            PreparedStatement declineFriend = con.prepareStatement("Delete from friends where status=? and username=? and friend=?");
+            declineFriend.setString(1, "sent");
+
+            declineFriend.setString(2, user);
+            declineFriend.setString(3, friend);
+            int i = declineFriend.executeUpdate();
+
+            int newId = getMaxFriendsID();
+            if (newId < id) {
                 success = true;
             } else {
                 success = false;

@@ -57,6 +57,13 @@ public class Users extends MySql {
         return sent;
     }
 
+    public boolean declineFriendRequest(String user, String friend) {
+        boolean declined = false;
+
+        declined = super.declineFriendRequest(user, friend);
+        return declined;
+    }
+
     public String getFriendsStatus(String user, String friend) {
         String status = "";
         status = super.getFriendsStatus(user, friend);
@@ -93,10 +100,14 @@ public class Users extends MySql {
                 if (status.equals("sent")) {
                     options = "<button onclick=\"javascript:ajaxConfirmRequest('" + u.getUserName() + "')\">Confirm</button>"
                             + "<br>"
-                            + "<button onclick=\"javascript:ajaxDeclineFriend('" + u.getUserName() + "')\">Decline</button>"
+                            + "<button onclick=\"javascript:ajaxDeclineRequest('" + u.getUserName() + "')\">Decline</button>"
                             + "<button disabled data-toggle=\"disabledMsgButton\" title=\"You can Send Messages only to Friends!\" id=\"disabledMsgButton\">Send Message</button>"
                             + "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>";
                 } else if (status.equals("confirmed")) {
+                    options = "<button onclick=\"javascript:ajaxRemoveFriend('" + u.getUserName() + "')\">Remove Friend</button>"
+                            + "<br>"
+                            + "<button data-toggle=\"disabledMsgButton\" title=\"You can Send Messages to Friends Now!\" id=\"disabledMsgButton\">Send Message</button>"
+                            + "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>";
 
                 } else if (status.equals("")) {
                     options = "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>"
@@ -153,14 +164,30 @@ public class Users extends MySql {
     public String getNumberOfRequest(String usr) {
         String html = "";
         User u = new User();
-        int number = u.getNumberOfRequest(usr);
+        int numberReq = u.getNumberOfRequest(usr);
 
-        if (number < 1) {
-            html = "<div  style=\"margin-top:110px;\">You dont have any friend requests </div>";
-        } else if (number == 1) {
+        if (numberReq < 1) {
+            html = "<div  style=\"margin-top:110px;\">You don't have any friend requests </div>";
+        } else if (numberReq == 1) {
             html = "<div style=\"margin-top:110px;\">One Person has sent you friend request.</div>";
         } else {
-            html = "<div  style=\"margin-top:100px;\">" + number + " people have sent you friend requests.</div>";
+            html = "<div  style=\"margin-top:100px;\">" + numberReq + " people have sent you friend requests.</div>";
+        }
+
+        return html;
+    }
+
+    public String getFriendsCount(String usr) {
+        String html = "";
+        User u = new User();
+        int numberFr = u.getNumberOfFriends(usr);
+
+        if (numberFr < 1) {
+            html = "<div  style=\"margin-top:1px;\">You don't have any friends added in your list.</br> Please use the Find Friends button to add people who you know</div>";
+        } else if (numberFr == 1) {
+            html = "<div style=\"margin-top:1px;\">You have one friend in your list</div>";
+        } else {
+            html = "<div  style=\"margin-top:1px;\">You have " + numberFr + " friends in your list</div>";
         }
 
         return html;

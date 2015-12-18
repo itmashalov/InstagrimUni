@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 /**
  *
  * @author imashalov
+ * We are using this class for different operations with multiple images 
+ * and displaying the galleries for users or for tags
  */
 public class Gallery extends MySql {
 
@@ -24,6 +26,8 @@ public class Gallery extends MySql {
 
     }
 
+    //this function is used to return list of images for a certain user
+    //we later pass this list to getHtmlForImages function.
     public java.util.LinkedList<Image> getPicsForUser(String User) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
 
@@ -31,6 +35,7 @@ public class Gallery extends MySql {
         return Pics;
     }
 
+    //this function returns the latest image for an user
     public Image getLatestImgForUser(String User) {
         Image Pic = new Image();
 
@@ -39,6 +44,7 @@ public class Gallery extends MySql {
         return Pic;
     }
 
+    //this function returns a list of images for a selected tag.
     public java.util.LinkedList<Image> getPicsForTag(String tag, String loggedUser) {
         java.util.LinkedList<Image> Pics = new java.util.LinkedList();
 
@@ -47,6 +53,7 @@ public class Gallery extends MySql {
         return Pics;
     }
 
+    //this function is used to return html gallery for certain user.
     public String getHtmlForImages(java.util.LinkedList<Image> images, String user) {
         String htm = "";
         Iterator<Image> it = images.iterator();
@@ -54,6 +61,9 @@ public class Gallery extends MySql {
 
             Image p = (Image) it.next();
             boolean isPublicPic = p.isPublicPic(p.getId());
+
+            //here we check if the image is public or the owner of the image is the same as the user selected
+            //we need this check because when we search for images we must show only our images or public images.
             if (isPublicPic == true || user.equals(p.getOwner())) {
                 byte[] imgData = new byte[10];
                 try {
@@ -64,6 +74,7 @@ public class Gallery extends MySql {
 
                 String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imgData);
                 String del = "";
+                //we are checking if the image is owned by the logged user if yes then we add the option to delete the image
                 if (user.equals(p.getOwner())) {
                     del = "<a  href=\"#\" onclick=\"javascript:deleteImgConf(" + p.getId() + ")\" ><img src=\"icons/bin_icon.png\" alt=\"Delete\" width=\"14%\"  ></a>\n";
                 }

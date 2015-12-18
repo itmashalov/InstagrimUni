@@ -16,13 +16,17 @@ import java.util.logging.Logger;
 /**
  *
  * @author Ivan
+ * 
+ * We use this class for user operations and activities related to user
  */
+
 public class Users extends MySql {
 
     public Users() {
 
     }
 
+    //we retrieve a list of user sent friend request to the logged user 
     public java.util.LinkedList<User> getUsersIdWhoSentReq(String loggedUser) {
         java.util.LinkedList<User> potentialFriends = new java.util.LinkedList();
         potentialFriends = super.getUsersIdWhoSentReq(loggedUser);
@@ -30,6 +34,7 @@ public class Users extends MySql {
         return potentialFriends;
     }
 
+    //we retrieve a list of friends for certain user
     public java.util.LinkedList<User> getFriends(String loggedUser) {
         java.util.LinkedList<User> myFriends = new java.util.LinkedList();
         myFriends = super.getFriends(loggedUser);
@@ -37,12 +42,14 @@ public class Users extends MySql {
         return myFriends;
     }
 
+    //we return a list of users got by username
     public java.util.LinkedList<User> getUsersByUserName(String User) {
         java.util.LinkedList<User> users = new java.util.LinkedList();
         users = super.getUsersByUserName(User);
         return users;
     }
 
+    //we sent friend request using that function and if successfull return true
     public boolean sendFriendRequest(String sender, String receiver) {
         boolean sent;
 
@@ -50,6 +57,7 @@ public class Users extends MySql {
         return sent;
     }
 
+    //using this function we confirm friend request and returning true if successful
     public boolean confirmFriendRequest(String user, String friend) {
         boolean sent = false;
 
@@ -57,11 +65,13 @@ public class Users extends MySql {
         return sent;
     }
 
+    //we decline a friend ruquest using that function and return true if successful
     public boolean declineFriendRequest(String user, String friend) {
         boolean declined = super.declineFriendRequest(user, friend);
         return declined;
     }
 
+    // we can remove from friend list using this function return true if successul
     public boolean removeFriend(String user, String friend) {
         boolean declined = false;
 
@@ -69,6 +79,7 @@ public class Users extends MySql {
         return declined;
     }
 
+    // we return the status between two users
     public String getFriendsStatus(String user, String friend) {
         String status = "";
         status = super.getFriendsStatus(user, friend);
@@ -76,6 +87,7 @@ public class Users extends MySql {
         return status;
     }
 
+    //we return html for users 
     public String getHtmlUsers(java.util.LinkedList<User> users, String loggedUser) {
         String htm = "";
         Iterator<User> it = users.iterator();
@@ -142,7 +154,7 @@ public class Users extends MySql {
         htm = htm + "  <div id=\"galleryLights\"   style=\"position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none\"></div>";
         return htm;
     }
-
+    // we return the html for profile pic using that function for a certain user 
     public String getProfilePicForUserHtml(String usr) {
         String html = "";
 
@@ -166,6 +178,7 @@ public class Users extends MySql {
         return html;
     }
 
+    //the html for number of request to the user
     public String getNumberOfRequest(String usr) {
         String html = "";
         User u = new User();
@@ -182,6 +195,7 @@ public class Users extends MySql {
         return html;
     }
 
+    //this function provides the html for showing the number of friends in the user's list
     public String getFriendsCount(String usr) {
         String html = "";
         User u = new User();

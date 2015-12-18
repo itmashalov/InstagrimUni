@@ -15,7 +15,7 @@ public class Comment extends MySql {
 
     public Comment() {
     }
-
+    //this function is used to insert new comments
     public void addComment(String comment, String user, int img_id) {
 
         super.addComment(comment, user, img_id);

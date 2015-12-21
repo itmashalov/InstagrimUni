@@ -31,6 +31,7 @@ function ajaxAddComment(newCommentID, imgID) {
     if (xmlhttp) {
 
         var comment = document.getElementById(newCommentID).value;
+
         commentsID = "comments" + newCommentID;
         xmlhttp.open("POST", "AddCommentServlet?comment=" + comment + "&imgID=" + imgID, true); //gettime will be the servlet name
         xmlhttp.onreadystatechange = handleServerResponseComments;
@@ -647,6 +648,99 @@ function handleajaxRemoveFriend() {
         }
     }
 }
+
+//Show conversation  
+var xmlhttp18 = new getXMLObject();
+var friendId = '';
+var selectedUser = "";
+function selectedUsera(friend) {
+    selectedUser = friend;
+}
+window.setInterval(function () {
+    if (selectedUser != "") {
+        ajaxShowConversation();
+    }
+}, 1000);
+function ajaxShowConversation( ) {
+
+    var friend = selectedUser;
+    friendId = friend;
+
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp18) {
+
+        var command = "showConversation";
+
+        var msgInputId = "message" + friendId;
+        var msg = "";
+
+
+        xmlhttp18.open("POST", "ProfileOperationsServlet?command=" + command + "&friend=" + friend + "&msg=" + "", true); //gettime will be the servlet name
+        xmlhttp18.onreadystatechange = handleajaxShowConversation;
+        xmlhttp18.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp18.send();
+
+    }
+}
+function handleajaxShowConversation() {
+    if (xmlhttp18.readyState == 4) {
+        if (xmlhttp18.status == 200) {
+
+            var msgInputId = "message" + friendId;
+            document.getElementById(msgInputId).style.display = "block";
+
+            var conversation = "conversation" + friendId;
+            document.getElementById(conversation).innerHTML = xmlhttp18.responseText; //Update the HTML Form element
+
+
+
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
+//send message
+var xmlhttp19 = new getXMLObject();
+function ajaxSendMessage() {
+
+    var friend = selectedUser;
+    friendId = friend;
+
+    var getdate = new Date(); //Used to prevent caching during ajax call
+    if (xmlhttp19) {
+
+        var command = "showConversation";
+
+        var msgInputId = "message" + friendId;
+        var msg = "";
+        if (document.getElementById(msgInputId) != null) {
+            msg = document.getElementById(msgInputId).value;
+
+        }
+
+        xmlhttp19.open("POST", "ProfileOperationsServlet?command=" + command + "&friend=" + friend + "&msg=" + msg, true); //gettime will be the servlet name
+        xmlhttp19.onreadystatechange = handleajaxSendMessage;
+        xmlhttp19.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp19.send();
+        spinIconOn();
+    }
+}
+function handleajaxSendMessage() {
+    if (xmlhttp19.readyState == 4) {
+        if (xmlhttp19.status == 200) {
+            ajaxShowConversation();
+            var msgInputId = "message" + friendId;
+            document.getElementById(msgInputId).value = "";
+            spinIconOff();
+
+
+        } else {
+            alert("Error during AJAX call. Please try again");
+        }
+    }
+}
+
+
 //AJAX========================================================================================================================================
 
 

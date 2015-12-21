@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Models.Image;
+import Models.Message;
 import Models.User;
 import Models.Users;
 import java.sql.SQLException;
@@ -41,6 +42,7 @@ public class ProfileOperationsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String command = (String) request.getParameter("command");
         String friend = (String) request.getParameter("friend");
+        String msgToUsr = (String) request.getParameter("msg");
 
         HttpSession session = request.getSession();
         String loggedUser = (String) session.getAttribute("user");
@@ -97,6 +99,26 @@ public class ProfileOperationsServlet extends HttpServlet {
                 out.println("Error");
             }
 
+        }
+        if (command.equals("showConversation")) {
+
+             if (!msgToUsr.equals("")) {
+                Message message = new Message(loggedUser,friend,msgToUsr);
+                message.recordMessage();
+            }
+            java.util.LinkedList<Message> conversation = users.getConversation(loggedUser, friend);
+            String htm = users.getHtmlMsges(conversation, loggedUser,friend);
+            out.println(htm);
+           
+
+//            boolean isRemoved = users.removeFriend(loggedUser, friend);
+//            if (isRemoved == true) {
+//                java.util.LinkedList<User> usrsList = users.getFriends(loggedUser);
+//                String htmlUsers = users.getHtmlUsers(usrsList, loggedUser);
+//                out.println(htmlUsers);
+//            } else {
+//                out.println("Error");
+//            }
         }
         if (command.equals("showFriends")) {
             java.util.LinkedList<User> usrsList = users.getFriends(loggedUser);

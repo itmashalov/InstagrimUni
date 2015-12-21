@@ -1,6 +1,7 @@
 package DataBases;
 
 import Models.Image;
+import Models.Message;
 import Models.User;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -22,7 +23,10 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.sql.Blob;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -115,10 +119,14 @@ public class MySql {
             PreparedStatement createFriends = con.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS friends( id integer,username varchar(255),friend varchar(255),status varchar(255), date DATE) ");
 
+            PreparedStatement createMsges = con.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS messages( id integer,sender varchar(255),receiver varchar(255),message varchar(255), date DATETIME) ");
+
             createUsers.executeUpdate();
             createImages.executeUpdate();
             createComments.executeUpdate();
             createFriends.executeUpdate();
+            createMsges.executeUpdate();
 
             con.close();
 
@@ -1064,7 +1072,6 @@ public class MySql {
             Connection con = DriverManager.getConnection(dataBase, this.user, password);
             //-----------------Getting Connection----------------------------------------- 
 
-            
             PreparedStatement declineFriend = con.prepareStatement("Delete from friends where status=? and username=? and friend=?");
             declineFriend.setString(1, "sent");
 
@@ -1072,8 +1079,7 @@ public class MySql {
             declineFriend.setString(3, friend);
             int i = declineFriend.executeUpdate();
 
-             
-            if (i!=0) {
+            if (i != 0) {
                 success = true;
             } else {
                 success = false;
@@ -1112,7 +1118,7 @@ public class MySql {
             int j = removeFriendSecond.executeUpdate();
 
             int newId = getNumberOfFriends(user);
-            if (newId < id ) {
+            if (newId < id) {
                 success = true;
             } else {
                 success = false;
@@ -1126,4 +1132,100 @@ public class MySql {
     }
 
     //FRIENDS FUNCTIONS END***************************************************************************************************************************************
+    //Message FUNCTIONS *****************************************************************************************************************************************
+    private int getMaxMessageID() {
+        int maxID = -1;
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            Statement s2 = con.createStatement();
+            s2.execute("SELECT MAX(id) FROM messages");
+            ResultSet rs2 = s2.getResultSet();
+            if (rs2.next()) {
+                maxID = rs2.getInt(1);
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+        return maxID;
+    }
+
+    protected void recordMessage(String sender, String receiver, String message) {
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            int id = getMaxMessageID();
+
+            PreparedStatement addMessage = con.prepareStatement(
+                    "insert into messages values(?,?,?,?,?)");
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            Calendar cal = Calendar.getInstance();
+            System.out.println(dateFormat.format(cal.getTime()));
+            java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
+
+            id = id + 1;
+            addMessage.setInt(1, id);
+            addMessage.setString(2, sender);
+            addMessage.setString(3, receiver);
+            addMessage.setString(4, message);
+            addMessage.setTimestamp(5, timestamp);
+            int i = addMessage.executeUpdate();
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+    }
+
+    protected java.util.LinkedList<Message> getConversation(String sender, String receiver) {
+        java.util.LinkedList<Message> messages = new java.util.LinkedList();
+        try {
+            //-----------------Getting Connection-----------------------------------------        
+            Class.forName(driver);
+
+            Connection con = DriverManager.getConnection(dataBase, this.user, password);
+            //-----------------Getting Connection----------------------------------------- 
+            PreparedStatement query = con.prepareStatement("select sender,receiver,message,date from messages where (sender=? and receiver=?) or  (sender=? and receiver=?)  ORDER BY `date` ");
+
+            query.setString(1, sender);
+            query.setString(2, receiver);
+            query.setString(3, receiver);
+            query.setString(4, sender);
+
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                Message msg = new Message();
+                String sendeR = rs.getString("sender");
+                String receiveR = rs.getString("receiver");
+                String message = rs.getString("message");
+                java.sql.Timestamp timestamp = rs.getTimestamp("date");
+
+                msg.setSender(sendeR);
+                msg.setReceiver(receiveR);
+                msg.setMessage(message);
+                msg.setDateTime(timestamp);
+                messages.add(msg);
+            }
+
+            con.close();
+
+        } catch (Exception e2) {
+            System.out.println(e2);
+        }
+
+        return messages;
+    }
+
+    //Message FUNCTIONS END***************************************************************************************************************************************
 }

@@ -16,10 +16,9 @@ import java.util.logging.Logger;
 /**
  *
  * @author Ivan
- * 
+ *
  * We use this class for user operations and activities related to user
  */
-
 public class Users extends MySql {
 
     public Users() {
@@ -87,6 +86,26 @@ public class Users extends MySql {
         return status;
     }
 
+    //we retrieve a list of messages between users 
+    public java.util.LinkedList<Message> getConversation(String loggedUser, String selectedUser) {
+        java.util.LinkedList<Message> conversation = new java.util.LinkedList();
+        conversation = super.getConversation(loggedUser, selectedUser);
+        return conversation;
+    }
+
+    public String getHtmlMsges(java.util.LinkedList<Message> msges, String loggedUser, String selectedUser) {
+        String htm = "";
+        User user = new User();
+        int id = user.getId();
+        Iterator<Message> it = msges.iterator();
+        while (it.hasNext()) {
+            Message m = (Message) it.next();
+            htm = htm + m.getSender() + ": " + m.getMessage() + "<br>";
+        }
+
+        return htm;
+    }
+
     //we return html for users 
     public String getHtmlUsers(java.util.LinkedList<User> users, String loggedUser) {
         String htm = "";
@@ -120,12 +139,17 @@ public class Users extends MySql {
                             + "<button onclick=\"javascript:ajaxDeclineRequest('" + u.getUserName() + "')\">Decline</button>"
                             + "<button disabled data-toggle=\"disabledMsgButton\" title=\"You can Send Messages only to Friends!\" id=\"disabledMsgButton\">Send Message</button>"
                             + "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>";
+
                 } else if (status.equals("confirmed")) {
+                    String id = "conversation" + u.getUserName();
                     options = "<button onclick=\"javascript:ajaxRemoveFriend('" + u.getUserName() + "')\">Remove Friend</button>"
                             + "<br>"
-                            + "<button data-toggle=\"disabledMsgButton\" title=\"You can Send Messages to Friends Now!\" id=\"disabledMsgButton\">Send Message</button>"
-                            + "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>";
-
+                            + "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>"
+                            + "<br>"
+                            + "<div id=" + id + "></div>"
+                            + "<script> var testUser =\"test\" </script>"
+                            + "<button  onclick=\"javascript:selectedUsera('" + u.getUserName() + "');ajaxSendMessage()\"  data-toggle=\"disabledMsgButton\" title=\"You can Send Messages to Friends Now!\" id=\"disabledMsgButton\">Send Message</button>"
+                            + "<textarea style=\"display:none;\"  id=\"message" + u.getUserName()   + "\"  rows=\"4\" cols=\"30\" autofocus>      </textarea>\n";
                 } else if (status.equals("")) {
                     options = "<button onclick=\"javascript:ajaxGetGallery('" + u.getUserName() + "')\">Show Gallery</button>"
                             + "<br>"
@@ -154,6 +178,7 @@ public class Users extends MySql {
         htm = htm + "  <div id=\"galleryLights\"   style=\"position:absolute;width:100%;height:100%;background-color:black;opacity:0.0;display:none\"></div>";
         return htm;
     }
+
     // we return the html for profile pic using that function for a certain user 
     public String getProfilePicForUserHtml(String usr) {
         String html = "";

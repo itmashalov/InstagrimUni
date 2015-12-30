@@ -49,13 +49,13 @@ public class MySql {
     private String driver = "com.mysql.jdbc.Driver";
     private String dataBaseName = "instagram";
 //Local DB:
-    private String dataBase = "jdbc:mysql://localhost/" + dataBaseName;
-    private String user = "ivan";
-    private String password = "ivankriskitchen";
+//    private String dataBase = "jdbc:mysql://localhost/" + dataBaseName;
+//    private String user = "ivan";
+//    private String password = "ivankriskitchen";
 //Local DB in OpenShift: 
-//    private String dataBase = "jdbc:mysql://127.3.255.130/" + dataBaseName;
-//    private String user = "admint2B46ui";
-//    private String password = "bVv5gL2JT7VT";
+    private String dataBase = "jdbc:mysql://127.4.81.130/" + dataBaseName;
+    private String user = "adminm6xShX8";
+    private String password = "s4J33srKScFa";
 //Remote DB using portfordwardind  (portforwarding must be started!!!): 
 //    private String dataBase = "jdbc:mysql://localhost/" + dataBaseName;
 //    private String user = "admint2B46ui";
@@ -80,8 +80,8 @@ public class MySql {
             //-----------------Getting Connection-----------------------------------------        
             Class.forName(driver);
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mysql", this.user, password);
-            //Connection con = DriverManager.getConnection("jdbc:mysql://127.3.225.130/mysql", this.user, password);
+            //Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mysql", this.user, password);
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.4.81.130/mysql", this.user, password);
             //-----------------Getting Connection----------------------------------------- 
 
             PreparedStatement createDataBase = con.prepareStatement("CREATE DATABASE IF NOT EXISTS " + dataBaseName);

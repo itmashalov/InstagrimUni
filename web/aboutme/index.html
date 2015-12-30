@@ -1,0 +1,340 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="media/style.css">
+        <script type="text/javascript" src="scripts/jquery/jquery-2.1.1.js"></script>
+        <title>About Me</title>
+
+        <script>
+            jQuery(document).ready(function ()
+            {
+
+                $(".goo-collapsible > li > a").on("click", function (e) {
+
+                    if (!$(this).hasClass("active")) {
+
+                        // hide any open menus and remove all other classes
+                        $(".goo-collapsible li ul").slideUp(350);
+                        $(".goo-collapsible li a").removeClass("active");
+
+                        // open our new menu and add the open class
+                        $(this).next("ul").slideDown(350);
+                        $(this).addClass("active");
+
+                    } else if ($(this).hasClass("active")) {
+
+                        $(this).removeClass("active");
+                        $(this).next("ul").slideUp(350);
+                    }
+                });
+
+
+            });
+
+
+            jQuery(document).ready(function ()
+            {
+
+                $(".goo-collapsible2 > li > a").on("click", function (e) {
+
+                    if (!$(this).hasClass("active")) {
+
+                        // hide any open menus and remove all other classes
+                        $(".goo-collapsible2 li ul").slideUp(350);
+                        $(".goo-collapsible2 li a").removeClass("active");
+
+                        // open our new menu and add the open class
+                        $(this).next("ul").slideDown(350);
+                        $(this).addClass("active");
+
+                    } else if ($(this).hasClass("active")) {
+
+                        $(this).removeClass("active");
+                        $(this).next("ul").slideUp(350);
+                    }
+                });
+            });
+        </script>
+
+
+
+    </head>
+
+    <body>
+        <div id="frame" style="   top: 5%;left:10%;  width:80%;display:block;">
+            <h1 style="text-align:center">Ivan Mashalov</h1>
+            <hr></hr>
+            <div id="frame2" style="   top: 5%;left:10%;  width:40%;display:block;     ">
+                <div style="position: relative;display:block;text-align:center;width:80%;   margin:auto; ">
+                    <p style="text-align:left; width:100%;font-size:105%  left:200px;font-size:125%">
+                        This page provides information about me, my education, abilities and portfolio.
+                    </p>
+                </div>
+            </div>
+
+            <div class="menu">
+
+                <ul class="goo-collapsible">
+                    <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Education:</div></li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#' style=" font-size:1.3em">1. Configuration and Pairing</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">1.1 Education</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                    <li class='dropdown'>
+                        <a href='#' style=" font-size:1.3em"> 2. Main Contacts</a>
+                        <ul>
+                            <li>
+                                <p style="position: relative; text-align: center;font-size:1.2em">Leon Wright: leon.wright@edmi-meters.com
+                                    </br> Nick Walton: Nick.Walton@edmi-meters.com
+                                </p>
+                                </br>
+                            </li>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                </ul>
+
+            </div>
+
+            <div class="menu">
+
+                <ul class="goo-collapsible">
+                    <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Employment History: </div> </li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#' style=" font-size:1.3em">1. Configuration and Pairing</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">1.1 Education</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                    <li class='dropdown'>
+                        <a href='#' style=" font-size:1.3em"> 2. Main Contacts</a>
+                        <ul>
+                            <li>
+                                <p style="position: relative; text-align: center;font-size:1.2em">Leon Wright: leon.wright@edmi-meters.com
+                                    </br> Nick Walton: Nick.Walton@edmi-meters.com
+                                </p>
+                                </br>
+                            </li>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                </ul>
+
+            </div>
+            <div class="menu">
+
+                <ul class="goo-collapsible">
+                    <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Abilities</div>  </li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#' style=" font-size:1.3em">1. Configuration and Pairing</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">1.1 Education</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                    <li class='dropdown'>
+                        <a href='#' style=" font-size:1.3em"> 2. Main Contacts</a>
+                        <ul>
+                            <li>
+                                <p style="position: relative; text-align: center;font-size:1.2em">Leon Wright: leon.wright@edmi-meters.com
+                                    </br> Nick Walton: Nick.Walton@edmi-meters.com
+                                </p>
+                                </br>
+                            </li>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                </ul>
+
+            </div>
+
+            <div class="menu">
+
+                <ul class="goo-collapsible">
+                    <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Portfolio:</div> </li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#' style=" font-size:1.3em">1. Configuration and Pairing</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">1.1 Education</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                    <li class='dropdown'>
+                        <a href='#' style=" font-size:1.3em"> 2. Main Contacts</a>
+                        <ul>
+                            <li>
+                                <p style="position: relative; text-align: center;font-size:1.2em">Leon Wright: leon.wright@edmi-meters.com
+                                    </br> Nick Walton: Nick.Walton@edmi-meters.com
+                                </p>
+                                </br>
+                            </li>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                </ul>
+
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -99,7 +99,7 @@ function openMenuFrame(id, width, height) {
             height: height,
             left: "0",
             right: "0",
-            }, 800);
+        }, 800);
         setTimeout(function () {
             $('#' + id).animate({
                 top: "200%", }, 800);

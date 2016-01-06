@@ -2,16 +2,22 @@
 
     <head>
         <link rel="stylesheet" type="text/css" href="media/style.css">
-        <script type="text/javascript" src="scripts/jquery/jquery-2.1.1.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <title>About Me</title>
 
         <script>
+            setTimeout(function () {
+                // $("html, body").animate({ scrollTop: 8000 }, 20000);
+            }, 500);
+
             jQuery(document).ready(function ()
             {
 
                 $(".goo-collapsible > li > a").on("click", function (e) {
 
                     if (!$(this).hasClass("active")) {
+                        //$("html, body").animate({ scrollTop: $(this).offset().top }, 20000);
+                        //
 
                         // hide any open menus and remove all other classes
                         $(".goo-collapsible li ul").slideUp(350);
@@ -20,13 +26,20 @@
                         // open our new menu and add the open class
                         $(this).next("ul").slideDown(350);
                         $(this).addClass("active");
+                        var selected = $(this);
+                      //  setTimeout(function () {
+                            $("html, body").animate({scrollTop: selected.offset().top/1.9}, 1200);
+                     //    }, 500);
 
                     } else if ($(this).hasClass("active")) {
 
                         $(this).removeClass("active");
                         $(this).next("ul").slideUp(350);
+                        //$("html, body").animate({ scrollTop: $(this).offset().top }, 1300);
                     }
                 });
+
+
 
 
             });
@@ -46,6 +59,16 @@
                         // open our new menu and add the open class
                         $(this).next("ul").slideDown(350);
                         $(this).addClass("active");
+                        var selected = $(this);
+                        var test=$(".goo-collapsible2 > li > a ");
+                         
+                         
+                         
+                         
+                         
+                         
+                            $("html, body").animate({scrollTop: selected.offset().top/1.9   }, 1200);
+                      
 
                     } else if ($(this).hasClass("active")) {
 
@@ -69,7 +92,15 @@
             <div id="frame2" style="   top: 5%;left:10%;  width:40%;display:block;     ">
                 <div style="position: relative;display:block;text-align:center;width:80%;   margin:auto; ">
                     <p style="text-align:left; width:100%;font-size:105%  left:200px;font-size:125%">
-                        This page provides information about me, my education, abilities and portfolio.
+                        Date of birth: 15.06.1991
+                        <br>
+                        Address: 40 Union Street, Dundee, UK
+                        <br>
+                        M(UK): 07523393019
+                        <br>
+                        M(BG): 0899420928
+                        <br>
+                        Email: imashalov@gmail.com
                     </p>
                 </div>
             </div>
@@ -79,12 +110,12 @@
                 <ul class="goo-collapsible">
                     <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Education:</div></li>
                     <hr></hr>
-                    <li class='dropdown'><a class='' href='#' style=" font-size:1.3em">1. Applied Computing BSc (University of Dundee): September 2012 - June 2015</a>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">1. Applied Computing BSc (University of Dundee): September 2012 - June 2015</a>
 
                         <ul class="goo-collapsible2">
 
                             <hr></hr>
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">1.1 Scrum</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Scrum</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -102,7 +133,7 @@
 
                             <hr></hr>
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.2 HCI </a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 HCI </a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -117,15 +148,15 @@
                             <hr></hr>
 
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.3 Java, Internet Security and Algorithms</a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.3 Java, Internet Security and Algorithms</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
                                             We have covered two different aspects of the programming language Java:
                                             the web development with Java using servlets and the other module was about writing programs with java.
                                             We have practised all kind of algorithms with Java and learned how to write secure back end functionality.
-                                            <a href="https://github.com/itmashalov/backgammon_non_graphic_game_java_first_year"> Backgammon Game (first year java) <img src='media/link.png' style='margin-top:5px'></a>
-                                            <a href="https://github.com/itmashalov/InstagrimUni"> Java Web(git) <img src='media/link.png' style='margin-top:5px'></a>
+                                            <a href="https://github.com/itmashalov/backgammon_non_graphic_game_java_first_year"> Backgammon Game (first year java project - git ) I have done that first year for less than 6 hours <img src='media/link.png' style='margin-top:5px'></a>
+                                            <a href="https://github.com/itmashalov/InstagrimUni"> Java Web(git)  <img src='media/link.png' style='margin-top:5px'></a>
                                             <a href="http://myinstagallery-itmashalov.rhcloud.com/main/"> Java Web(actual website) <img src='media/link.png' style='margin-top:5px'></a>
 
                                         </p>
@@ -137,14 +168,14 @@
 
 
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.4 C++ and Algorithms and Data Structures  </a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.4 C++ and Algorithms and Data Structures  </a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
                                             It was one of my favorite modules because we learned how to create the chained and open addressed hash tables, trees and also using,
                                             templates, pointers, references, inheritance, polymorphism, lists, stacks, virtual functions, interfaces, abstract classes, queues and vectors.
-                                            <a href="https://github.com/itmashalov/chained_hash_table"> Chained Hash Table(written by me) <img src='media/link.png' style='margin-top:5px'></a>
-                                            <a href="https://github.com/itmashalov/open_addressed_hash_table"> Open Addressed Hash Table(written by me)  <img src='media/link.png' style='margin-top:5px'></a>
+                                            <a href="https://github.com/itmashalov/chained_hash_table"> Chained Hash Table(written by me) I did that in two days <img src='media/link.png' style='margin-top:5px'></a>
+                                            <a href="https://github.com/itmashalov/open_addressed_hash_table"> Open Addressed Hash Table(written by me) I did that in two days  <img src='media/link.png' style='margin-top:5px'></a>
 
                                         </p>
                                         </br>
@@ -154,7 +185,7 @@
                             <hr></hr>
 
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.5 C# asp.net and Forms  </a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.5 C# asp.net and Forms  </a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -163,6 +194,24 @@
                                             I had another module about C# where we created a simple ATM system covering problems like dead lock and using multy threading, 
                                             We also had another project where we had to develop a windows game using C#.
                                             I also Have done my game from the games programming in C# using Unity3D.
+                                            <br>
+                                            <br>
+                                            The Unity3D game which I have finished in less than a week:
+                                            <a href="https://www.youtube.com/watch?v=bvyoRjKxuGY"> ROAZ cross platform mobile game. <img src='media/link.png' style='margin-top:5px'></a>
+                                            <br>
+                                            This is the charity website which we developed in asp.Net and Microsoft SQL Server in a team of four:
+                                            <a href="https://github.com/DragomirKolev/website-acyt"> Charity WebSite <img src='media/link.png' style='margin-top:5px'></a>
+                                            <br>
+                                            This was my first encounter with C# and I have written a game for 8 hours having in Mind that I have not written any code in C# before:
+                                            <a href="https://github.com/itmashalov/csharp_first_game"> C# Game Desktop Apllication project - github <img src='media/link.png' style='margin-top:5px'></a>
+                                            <a href="https://youtu.be/t8r32McnauU"> C# Game Desktop Apllication project - Video Demonstration <img src='media/link.png' style='margin-top:5px'></a>
+                                            <br>
+                                            This is simple impementation of front end for an ATM in C# it was my second C# project and took me 6 hours:
+
+                                            <a href="https://github.com/itmashalov/atm_c-"> C# ATM Desktop Apllication project - github. <img src='media/link.png' style='margin-top:5px'></a>
+                                            <a href="https://youtu.be/YyOiW6mVvvs"> C# ATM Desktop Apllication project - Video Demonstration <img src='media/link.png' style='margin-top:5px'></a>
+                                            <br>
+
 
                                         </p>
                                         </br>
@@ -172,12 +221,23 @@
                             <hr></hr>
 
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.6 Arduino, Processing and Data visualisation  </a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.6 Arduino, Processing and Data visualisation  </a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            <br>
+                                            I have Developed a game in processing (in C) about<a href="https://en.wikipedia.org/wiki/Felix_Baumgartner"> Felix Baumgartner</a>(the controls are with 'A' and 'D' buttons:
+                                            <br>
                                             <a href="http://www.openprocessing.org/sketch/76250"> Processing Game  <img src='media/link.png' style='margin-top:5px'></a>
-                                            <a href="https://github.com/itmashalov/surf_project_processing"> Surf App  <img src='media/link.png' style='margin-top:5px'></a>
+                                            <br>
+                                            I have Developed a Surf App in processing (in C) which purpose is to show live data for surf locations(the data is extracted from a web page) :
+                                            <br>                                              
+                                            <a href="https://github.com/itmashalov/surf_project_processing"> Surf App   <img src='media/link.png' style='margin-top:5px'></a>
+                                            <br> 
+                                            I have worked on a processing/arduino project where a data is extracted from the weather's station webpage
+                                            in Dundee and Lights controlled by an arduino indicates change in the weather.
+                                            <br>
+                                            <a href="https://github.com/itmashalov/ArduinoWeather"> Weather processing/arduino project <img src='media/link.png' style='margin-top:5px'></a>
 
 
                                         </p>
@@ -188,24 +248,35 @@
                             <hr></hr>
 
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.7 Games Programming</a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.7 Games Programming</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
-                                            test
+                                            We have covered different aspects of the game development and also different game engines, different market places,
+                                            and many other topics related to game development. Our final project was to develop a game:
+                                            <br>
+                                            <a href="https://www.youtube.com/watch?v=bvyoRjKxuGY"> ROAZ cross platform mobile game. <img src='media/link.png' style='margin-top:5px'></a>
+                                            <br>
                                         </p>
-                                        </br>
+
                                     </li>
                                 </ul>
                             </li>
                             <hr></hr>
 
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.8 Database Systems and PHP</a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.8 Database Systems and PHP</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
-                                            test
+                                            We have covered more complex SQL, Different databases like:
+                                            graph database, noSQL(like Cassandra), Multimedia Databases, Relational Databases.
+                                            We also have leaned about Data Marts, Big Data, Data Warehousing, Data Mining, Security and PHP.
+                                            <br>
+                                            We have developed a php website with MySQL database for a Food Market Company:
+                                            <br>
+                                            <a href="https://github.com/itmashalov/Database-Systems-Food-Project">Food Market Company  <img src='media/link.png' style='margin-top:5px'></a>
+
                                         </p>
                                         </br>
                                     </li>
@@ -215,11 +286,14 @@
                             <hr></hr>
 
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.9 Computer Systems</a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.9 Computer Systems</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
-                                            test
+                                            We have learned in depth about the computer hardware. We studied different type of processors,
+                                            how does the ram work, about the processor cache, about the different buses, about the fetch execute cycle.
+                                            We also have learned about Linux and have written some bash scripts.
+
                                         </p>
                                         </br>
                                     </li>
@@ -241,12 +315,12 @@
                 <ul class="goo-collapsible">
                     <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Employment History: </div> </li>
                     <hr></hr>
-                    <li class='dropdown'><a class='' href='#' style=" font-size:1.3em">1. DataMax : June 2010 - December 2011 </a>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">1. DataMax : June 2010 - December 2011 </a>
 
                         <ul class="goo-collapsible2">
 
                             <hr></hr>
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">1.1 Banking Sofware</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Banking Sofware</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -264,7 +338,7 @@
                             </li>
                             <hr></hr>
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.2 Programming</a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 Programming</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -277,7 +351,7 @@
                             </li>
                             <hr></hr>
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.3 Databases</a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.3 Databases</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -297,12 +371,12 @@
                     <hr></hr>
                     <li class='dropdown'>
 
-                        <a href='#' style=" font-size:1.3em"> 2. Hutchison Technologies : February 2015 - December 2015</a>
+                        <a href='#goto' style=" font-size:1.3em"> 2. Hutchison Technologies : February 2015 - December 2015</a>
 
                         <ul class="goo-collapsible2">
                             <hr></hr>
 
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">2.1 Job Overview</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">2.1 Job Overview</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -320,7 +394,7 @@
                             </li>
                             <hr></hr>
 
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">2.2 Web Development</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">2.2 Web Development</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -344,7 +418,7 @@
 
                             </li>
                             <hr></hr>
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">2.3 Cross-platform Mobile Application Development</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">2.3 Cross-platform Mobile Application Development</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -357,7 +431,7 @@
 
                             </li>
                             <hr></hr>
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">2.4 Security and Bash Scripting</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">2.4 Security and Bash Scripting</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -378,7 +452,7 @@
 
                             </li>
                             <hr></hr>
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">2.5 Cross-platform desktop development</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">2.5 Cross-platform desktop development</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -408,12 +482,12 @@
                 <ul class="goo-collapsible">
                     <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Abilities</div>  </li>
                     <hr></hr>
-                    <li class='dropdown'><a class='' href='#' style=" font-size:1.3em">1. Configuration and Pairing</a>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">1. Programming languages</a>
 
                         <ul class="goo-collapsible2">
 
                             <hr></hr>
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">1.1 Education</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Education</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -429,7 +503,7 @@
                             </li>
                             <hr></hr>
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -454,7 +528,7 @@
                     </li>
                     <hr></hr>
                     <li class='dropdown'>
-                        <a href='#' style=" font-size:1.3em"> 2. Main Contacts</a>
+                        <a href='#goto' style=" font-size:1.3em"> 2. Databases</a>
                         <ul>
                             <li>
                                 <p style="position: relative; text-align: center;font-size:1.2em">Leon Wright: leon.wright@edmi-meters.com
@@ -465,21 +539,12 @@
                         </ul>
                     </li>
                     <hr></hr>
-                </ul>
-
-            </div>
-
-            <div class="menu">
-
-                <ul class="goo-collapsible">
-                    <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Portfolio:</div> </li>
-                    <hr></hr>
-                    <li class='dropdown'><a class='' href='#' style=" font-size:1.3em">1. Configuration and Pairing</a>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">3. Version Control Systems</a>
 
                         <ul class="goo-collapsible2">
 
                             <hr></hr>
-                            <li class='dropdown2'><a class='' href='#' style=" font-size:1.3em; ">1.1 Education</a>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Education</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -495,7 +560,242 @@
                             </li>
                             <hr></hr>
                             <li class='dropdown2'>
-                                <a href='#' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">4. Management Systems</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Education</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">5. Operating Systems</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Education</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">6. Portals</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Education</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">7. Other</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Qt</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            Once EziView is activated The proram will ask for username and password. The username is EDMI and the password is IMDEIMDE.After
+                                            that you need to attach the optical head to the meter. Right click on Quick Connect and chose properties. Choose
+                                            the right COM for this USB. After that click connect. This is only to test if the optical prob is connected. To
+                                            be able to read and write to the meter you need to create a new station as a modem and set the details manualy.
+                                            </br>For more information:
+                                            </br>
+                                            </br>
+                                            <a href="../manuals/manual.pdf"> EDMI Manual <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/atlas2.pdf"> Atlas 2 Manual and Registers List <img src='media/link.png' style='margin-top:5px'></a></br>
+                                            <a href="../manuals/pairing.pdf"> Pairing <img src='media/link.png' style='margin-top:5px'></a></br>
+
+                                        </p>
+                                        </br>
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                        </ul>
+                    </li>
+                    <hr></hr>
+
+                </ul>
+
+            </div>
+
+            <div class="menu">
+
+                <ul class="goo-collapsible">
+                    <li class="header" style=" font-size:1.3em;text-aling:center"><span class="round-button"> </span><div id="header">Portfolio:</div> </li>
+                    <hr></hr>
+                    <li class='dropdown'><a class='' href='#goto' style=" font-size:1.3em">1. Configuration and Pairing</a>
+
+                        <ul class="goo-collapsible2">
+
+                            <hr></hr>
+                            <li class='dropdown2'><a class='' href='#goto' style=" font-size:1.3em; ">1.1 Education</a>
+                                <ul>
+                                    <li>
+                                        <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
+                                            These meters can be configured with EziView (for Windows) using a USB optical head. Some have test certificates, others have
+                                            production certificates for pairing with an IHD/CAD. When EziView Is installed it will ask for the provided cd-key.
+                                            When the key is entered it will generate another key which must be sent to EDMI team and they will send back the
+                                            activation key.
+                                        </p>
+                                        </br>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <hr></hr>
+                            <li class='dropdown2'>
+                                <a href='#goto' style=" font-size:1.3em"></span> 1.2 Work Experience</a>
                                 <ul>
                                     <li>
                                         <p style="position: relative; text-align: left;font-size:1.2em;width:80%;margin-left:8%;">
@@ -520,7 +820,7 @@
                     </li>
                     <hr></hr>
                     <li class='dropdown'>
-                        <a href='#' style=" font-size:1.3em"> 2. Main Contacts</a>
+                        <a href='#goto' style=" font-size:1.3em"> 2. Main Contacts</a>
                         <ul>
                             <li>
                                 <p style="position: relative; text-align: center;font-size:1.2em">Leon Wright: leon.wright@edmi-meters.com
